@@ -1,0 +1,4 @@
+# Ignore Mac System Files
+.DS_store
+.ipynb_checkpoints
+.idea
