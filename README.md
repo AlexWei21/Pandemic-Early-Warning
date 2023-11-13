@@ -1,1 +1,1 @@
-# Hospitalization_Prediction
+# Pandemic Early Warning using Past Pandemic Data
