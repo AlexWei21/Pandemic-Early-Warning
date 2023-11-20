@@ -12,7 +12,7 @@ class Pandemic_Data:
 
 
 def read_pandemic_ts (file_name, root_dir = None, look_back = 100, pred_len = 200, with_meta_data = False, 
-                      moving_average = 1, data_frequency = 'Daily'):
+                      moving_average = 1, data_smoothing = 'False', data_frequency = 'Daily'):
 
     pandemic_ts_file = pd.read_csv(root_dir + file_name, dtype={'Domain':str})
 
@@ -20,7 +20,7 @@ def read_pandemic_ts (file_name, root_dir = None, look_back = 100, pred_len = 20
 
     country_names = list(set(pandemic_ts_file['Country']))[0:2]
 
-    a = Pandemic_Data(look_back=look_back, pred_len=pred_len)
+    data = Pandemic_Data(look_back=look_back, pred_len=pred_len)
 
     for country in country_names:
 
@@ -28,30 +28,93 @@ def read_pandemic_ts (file_name, root_dir = None, look_back = 100, pred_len = 20
         
         processing_country_data = processing_country_data.reset_index(drop=True)
 
-        start_idx = processing_country_data.ne(0).idxmax()['number']
+        ## Set the first day that case number exceed 100 as the start date
+        start_idx = np.argmax(processing_country_data['number']>100)
 
         processing_country_data = processing_country_data[start_idx:]
 
         min_date = min(pd.to_datetime(processing_country_data['date']).dt.date)
         max_date = max(pd.to_datetime(processing_country_data['date']).dt.date)
 
-        print(processing_country_data)
+        # print(processing_country_data)
 
         if (max_date - min_date).days < (look_back + pred_len):
+            print(processing_country_data['Country'][0], processing_country_data['Domain'][0], processing_country_data['Sub-Domain'][0], "doesn't contain enough time span for desired look back length and prediction length.")
             continue
 
         look_back_data = processing_country_data['number'][:look_back]
         pred_data = processing_country_data['number'][look_back:look_back + pred_len]
 
-        a.x = np.append(a.x, [look_back_data.to_list()], axis=0)
-        a.y = np.append(a.y, [pred_data.to_list()], axis = 0)
+        data.x = np.append(data.x, [look_back_data.to_list()], axis=0)
+        data.y = np.append(data.y, [pred_data.to_list()], axis = 0)
 
-    print(a.x)
-    print(a.y)
+    # print(data.x)
+
+    if data_frequency == 'Daily':
+        data.x = process_daily_data(data.x, moving_average)
+    elif data_frequency == 'Weekly':
+        data.x = process_weekly_data(data.x, data_smoothing)
+    else:
+        print("Data Frequency Type not supported, currently only accepting Daily and Weekly Data.")
+        exit(1)
+
+    print(data.x.shape)
+    print(data.y.shape)
 
     return 0
 
+def process_daily_data(ts, avg_len):
+    
+    processed_data = moving_average(ts, avg_len)
+
+    return processed_data
+
+def process_weekly_data(data, smoothing):
+
+    if smoothing == 'False':
+        processed_data = data_padding(data, replace_value='prev')
+    else:
+        processed_data= data_smoothing(data, method = 'linear')
+    
+    return processed_data
+    
+def moving_average(ts, avg_len = 7):
+
+    moving_list = np.empty((0,len(ts[0])), int)
+
+    for data in ts:
+
+        moving_number = np.empty(len(data))
+
+        for i in range(len(moving_number)):
+            if i == 0:
+                moving_number[i] = data[i]
+            elif i < (avg_len - 1):
+                moving_number[i] = round(sum(data[:i+1])/(i+1))
+            else:
+                moving_number[i] = round(sum(data[i-avg_len+1:i+1]/ avg_len))
+
+        moving_list = np.append(moving_list,[moving_number],axis=0)
+
+    return moving_list
+
+### TODO
+def data_smoothing(data, method = 'linear'):
+
+    smooth_data = data
+
+    return smooth_data
+
+### TODO
+def data_padding(data, replace_value = 'prev'):
+
+    pad_data = data
+
+    return pad_data
+
+
 
 if __name__ == '__main__':
-    read_pandemic_ts(root_dir='F:/Pandemic-Database/Past_Pandemic_Time_Series_Data/Covid 19/',
-                     file_name='Covid_World_Domain_Daily_CumCases.csv')
+    read_pandemic_ts(root_dir='F:/Pandemic-Database/Processed_Data/Covid_19/',
+                     file_name='Covid_World_Domain_Daily_CumCases.csv',
+                     moving_average=7)
