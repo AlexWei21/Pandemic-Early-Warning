@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import torch
 
 class Pandemic_Data:
     def __init__(self, look_back, pred_len):
