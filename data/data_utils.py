@@ -1,11 +1,24 @@
 import pandas as pd
 import numpy as np
 
-def process_daily_data(ts, avg_len):
+def process_daily_data(data, smoothing, look_back, pred_len, avg_len):
     
-    processed_data = moving_average(ts, avg_len)
+    if smoothing == 'False':
+        look_back_data, pred_data, look_back_timestamp, pred_data_timestamp = data_padding(data,
+                                                                                           look_back,
+                                                                                           pred_len, 
+                                                                                           replace_value='prev')
+    else:
+        look_back_data, pred_data, look_back_timestamp, pred_data_timestamp = data_smoothing(data, 
+                                                                                             look_back,
+                                                                                             pred_len,
+                                                                                             method = 'linear')
+    
+    look_back_data = moving_average(look_back_data, avg_len)
 
-    return processed_data
+    pred_data = moving_average(pred_data, avg_len)
+
+    return look_back_data, pred_data, look_back_timestamp, pred_data_timestamp
 
 def process_weekly_data(data, smoothing, look_back, pred_len):
 
@@ -37,6 +50,8 @@ def moving_average(ts, avg_len = 7):
     return moving_number
 
 def data_smoothing(data, look_back, pred_len, method = 'linear'):
+
+    data = data.drop_duplicates(subset=['date'], keep = 'first')
 
     min_date = min(data['date'])
     max_date = max(data['date'])
@@ -95,6 +110,7 @@ def get_meta_data(pandemic_name):
                           'SARS': [2.2,3.6,1,0,1,0,1, 0.11,2,10,2,10,17.4,29.7],
                           'Dengue': [14.8,49.3,0,1,0,1,0,0.2,5.7,3.46,5,7,0,6],
                           'MPox':[1.1,2.4,1,0,0,0,1,0.075,3.2,15.6,0.2,12.4,6.93,19.67],
-                          'Zika': [2.4,5.6,0,1,0,1,0,0.0526,3,14,3,14,0,0],}
+                          'Zika': [2.4,5.6,0,1,0,1,0,0.0526,3,14,3,14,0,0],
+                          'Influenza': [1,2,1,0,0,0,1,0.000002,2,2,2,2,6,9]}
     
     return feature_names, pandemic_meta_data[pandemic_name]

@@ -8,13 +8,13 @@ import math
 import numpy as np
 
 
-class Model(nn.Module):
+class Panformer(nn.Module):
     """
     Autoformer is the first method to achieve the series-wise connection,
     with inherent O(LlogL) complexity
     """
     def __init__(self, configs):
-        super(Model, self).__init__()
+        super(Panformer, self).__init__()
         self.seq_len = configs.seq_len
         self.label_len = configs.label_len
         self.pred_len = configs.pred_len
