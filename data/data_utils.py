@@ -114,3 +114,6 @@ def get_meta_data(pandemic_name):
                           'Influenza': [1,2,1,0,0,0,1,0.000002,2,2,2,2,6,9]}
     
     return feature_names, pandemic_meta_data[pandemic_name]
+
+def get_date_from_date_time_list(datetime):
+    return pd.to_datetime(datetime).date()
