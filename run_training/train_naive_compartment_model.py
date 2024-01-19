@@ -157,7 +157,8 @@ def run_DELPHI(processed_data_path,country,domain = None,subdomain = None, past_
     # PopulationT = data_object.country_meta_data['population']
     # PopulationT = 329500000
     PopulationT = 7694000
-    OPTIMIZER = "annealing"
+    OPTIMIZER = "trust-constr"
+    ## OPTIMIZER = "annealing"
 
     N = PopulationT
     PopulationI = validcases.loc[0, "case_cnt"]
@@ -345,7 +346,7 @@ def run_DELPHI(processed_data_path,country,domain = None,subdomain = None, past_
                 t_span=[t_predictions[0], t_predictions[-1]],
                 t_eval=t_predictions,
                 args=tuple(optimal_params),
-            ).y
+            ).y 
             
             return x_sol_best
         

@@ -4,10 +4,13 @@ import plotly.graph_objects as go
 
 def DELPHI_evaluation(pred_case, pred_death, true_case, true_death, metric = 'MAPE'):
 
-    total_loss = (compute_mape(true_case[-15:],
-                 pred_case[len(true_case)-15:len(true_case)])
-    + compute_mape(true_death[-15:],
-                   pred_death[len(true_death)-15:len(true_death)])) / 2
+    case_loss = compute_mape(true_case[-15:],
+                             pred_case[len(true_case)-15:len(true_case)])
+    
+    death_loss = compute_mape(true_death[-15:],
+                              pred_death[len(true_death)-15:len(true_death)])
+    
+    total_loss = (case_loss + death_loss) / 2
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(x = np.arange(1,len(pred_case)),
@@ -43,7 +46,7 @@ def DELPHI_evaluation(pred_case, pred_death, true_case, true_death, metric = 'MA
     
     fig.show()
     
-    return total_loss
+    return case_loss, death_loss, total_loss
 
 def compute_mape(y_true: list, y_pred: list) -> float:
     """
@@ -62,12 +65,11 @@ pred_death = result[14,:]
 true_case = np.load('true_case.npy', allow_pickle=True)
 true_death = np.load('true_death.npy', allow_pickle=True)
 
-loss = DELPHI_evaluation(pred_case=pred_case,
-                         pred_death=pred_death,
-                         true_case=true_case,
-                         true_death=true_death)
+case_loss, death_loss, loss = DELPHI_evaluation(pred_case=pred_case,
+                                                pred_death=pred_death,
+                                                true_case=true_case,
+                                                true_death=true_death)
 
-print(pred_case)
-print(true_case)
-
+print(case_loss)
+print(death_loss)
 print(loss)

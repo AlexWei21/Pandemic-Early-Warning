@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import math
 
 def process_daily_data(data, smoothing, look_back, pred_len, avg_len):
     
@@ -117,3 +118,7 @@ def get_meta_data(pandemic_name):
 
 def get_date_from_date_time_list(datetime):
     return pd.to_datetime(datetime).date()
+
+def pandemic_meta_data_imputation(model_input:list):
+    
+    return [0 if math.isnan(x) else x for x in model_input]
