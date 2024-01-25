@@ -173,16 +173,15 @@ def process_data(pandemic_name = 'Covid-19',
 
     return data_list
                 
-
+## Edited Jan21
 def get_pandemic_meta_data(meta_data_file, pandemic_name, year, country, region):
     meta_data_row = meta_data_file[(meta_data_file['Country'] == country) & (meta_data_file['Pandemic'] == pandemic_name)]
-    if len(meta_data_row) == 0:
-        print(region)
-        meta_data_row = meta_data_file[(meta_data_file['Region'] == region) & (meta_data_file['Pandemic'] == pandemic_name)]
-        print(meta_data_row)
-        if len(meta_data_row) == 0:
+    if len(meta_data_row) > 0:
+        meta_data_row_domain = meta_data_row[(meta_data_file['Region'] == region) & (meta_data_file['Pandemic'] == pandemic_name)]
+        if len(meta_data_row_domain) == 0:
             print(f"No meta data found for {country} {pandemic_name} data in {year}")
-            return None
+        else:
+            meta_data_row = meta_data_row_domain
 
     meta_data_row = meta_data_row.iloc[0,6:].T
     return(meta_data_row.to_dict())

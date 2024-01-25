@@ -152,18 +152,18 @@ def get_weight_estimation_model(model_name,
         return -1
 
 ## TODO: Update Run_Compartment Model
-def run_compartment_model(predicted_edge_weights,
+def run_compartment_model(data,
+                          predicted_edge_weights,
                           predicted_parameters, 
-                          start_date_list,
-                          compartment_model,
-                          cumulative_case_number_list,
-                          population_list,
                           batch_size,
-                          time_stamps_list,
-                          cumulative_death_number_list = None,):
+                          target_training_len = 30,
+                          pred_len = 60,):
 
     loss_list = []
     loss_function = mape()
+
+    performance_df = []
+    terrible_samples = []
 
     for i in range(batch_size):
          
@@ -173,17 +173,17 @@ def run_compartment_model(predicted_edge_weights,
         edge_weights = predicted_edge_weights[i]
 
         parameter_list = predicted_parameters[i]
-        start_date = start_date_list[i]
-        timestamps = time_stamps_list[i]
+        start_date = data['start_date'][i]
+        timestamps = data['timestamps'][i]
 
-        cumulative_case_number = cumulative_case_number_list[i]
+        cumulative_case_number = data['cumulative_case_number'][i]
 
-        if cumulative_death_number_list is None:
+        if data['cumulative_death_number'] is None:
             cumulative_death_number = None
         else:
-            cumulative_death_number = cumulative_death_number_list[i]
+            cumulative_death_number = data['cumulative_death_number'][i]
 
-        N = population_list[i]
+        N = data['population'][i]
 
         if cumulative_death_number is not None:
             validcases = pd.DataFrame(list(zip(np.arange(0,len(timestamps)), cumulative_case_number, cumulative_death_number)),
@@ -216,69 +216,8 @@ def run_compartment_model(predicted_edge_weights,
         # balance, balance_total_difference, cases_data_fit, deaths_data_fit, weights = create_fitting_data_from_validcases(validcases)
 
         GLOBAL_PARAMS_FIXED = (N, R_upperbound, R_heuristic, R_0, PopulationD, PopulationI, p_d, p_h, p_v)
-                
-        def DELPHI_model(
-                    t, x, alpha, days, r_s, r_dth, p_dth, r_dthdecay, k1, k2, jump, t_jump, std_normal, k3
-                ) -> list:
-            """
-            SEIR based model with 16 distinct states, taking into account undetected, deaths, hospitalized and
-            recovered, and using an ArcTan government response curve, corrected with a Gaussian jump in case of
-            a resurgence in cases
-            :param t: time step
-            :param x: set of all the states in the model (here, 16 of them)
-            :param alpha: Infection rate
-            :param days: Median day of action (used in the arctan governmental response)
-            :param r_s: Median rate of action (used in the arctan governmental response)
-            :param r_dth: Rate of death
-            :param p_dth: Initial mortality percentage
-            :param r_dthdecay: Rate of decay of mortality percentage
-            :param k1: Internal parameter 1 (used for initial conditions)
-            :param k2: Internal parameter 2 (used for initial conditions)
-            :param jump: Amplitude of the Gaussian jump modeling the resurgence in cases
-            :param t_jump: Time where the Gaussian jump will reach its maximum value
-            :param std_normal: Standard Deviation of the Gaussian jump (~ time span of the resurgence in cases)
-            :param k3: Internal parameter 2 (used for initial conditions)
-            :return: predictions for all 16 states, which are the following
-            [0 S, 1 E, 2 I, 3 UR, 4 DHR, 5 DQR, 6 UD, 7 DHD, 8 DQD, 9 R, 10 D, 11 TH, 12 DVR,13 DVD, 14 DD, 15 DT]
-            """
-            r_i = np.log(2) / IncubeD  # Rate of infection leaving incubation phase
-            r_d = np.log(2) / DetectD  # Rate of detection
-            r_ri = np.log(2) / RecoverID  # Rate of recovery not under infection
-            r_rh = np.log(2) / RecoverHD  # Rate of recovery under hospitalization
-            r_rv = np.log(2) / VentilatedD  # Rate of recovery under ventilation
-            gamma_t = (
-                (2 / np.pi) * np.arctan(-(t - days) / 20 * r_s) + 1
-                + jump * np.exp(-(t - t_jump) ** 2 / (2 * std_normal ** 2))
-                )
-            p_dth_mod = (2 / np.pi) * (p_dth - 0.001) * (np.arctan(-t / 20 * r_dthdecay) + np.pi / 2) + 0.001
-            assert (
-                len(x) == 16
-            ), f"Too many input variables, got {len(x)}, expected 16"
-            S, E, I, AR, DHR, DQR, AD, DHD, DQD, R, D, TH, DVR, DVD, DD, DT = x
-            # Equations on main variables
-            dSdt = -alpha * gamma_t * S * I / N
-            dEdt = alpha * gamma_t * S * I / N - r_i * E
-            dIdt = r_i * E - r_d * I
-            dARdt = r_d * (1 - p_dth_mod) * (1 - p_d) * I - r_ri * AR
-            dDHRdt = r_d * (1 - p_dth_mod) * p_d * p_h * I - r_rh * DHR
-            dDQRdt = r_d * (1 - p_dth_mod) * p_d * (1 - p_h) * I - r_ri * DQR
-            dADdt = r_d * p_dth_mod * (1 - p_d) * I - r_dth * AD
-            dDHDdt = r_d * p_dth_mod * p_d * p_h * I - r_dth * DHD
-            dDQDdt = r_d * p_dth_mod * p_d * (1 - p_h) * I - r_dth * DQD
-            dRdt = r_ri * (AR + DQR) + r_rh * DHR
-            dDdt = r_dth * (AD + DQD + DHD)
-            # Helper states (usually important for some kind of output)
-            dTHdt = r_d * p_d * p_h * I
-            dDVRdt = r_d * (1 - p_dth_mod) * p_d * p_h * p_v * I - r_rv * DVR
-            dDVDdt = r_d * p_dth_mod * p_d * p_h * p_v * I - r_dth * DVD
-            dDDdt = r_dth * (DHD + DQD)
-            dDTdt = r_d * p_d * I
-            return [
-                dSdt, dEdt, dIdt, dARdt, dDHRdt, dDQRdt, dADdt, dDHDdt,
-                dDQDdt, dRdt, dDdt, dTHdt, dDVRdt, dDVDdt, dDDdt, dDTdt,
-            ]
 
-        t_predictions = [i for i in range(maxT)]
+        t_predictions = [i for i in range(pred_len + target_training_len)]
 
         def solve_best_params_and_predict(optimal_params, t_predictions):
             # Variables Initialization for the ODE system
@@ -303,14 +242,6 @@ def run_compartment_model(predicted_edge_weights,
                 global_params_fixed=GLOBAL_PARAMS_FIXED,
             )
 
-            # x_sol_best = solve_ivp(
-            #     fun=DELPHI_model,
-            #     y0=x_0_cases,
-            #     t_span=[t_predictions[0], t_predictions[-1]],
-            #     t_eval=t_predictions,
-            #     args=tuple(optimal_params),
-            # ).y
-
             delphi_model = DELPHI_pytorch(optimal_params,
                                         N = N)
 
@@ -326,13 +257,26 @@ def run_compartment_model(predicted_edge_weights,
        
         x_sol = solve_best_params_and_predict(parameter_list, t_predictions=t_predictions)
 
-        pred_case = x_sol[:,15]
-        pred_death = x_sol[:,14]
+        pred_case = x_sol[target_training_len:,15]
+        # pred_death = x_sol[target_training_len:,14]
 
-        loss = loss_function(pred_case, torch.tensor(cumulative_case_number))
+        loss = loss_function(pred_case, torch.tensor(cumulative_case_number[target_training_len:target_training_len+pred_len]))
+
+        performance_df.append([data['pandemic_name'][i], loss.item()])
+
+        if loss.item() > 100:
+            terrible_samples.append(data)
 
         loss_list.append(loss)
 
     avg_loss = torch.mean(torch.stack(loss_list), dim=0)
 
-    return avg_loss
+    performance_df = pd.DataFrame(performance_df, columns=['Pandemic_Name','Loss'])
+
+    performance_df = (performance_df.groupby(['Pandemic_Name'])
+                      .agg([('Average_Loss','mean'),('Count', 'count')])
+                      .reset_index())
+
+    print(performance_df)
+
+    return avg_loss, terrible_samples

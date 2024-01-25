@@ -119,6 +119,6 @@ def get_meta_data(pandemic_name):
 def get_date_from_date_time_list(datetime):
     return pd.to_datetime(datetime).date()
 
-def pandemic_meta_data_imputation(model_input:list):
-    
+def pandemic_meta_data_imputation(model_input:list, method = "from_same_pandemic"):
+
     return [0 if math.isnan(x) else x for x in model_input]

@@ -65,6 +65,7 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
     def __init__(self, 
                  pandemic_data,
                  target_training_len = 30,
+                 pred_len = 60,
                  batch_size = 64,
                  ):
         
@@ -72,18 +73,20 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
         self.train_len = target_training_len
         self.batch_size = batch_size
 
-        for item in pandemic_data:
-            if item.pandemic_meta_data is None:
-                pandemic_data.remove(item)
-                continue
-            else:
-                item.model_input = list(item.cumulative_case_number[:target_training_len]) + list(item.pandemic_meta_data.values())
-                item.model_input = [float(i) for i in item.model_input]
-                item.model_input = pandemic_meta_data_imputation(item.model_input)
 
-        for item in pandemic_data:         
-            if len(item.model_input) != 57:
-                pandemic_data.remove(item)
+        pandemic_data = [item for item in pandemic_data if item.pandemic_meta_data is not None]
+
+        for item in pandemic_data:
+            item.model_input = list(item.cumulative_case_number[:target_training_len]) + list(item.pandemic_meta_data.values())
+            item.model_input = [float(i) for i in item.model_input]
+            item.model_input = pandemic_meta_data_imputation(item.model_input,
+                                                                 method = 'from_same_pandemic')
+
+        pandemic_data = [item for item in pandemic_data if len(item.model_input) == 57]
+
+        pandemic_data = [item for item in pandemic_data if len(item.cumulative_case_number) >= (target_training_len + pred_len)]
+
+        self.pandemic_data = pandemic_data
 
 
     def __len__(self):

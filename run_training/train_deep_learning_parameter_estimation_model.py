@@ -7,6 +7,7 @@ from data.data_processing_compartment_model import process_data
 from data.data import Compartment_Model_Pandemic_Dataset
 from torch.utils.data import DataLoader
 from tqdm import tqdm
+import wandb
 
 def run_weight_estimation_model(past_pandemic_list:list,
                                 target_pandemic:str,
@@ -20,8 +21,9 @@ def run_weight_estimation_model(past_pandemic_list:list,
                                 batch_size = 10,
                                 target_training_len = 30,
                                 lr = 1e-4,
+                                pred_len = 60,
                                 ):
-
+    
     past_pandemic_data = []
 
     for pandemic in past_pandemic_list:
@@ -48,8 +50,9 @@ def run_weight_estimation_model(past_pandemic_list:list,
     
     past_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=past_pandemic_data,
                                               target_training_len=target_training_len,
+                                              pred_len = pred_len,
                                               batch_size=batch_size,)
-    
+
     train_data_loader = DataLoader(past_pandemic_dataset,
                                    batch_size=batch_size,
                                    shuffle=True,
@@ -79,10 +82,14 @@ def run_weight_estimation_model(past_pandemic_list:list,
     optimizer = optim.Adam(weight_estimation_model.parameters(),
                            lr=lr)
     
+    run = wandb.init()
+
     print (">>>>> Model Infrastructure")
     print(weight_estimation_model)
 
     for epoch in tqdm(range(n_epochs)):
+
+        terrible_sample_list = []
 
         for i,data in enumerate(tqdm(train_data_loader, leave= False),0):
 
@@ -93,19 +100,24 @@ def run_weight_estimation_model(past_pandemic_list:list,
             edge_weights = output[:,:num_of_compartment_edges]
             params = output[:,num_of_compartment_edges:]
 
-            loss = run_compartment_model(predicted_edge_weights=edge_weights,
+            loss, terrible_samples = run_compartment_model(data = data,
+                                        predicted_edge_weights=edge_weights,
                                         predicted_parameters=params,
-                                        compartment_model = compartment_model,
-                                        batch_size=batch_size,
-                                        start_date_list=data['start_date'],
-                                        time_stamps_list=data['timestamps'],
-                                        population_list = data['population'],
-                                        cumulative_case_number_list = data['cumulative_case_number'])
+                                        target_training_len = target_training_len,
+                                        pred_len=pred_len,
+                                        # compartment_model = compartment_model,
+                                        batch_size=batch_size,)
+
+            run.log({"MAPE_Loss":loss, "epoch": epoch})
 
             loss.backward()
 
             optimizer.step()
 
+            terrible_sample_list.append(terrible_samples)
+
+        for item in terrible_sample_list:
+            print(item)
 
 run_weight_estimation_model(past_pandemic_list = ['Dengue','Ebola','Influenza','MPox','SARS'],
                             target_pandemic = 'Covid_19',
@@ -116,6 +128,6 @@ run_weight_estimation_model(past_pandemic_list = ['Dengue','Ebola','Influenza','
                             compartment_model = 'DELPHI',
                             weight_estimation_model = 'Naive_nn',
                             n_epochs = 100,
-                            batch_size = 10,
+                            batch_size = 64,
                             target_training_len = 30,
-                            lr = 1e-4)
+                            lr = 0.05)
