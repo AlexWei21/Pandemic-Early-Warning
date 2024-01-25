@@ -2,3 +2,5 @@
 .DS_store
 .ipynb_checkpoints
 .idea
+*.log
+*.wandb
