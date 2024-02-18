@@ -11,7 +11,7 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import dual_annealing
 
 from utils.compartment_utils import plot_compartment
-from run_training.training_utils import create_fitting_data_from_validcases, get_initial_conditions, get_residuals_value
+from utils.training_utils import create_fitting_data_from_validcases, get_initial_conditions, get_residuals_value
 
 from model.delphi_default_parameters import (
     default_parameter_list, 

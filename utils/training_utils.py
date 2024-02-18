@@ -2,7 +2,6 @@ import pandas as pd
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 import numpy as np
-from model.deep_learning_model_for_parameter_estimation import naive_nn
 from datetime import datetime
 import torch, torch.nn as nn
 from model.Compartment_Pytorch_Models import DELPHI_pytorch
@@ -134,22 +133,6 @@ def get_residuals_value(
 #################################################
 ## Training Utils for weight estimation Models ##
 #################################################
-
-def get_weight_estimation_model(model_name,
-                                input_dim,
-                                output_dim,
-                                num_hidden = 2,
-                                hidden_dim = 512):
-
-    assert (model_name in ['Naive_nn']), "Provided weight estimation model is not supported"
-
-    if model_name == 'Naive_nn':
-        return naive_nn(input_dim=input_dim,
-                        output_dim=output_dim,
-                        num_hidden=num_hidden,
-                        hidden_dim=hidden_dim)
-    else:
-        return -1
 
 ## TODO: Update Run_Compartment Model
 def run_compartment_model(data,

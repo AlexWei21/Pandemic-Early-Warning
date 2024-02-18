@@ -24,7 +24,8 @@ class DELPHI_pytorch(nn.Module):
     def __init__(self, model_params, N):
         super().__init__()
 
-        self.model_params = nn.Parameter(torch.tensor(model_params))
+        # self.model_params = nn.Parameter(torch.tensor(model_params))
+        self.model_params = model_params
         self.N = N
 
     def forward(self,
@@ -38,15 +39,18 @@ class DELPHI_pytorch(nn.Module):
         r_ri = torch.log(torch.tensor(2)) / RecoverID  # Rate of recovery not under infection
         r_rh = torch.log(torch.tensor(2)) / RecoverHD  # Rate of recovery under hospitalization
         r_rv = torch.log(torch.tensor(2)) / VentilatedD  # Rate of recovery under ventilation
+        
+        # print(t,days)
+
         gamma_t = (
             (2 / torch.pi) * torch.arctan(-(t - days) / 20 * r_s) + 1
             + jump * torch.exp(-(t - t_jump) ** 2 / (2 * std_normal ** 2))
             )
+        # print((2 / torch.pi) * torch.arctan(-(t - days) / 20 * r_s))
+        # print(gamma_t)
         p_dth_mod = (2 / torch.pi) * (p_dth - 0.001) * (torch.arctan(-t / 20 * r_dthdecay) + torch.pi / 2) + 0.001
-        
-        assert (
-            len(states) == 16
-        ), f"Too many input variables, got {len(states)}, expected 16"
+
+        # print(p_dth_mod)
 
         S = states[..., 0]
         E = states[..., 1]

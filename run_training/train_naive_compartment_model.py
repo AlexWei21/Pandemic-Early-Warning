@@ -1,5 +1,5 @@
-from data.data_processing_compartment_model import get_data, get_population
-from model.Compartment_Models import SEIRD, SEIRD_solver
+# from data.data_processing_compartment_model import get_data, get_population
+# from model.Compartment_Models import SEIRD, SEIRD_solver
 from scipy.optimize import minimize
 import plotly.graph_objects as go
 import numpy as np
@@ -11,7 +11,7 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import dual_annealing
 
 from utils.compartment_utils import plot_compartment
-from run_training.training_utils import create_fitting_data_from_validcases, get_initial_conditions, get_residuals_value
+from utils.training_utils import create_fitting_data_from_validcases, get_initial_conditions, get_residuals_value
 
 from model.delphi_default_parameters import (
     default_parameter_list, 
@@ -137,8 +137,8 @@ def run_DELPHI(processed_data_path,country,domain = None,subdomain = None, past_
     data_object = data_object_list[0]
 
     print(data_object)
-    print(len(default_parameter_list))
-    print(len(perfect_washington_parameter_list))
+    # print(len(default_parameter_list))
+    # print(len(perfect_washington_parameter_list))
 
     parameter_list = perfect_washington_parameter_list
     bounds_params = perfect_washington_bounds_params
@@ -179,9 +179,15 @@ def run_DELPHI(processed_data_path,country,domain = None,subdomain = None, past_
         logging.error(f"Initial conditions for PopulationR too high for {country}-{domain}")
 
     maxT = (default_maxT - start_date).days + 1
+    maxT = 60
+    # print(maxT)
+    # exit()
     t_cases = validcases["day_since100"].tolist() - validcases.loc[0, "day_since100"]
+    # validcases = validcases[:30]
     balance, balance_total_difference, cases_data_fit, deaths_data_fit, weights = create_fitting_data_from_validcases(validcases)
+    # print(len(cases_data_fit))
     GLOBAL_PARAMS_FIXED = (N, R_upperbound, R_heuristic, R_0, PopulationD, PopulationI, p_d, p_h, p_v)
+    print('Global_params_fixed:', GLOBAL_PARAMS_FIXED)
 
     def DELPHI_model(
                 t, x, alpha, days, r_s, r_dth, p_dth, r_dthdecay, k1, k2, jump, t_jump, std_normal, k3
@@ -216,7 +222,11 @@ def run_DELPHI(processed_data_path,country,domain = None,subdomain = None, past_
             (2 / np.pi) * np.arctan(-(t - days) / 20 * r_s) + 1
             + jump * np.exp(-(t - t_jump) ** 2 / (2 * std_normal ** 2))
             )
+        
+        # print(gamma_t)
+        
         p_dth_mod = (2 / np.pi) * (p_dth - 0.001) * (np.arctan(-t / 20 * r_dthdecay) + np.pi / 2) + 0.001
+
         assert (
             len(x) == 16
         ), f"Too many input variables, got {len(x)}, expected 16"
@@ -318,7 +328,7 @@ def run_DELPHI(processed_data_path,country,domain = None,subdomain = None, past_
     if (OPTIMIZER in ["tnc", "trust-constr"]) or (OPTIMIZER == "annealing" and output.success):
         best_params = output.x
         t_predictions = [i for i in range(maxT)]
-    
+
         def solve_best_params_and_predict(optimal_params):
             # Variables Initialization for the ODE system
             alpha, days, r_s, r_dth, p_dth, r_dthdecay, k1, k2, jump, t_jump, std_normal, k3 = optimal_params
@@ -336,10 +346,30 @@ def run_DELPHI(processed_data_path,country,domain = None,subdomain = None, past_
                 max(std_normal, dict_default_reinit_parameters["std_normal"]),
                 max(k3, dict_default_reinit_lower_bounds["k3"]),
                 ]
+
+            param_dict = {'alpha': optimal_params[0],
+                      'days': optimal_params[1],
+                      'r_s': optimal_params[2],
+                      'r_dth': optimal_params[3],
+                      'p_dth': optimal_params[4],
+                      'r_dthdecay': optimal_params[5],
+                      'k1': optimal_params[6],
+                      'k2': optimal_params[7],
+                      'jump': optimal_params[8],
+                      't_jump': optimal_params[9],
+                      'std_normal': optimal_params[10],
+                      'k3': optimal_params[11],}
+
+            for key in param_dict:
+                print(key, ": ", param_dict[key])
+
             x_0_cases = get_initial_conditions(
                 params_fitted=optimal_params,
                 global_params_fixed=GLOBAL_PARAMS_FIXED,
             )
+
+            print(x_0_cases)
+
             x_sol_best = solve_ivp(
                 fun=DELPHI_model,
                 y0=x_0_cases,
@@ -357,6 +387,7 @@ def run_DELPHI(processed_data_path,country,domain = None,subdomain = None, past_
         np.save('true_death.npy', np.array(data_object.cumulative_death_number[:maxT]), allow_pickle=True)
 
 
-run_DELPHI(processed_data_path='/Users/alex/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_covid_data_objects.pickle',
+run_DELPHI(processed_data_path='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/processed_data/compartment_model_covid_data_objects.pickle',
            country = "United States",
-           domain='Washington')
+           domain='Washington',
+           train_length=60,)

@@ -23,9 +23,11 @@ class Pandemic_Data():
         self.decoder_input = np.empty((0,pred_len), float)
 
 class Compartment_Model_Pandemic_Data():
-    def __init__(self, pandemic_name:str = None, country_name:str = None, domain_name:str = None, subdomain_name:str = None, 
-                 start_date:pd.Timestamp = None, end_date:pd.Timestamp = None, update_frequency:str = None, population:int = None, pandemic_meta_data:dict = None,
-                 case_number:list = None, cumulative_case_number:list = None, death_number:list = None, cumulative_death_number:list = None, first_day_above_hundred:pd.Timestamp = None,
+    def __init__(self, pandemic_name:str = None, country_name:str = None, domain_name:str = None, 
+                 subdomain_name:str = None, start_date:pd.Timestamp = None, end_date:pd.Timestamp = None, 
+                 update_frequency:str = None, population:int = None, pandemic_meta_data:dict = None,
+                 case_number:list = None, cumulative_case_number:list = None, death_number:list = None, 
+                 cumulative_death_number:list = None, first_day_above_hundred:pd.Timestamp = None,
                  timestamps:list = None):
 
         ## Pandemic Information
@@ -67,6 +69,8 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
                  target_training_len = 30,
                  pred_len = 60,
                  batch_size = 64,
+                 meta_data_impute_value = -999,
+                 normalize_by_population = False,
                  ):
         
         self.pandemic_data = pandemic_data
@@ -77,12 +81,17 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
         pandemic_data = [item for item in pandemic_data if item.pandemic_meta_data is not None]
 
         for item in pandemic_data:
-            item.model_input = list(item.cumulative_case_number[:target_training_len]) + list(item.pandemic_meta_data.values())
+
+            if normalize_by_population:
+                item.model_input = list(item.cumulative_case_number[:target_training_len] / float(item.population.replace(',',''))) + list(item.pandemic_meta_data.values())
+            else:
+                item.model_input = list(item.cumulative_case_number[:target_training_len]) + list(item.pandemic_meta_data.values())
             item.model_input = [float(i) for i in item.model_input]
             item.model_input = pandemic_meta_data_imputation(item.model_input,
-                                                                 method = 'from_same_pandemic')
+                                                             method = 'from_same_pandemic',
+                                                             impute_value=meta_data_impute_value)
 
-        pandemic_data = [item for item in pandemic_data if len(item.model_input) == 57]
+        pandemic_data = [item for item in pandemic_data if len(item.model_input) == 27 + target_training_len]
 
         pandemic_data = [item for item in pandemic_data if len(item.cumulative_case_number) >= (target_training_len + pred_len)]
 
