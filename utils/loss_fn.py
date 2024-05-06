@@ -2,6 +2,36 @@ import torch
 import torch.nn as nn
 from torchmetrics.regression import MeanAbsolutePercentageError
 
+class Weighted_L1Loss(nn.Module):
+    def __init__(self):
+        super().__init__()
+    
+    def forward(self, y_pred, y_true):
+
+        mae = nn.L1Loss()
+
+
+class WMAE(nn.Module):
+    def __init__(self, output_weights):
+        super().__init__()
+        self.output_weights = output_weights
+    
+    def forward(self, y_pred, y_true):
+
+        mae = nn.L1Loss(reduction='none')
+
+        loss = mae(y_pred, y_true)
+        loss = loss * torch.tensor(self.output_weights).to(loss)
+        loss = torch.mean(loss, dim = 0)
+        
+        unscaled_loss = loss / torch.tensor(self.output_weights).to(loss)
+        
+        loss = torch.mean(loss)
+
+        return loss, unscaled_loss
+
+
+
 class DMAPE(nn.Module):
     def __init__(self, delta_t):
         super(DMAPE, self).__init__()

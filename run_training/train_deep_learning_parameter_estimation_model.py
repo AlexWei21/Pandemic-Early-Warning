@@ -15,6 +15,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from utils.loss_fn import DMAPE
 from pathlib import Path
+from matplotlib import pyplot as plt
 
 def run_weight_estimation_model(past_pandemic_list:list,
                                 target_pandemic:str,
@@ -38,11 +39,14 @@ def run_weight_estimation_model(past_pandemic_list:list,
                                 seed = 15,
                                 log_parameter = False,
                                 population_normalization = True,
+                                dropout = 0.0,
+                                predict_parameters_only: bool = False,
+                                perfect_parameters_dir: str = "/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_params_covid.csv",
                                 ):
     
     torch.manual_seed(seed)
 
-    config = dict(past_pandemic_data = past_pandemic_data,
+    config = dict(past_pandemic_list = past_pandemic_list,
                   target_pandemic = target_pandemic,
                   num_of_compartment_edges = num_of_compartment_edges,
                   num_of_trainable_parameters = num_of_trainable_parameters,
@@ -94,7 +98,7 @@ def run_weight_estimation_model(past_pandemic_list:list,
     # toy_data = [item for item in past_pandemic_data if (item.domain_name == 'Washington') | (item.domain_name == 'Massachusetts') | (item.domain_name == 'Ohio')| (item.domain_name == 'North Carolina')]
     toy_data = [item for item in past_pandemic_data if (item.domain_name == 'Ohio') | (item.domain_name == 'Massachusetts')]
     past_pandemic_data = toy_data
-    print(len(toy_data))
+    # print(len(toy_data))
 
     ### Data Loaders
     past_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=past_pandemic_data,
@@ -145,6 +149,8 @@ def run_weight_estimation_model(past_pandemic_list:list,
                                                           device = device,
                                                           batch_size=batch_size,
                                                           population_normalization = population_normalization,
+                                                          dropout = dropout,
+                                                          predict_parameters_only = predict_parameters_only
                                                           ).to(device)
 
     if opt == 'Adam':
@@ -162,6 +168,12 @@ def run_weight_estimation_model(past_pandemic_list:list,
     elif opt == 'RMSprop':
         optimizer = optim.RMSprop(weight_estimation_model.parameters(),
                                   lr = lr)
+        
+    # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer,
+    #                                                        mode = 'min',
+    #                                                        factor = 0.1,
+    #                                                        patience = 10,
+    #                                                        threshold = 0.0001)
 
     if loss_fn == 'MAPE' or loss_fn == 'max_MAPE' or loss_fn == 'case_weighted_MAPE':
         criterion = MeanAbsolutePercentageError().cuda() if torch.cuda.is_available() else MeanAbsolutePercentageError()
@@ -186,22 +198,44 @@ def run_weight_estimation_model(past_pandemic_list:list,
     output_list = []
     dnn_output_list = []
 
+    sample_dist_list = []
+    sample_dist_list_before_scaling = []
+    sample_dist_list_dnn_output = []
+
+    mass_output = []
+    ohio_output = []
+
+    last_layer_weights = []
+
+    # Custom loss weight experiment
+    # weight_dict = {"Massachusetts": 0.78,
+    #                "Ohio": 0.22 }
+
     ### Training Loop
     for epoch in tqdm(range(n_epochs)):
 
         terrible_sample_list = []   
         performance_df = []
         avg_loss = []
+        ts_input_list = []
+        dnn_output_before_scaling_list = []
+        dnn_output_debug_list = []
+
         tspan = np.arange(0, target_training_len + pred_len)
 
         for i,data in enumerate(tqdm(train_data_loader, leave= False),0):
             
             optimizer.zero_grad()
-            
-            output, dnn_output = weight_estimation_model(data, 
-                                                         sigmoid_scale = 0.1)
 
-            print(data['domain_name'])
+            output, dnn_output, ts_input, dnn_output_before_scaling = weight_estimation_model(data, 
+                                                            sigmoid_scale = 0.1)
+
+            print(data['country_name'], data['domain_name'])
+
+            if data['domain_name'][0] == 'Massachusetts':
+                mass_output.append(dnn_output[:,11:].tolist()[0])
+            elif data['domain_name'][0] == 'Ohio':
+                ohio_output.append(dnn_output[:,11:].tolist()[0])
             
             if epoch == n_epochs - 1:
                 pandemic_name_list.append(data['pandemic_name'])
@@ -254,14 +288,25 @@ def run_weight_estimation_model(past_pandemic_list:list,
             else:        
                 loss = criterion(pred_case, y_true)
 
+            ts_input_list.append(torch.flatten(ts_input))
+            dnn_output_debug_list.append(torch.flatten(dnn_output))
+            dnn_output_before_scaling_list.append(dnn_output_before_scaling)
             avg_loss.append(loss.item())
 
             print(loss.item())
+
+            # Custom Loss Weight 
+            # loss_weight = weight_dict[data['domain_name'][0]]
+            # loss = loss * loss_weight
+            # print(loss_weight)
+            # print(loss.item())
+
             loss.backward()    
 
             ## Debug: Check if there's None Gradient
             for name, param in weight_estimation_model.named_parameters():
-                # print(name, param.grad.shape)
+                if name == 'readout.38.weight':
+                    last_layer_weights.append(torch.flatten(param).tolist())
                 if param.grad is None:
                     print(name, param.grad)
 
@@ -270,26 +315,61 @@ def run_weight_estimation_model(past_pandemic_list:list,
 
             optimizer.step()
 
+        # scheduler.step(np.mean(avg_loss))
+        # print(scheduler.optimizer.param_groups[0]['lr'])
         print(np.mean(avg_loss))   
+
+        # Sample distance experiemnt           
+        ts_input_distance = nn.PairwiseDistance(p=2)(ts_input_list[0], ts_input_list[1])
+        dnn_output_before_scaling_distance = nn.PairwiseDistance(p=2)(dnn_output_before_scaling_list[0],dnn_output_before_scaling_list[1])
+        dnn_output_distance = nn.PairwiseDistance(p=2)(dnn_output_debug_list[0],dnn_output_debug_list[1])
+        sample_dist_list.append(ts_input_distance.item())
+        sample_dist_list_before_scaling.append(dnn_output_before_scaling_distance.item())
+        sample_dist_list_dnn_output.append(dnn_output_distance.item())
+        print("l2 Distance between inputs: ", ts_input_distance.item())
+        print("l2 Distance between DNN output before scaling is: ", dnn_output_before_scaling_distance.item())
+        print("l2 Distance between DNN output is: ", dnn_output_distance.item())
 
         if record_run:
             run.log({"Epoch_Loss":loss.item(), "epoch": epoch})
-        
+    
+    # Sample distance experiment
+    x = np.arange(0,n_epochs)    
+    plt.plot(x, sample_dist_list, label = 'Sample Distance after Time Series Encoding')
+    plt.plot(x, sample_dist_list_before_scaling, label = 'Sample Distance after Feedforward layer before Sigmoid Scaling')
+    plt.plot(x, sample_dist_list_dnn_output, label = 'Sample Distance when given to ode solver')
+    plt.show()
+    
+    # Weight Change Experiment
+    # with open(output_dir + 'parameter_change/last_layer_weight_change.txt', 'w') as f:
+    #     for item in last_layer_weights:
+    #         for i in item:
+    #             f.write(str(i))
+    #             f.write('    ')
+    #         f.write('\n')
+
+    # exit()
+
+    # with open(output_dir + 'parameter_change/mass_weight_change.txt', 'w') as f:
+    #     for item in mass_output:
+    #         for i in item:
+    #             f.write(str(i))
+    #             f.write('    ')
+    #         f.write('\n')
+
+    # with open(output_dir + 'parameter_change/ohio_weight_change.txt', 'w') as f:
+    #     for item in ohio_output:
+    #         for i in item:
+    #             f.write(str(i))
+    #             f.write('    ')
+    #         f.write('\n')    
+    
     pandemic_name_list = [item for row in pandemic_name_list for item in row]
     country_list = [item for row in country_list for item in row]
     domain_list = [item for row in domain_list for item in row]
     true_case_list = [item for row in true_case_list for item in row]
     output_list = [item for row in output_list for item in row]
     dnn_output_list = [item for row in dnn_output_list for item in row]
-
-    print(len(dnn_output_list[0]))
-    
-    # print(pandemic_name_list)
-    # print(country_list)
-    # print(domain_list)
-    # print(true_case_list)
-    # print(output_list)
-    # print(output_list[0].shape)
 
         ### Stratified Result Examination
         # performance_df = pd.DataFrame(performance_df, columns=['Pandemic_Name','Loss'])
@@ -302,6 +382,8 @@ def run_weight_estimation_model(past_pandemic_list:list,
 
         # for item in terrible_sample_list:
         #     print(item)
+    
+    
 
     if log_parameter:
 
@@ -350,19 +432,22 @@ run_weight_estimation_model(past_pandemic_list = ['Covid_19'],
                             num_of_compartment_edges = 11,
                             num_of_trainable_parameters = 12,
                             num_hidden = 20,
-                            hidden_dim = 512,
+                            hidden_dim = 256,
                             compartment_model = 'DELPHI',
                             weight_estimation_model = 'Naive_nn',
-                            n_epochs = 30,
-                            batch_size = 2,
+                            n_epochs = 100,
+                            batch_size = 1,
                             target_training_len = 30,
-                            lr = 0.001,
+                            lr = 0.0001,
                             record_run = False,
                             pred_len = 60,
                             plot_result = True,
                             log_parameter = True,
                             output_dir = '/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/output/',
-                            loss_fn='case_weighted_MAE',
-                            opt = 'Adagrad',
+                            loss_fn='MAPE',
+                            opt = 'AdamW',
                             seed = 15,
-                            population_normalization = True,)
+                            population_normalization = True,
+                            dropout = 0.2,
+                            predict_parameters_only = True,
+                            perfect_parameters_dir = "/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_params_covid.csv", )

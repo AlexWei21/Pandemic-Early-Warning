@@ -7,6 +7,7 @@ from torchdiffeq import odeint as odeint
 # from scipy.integrate import solve_ivp
 from utils.training_utils import get_initial_conditions
 import random
+from model.resnet import res_net
 
 from model.delphi_default_parameters import (
     default_parameter_list, 
@@ -28,15 +29,18 @@ from model.delphi_default_parameters import (
 
 class naive_nn(nn.Module):
     def __init__(self, input_dim, output_dim, device = 'cpu',
-                 num_hidden = 2, hidden_dim = 512, 
+                 num_hidden = 2, hidden_dim = 256, 
                  pred_len = 60, target_training_len = 30,
                  dnn_output_range = None, output_dir = None,
-                 batch_size = 64, population_normalization = True,):
+                 batch_size = 64, population_normalization = True,
+                 readout_layer_type = 'resnet', dropout = 0.0,
+                 predict_parameters_only = False,):
 
         super().__init__()
 
         self.batch_size = batch_size
         self.hidden_dim = hidden_dim
+        self.predict_parameters_only = predict_parameters_only
         self.rnn_layers = 5
 
         ## Create time series embedding layer
@@ -54,18 +58,29 @@ class naive_nn(nn.Module):
 
         self.meta_input_layer = nn.Sequential(*modules)
 
-        modules = []
+        if readout_layer_type == 'linear':
+            modules = []
 
-        for i in range(num_hidden):
-            if i == (num_hidden - 1):
-                modules.append(nn.Linear(hidden_dim,output_dim))
-            else:
-                modules.append(nn.Linear(hidden_dim, hidden_dim))
-                modules.append(nn.Tanh())
-        
-        self.readout = nn.Sequential(*modules)
+            for i in range(num_hidden):
+                if i == (num_hidden - 1):
+                    modules.append(nn.Linear(hidden_dim,output_dim))
+                else:
+                    modules.append(nn.Linear(hidden_dim, hidden_dim))
+                    modules.append(nn.Tanh())
+            
+            self.readout = nn.Sequential(*modules)
+        elif readout_layer_type == 'resnet':
+            self.readout = res_net(input_dim = hidden_dim,
+                                   hidden_dim = hidden_dim * 2,
+                                   output_dim = output_dim,
+                                   dropout = dropout)
 
         self.range_restriction = nn.Sigmoid()
+
+        # Initializa Weights
+        self.meta_input_layer.apply(self.init_weights)
+        self.lstm.apply(self.init_weights)
+        self.readout.apply(self.init_weights)
 
         self.dnn_output_range = dnn_output_range
 
@@ -79,13 +94,9 @@ class naive_nn(nn.Module):
 
     def forward(self, x, sigmoid_scale = 1,):
 
-        print(x['model_input'][:,:self.target_training_len])
-        print(x['population'])
-
         if self.population_normalization:
             ts_input = x['model_input'][:,:self.target_training_len]
             ts_input = torch.div(ts_input, x['population'].unsqueeze(1)).to(self.device)
-            print(ts_input)
         else:
             ts_input = x['model_input'][:,:self.target_training_len].to(self.device)
             
@@ -97,16 +108,11 @@ class naive_nn(nn.Module):
         ts_input, h = self.lstm(ts_input.unsqueeze(1), (h0,c0))
         meta_input = self.meta_input_layer(meta_input)
 
-        # print(ts_input)
-        # print(meta_input)
-
         dnn_output = torch.cat((torch.squeeze(ts_input,1),meta_input), 1)
-
-        # print(dnn_output)
 
         dnn_output = self.readout(dnn_output)
 
-        # print(dnn_output)
+        dnn_output_before_scaling = dnn_output
 
         if self.dnn_output_range is not None:
             
@@ -116,19 +122,6 @@ class naive_nn(nn.Module):
             dnn_output = self.range_restriction(dnn_output)
 
             dnn_output = dnn_output * self.dnn_output_range.to(self.device)
-
-        perfect_washington_parameter_list = [0.4142615697024255, 
-                                             2.1279631272659053e-08,
-                                             2.0628398549857805e-14, 
-                                             0.959999999997383,
-                                             0.001, 
-                                             7.512244771221772e-08,
-                                             0.0002969779597709444, 
-                                             163.15756156175354,
-                                             9.081779702773275e-11,
-                                             141.4605182630534, 
-                                             1,
-                                             0.02796605040144473]
 
         t_predictions = torch.tensor(self.t_predictions).float().to(self.device)
 
@@ -140,31 +133,20 @@ class naive_nn(nn.Module):
             R_upperbound = PopulationI - PopulationD
             R_heuristic = 10
             R_0 = PopulationD * 5 if PopulationI - PopulationD > PopulationD * 5 else 0
-
-
-            # print(dnn_output[i,11:])
             
             compartment_model = DELPHI_pytorch(dnn_output[i,11:],N)
-            # compartment_model = DELPHI_pytorch(perfect_washington_parameter_list,N)
-
-            # print((N, R_upperbound, R_heuristic, R_0, PopulationD, PopulationI, p_d, p_h, p_v))
 
             x_0_cases = get_initial_conditions(
                 params_fitted = dnn_output[i,11:].tolist(),
                 global_params_fixed=(N, R_upperbound, R_heuristic, R_0, PopulationD, PopulationI, p_d, p_h, p_v),
-                # global_params_fixed = (N, 94, 10, 80, 16, 110, p_d, p_h, p_v),
                 )
 
             x_0_cases = torch.tensor(x_0_cases).to(self.device)
-
-            # print(x_0_cases)
 
             sol = odeint(compartment_model,
                             x_0_cases,
                             t_predictions,
                             method='dopri5')
-
-            # print(sol)
 
             state_name = ['S','E','I','AR','DHR','DQR','AD','DHD','DQD','R','D','TH','DVR','DVD','DD','DT']
 
@@ -192,4 +174,15 @@ class naive_nn(nn.Module):
             else:
                 sol_list = torch.cat((sol_list,torch.unsqueeze(sol,0)),0)
 
-        return sol_list, dnn_output
+        return sol_list, dnn_output, ts_input, dnn_output_before_scaling
+
+
+    def init_weights(self, m):
+        if isinstance(m, nn.Linear):
+            torch.nn.init.xavier_uniform_(m.weight)
+            m.bias.data.fill_(0.01)
+
+# model = naive_nn(input_dim=57,
+#                  output_dim=23)
+
+# print(model)

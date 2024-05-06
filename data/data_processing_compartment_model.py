@@ -15,7 +15,9 @@ def process_data(pandemic_name = 'Covid-19',
                  processed_data_path = None,
                  validcase_threshold=30,
                  save_file_path = None,
-                 raw_data = True):
+                 raw_data = True,
+                 true_delphi_parameter_filepath = None,
+                 smoothing = False,):
     
     if (raw_data == True) & (cumulative_case_data_filepath is None):
         print("raw data paths are needed when raw_data == True")
@@ -24,11 +26,18 @@ def process_data(pandemic_name = 'Covid-19',
         print("processed_data_path is needed when raw_data == False")
         exit(1)
 
+    ## Process data if input is raw data
     if raw_data:
+        ## Load Cumulative Time Series Data
         if cumulative_case_data_filepath is not None:
             cumulative_case_data = pd.read_csv(cumulative_case_data_filepath)
         if cumulative_death_data_filepath is not None:
             cumulative_death_data = pd.read_csv(cumulative_death_data_filepath)
+
+        if true_delphi_parameter_filepath is not None:
+            true_parameters = pd.read_csv(true_delphi_parameter_filepath)
+
+        ## Load Meta-Data
         meta_data = pd.read_csv(meta_data_filepath,index_col=0)
         geological_meta_data = pd.read_csv(geological_meta_data_filepath)
 
@@ -41,13 +50,11 @@ def process_data(pandemic_name = 'Covid-19',
 
         country_names = full_data['Country'].unique()
 
+        ## Iterate through counties to get data
         data_list = []
-
-        for country in tqdm (country_names):
+        for country in tqdm(country_names):
 
             processing_country_data = full_data[full_data['Country'] == country]
-            
-            # processing_country_data = processing_country_data.reset_index(drop=True)
 
             for domain in processing_country_data['Domain'].unique():
 
@@ -87,8 +94,6 @@ def process_data(pandemic_name = 'Covid-19',
                     
                     processing_subdomain_data_cumcase = processing_subdomain_data_cumcase.reset_index(drop=True)
                     processing_subdomain_data_cumdeath = processing_subdomain_data_cumdeath.reset_index(drop=True)
-
-
 
                     ## Set the first day that case number exceed 100 as the start date
                     if max(processing_subdomain_data_cumcase['number']) < 100:
@@ -130,13 +135,13 @@ def process_data(pandemic_name = 'Covid-19',
                         for t in ts_type:
                             if t == 'CumCases':
                                 cumcase_data, _, cumcase_timestamp, _ = process_daily_data(processing_subdomain_data_cumcase,
-                                                                            smoothing = True,
+                                                                            smoothing = smoothing,
                                                                             look_back = len(processing_subdomain_data_cumcase),
                                                                             pred_len = 0,
                                                                             avg_len=7)
                             elif t == 'CumDeaths':
                                 cumdeath_data,_,cumdeath_timestamp,_= process_daily_data(processing_subdomain_data_cumdeath,
-                                                                            smoothing=True,
+                                                                            smoothing=smoothing,
                                                                             look_back=len(processing_subdomain_data_cumdeath),
                                                                             pred_len=0,
                                                                             avg_len=7)
@@ -145,12 +150,12 @@ def process_data(pandemic_name = 'Covid-19',
                         for t in ts_type:
                             if t == 'CumCases':
                                 cumcase_data, _, cumcase_timestamp, _ = process_weekly_data(processing_subdomain_data_cumcase,
-                                                                            smoothing = True,
-                                                                            look_back = len(processing_subdomain_data_cumcase),
+                                                                            smoothing = smoothing,
+                                                                            look_back = (len(processing_subdomain_data_cumcase) - 1) * 7 + 1 ,
                                                                             pred_len = 0)
                             elif t == 'CumDeaths':
                                 cumdeath_data,_,cumdeath_timestamp,_= process_weekly_data(processing_subdomain_data_cumdeath,
-                                                                            smoothing=True,
+                                                                            smoothing=smoothing,
                                                                             look_back=len(processing_subdomain_data_cumdeath),
                                                                             pred_len=0)
                     
@@ -161,10 +166,28 @@ def process_data(pandemic_name = 'Covid-19',
                     data_point.cumulative_case_number = cumcase_data
                     data_point.cumulative_death_number = cumdeath_data
                     data_point.timestamps = cumcase_timestamp
+
+                    if true_delphi_parameter_filepath is not None:
+                        if pd.isna(data_point.domain_name):
+                            if pandemic_name == 'Influenza':
+                                true_value_row = true_parameters[(true_parameters['country'] == data_point.country_name) & (pd.isna(true_parameters['domain'])) & (true_parameters['year'] == data_point.first_day_above_hundred.year)]
+                            else:
+                                true_value_row = true_parameters[(true_parameters['country'] == data_point.country_name) & (pd.isna(true_parameters['domain']))]
+                            assert len(true_value_row) == 1
+                            data_point.true_delphi_params = true_value_row.values.flatten().tolist()[:12]
+                        else: 
+                            if pandemic_name == 'Influenza':
+                                true_value_row =  true_parameters[(true_parameters['country'] == data_point.country_name) & (true_parameters['domain'] == data_point.domain_name) & (true_parameters['year'] == data_point.first_day_above_hundred.year)]                                
+                            else:
+                                true_value_row =  true_parameters[(true_parameters['country'] == data_point.country_name) & (true_parameters['domain'] == data_point.domain_name)]
+                            if len(true_value_row) != 1:
+                                continue
+                            data_point.true_delphi_params =true_value_row.values.flatten().tolist()[:12]
                     
                     data_list.append(data_point)
 
         with open(save_file_path, 'wb') as handle:
+
             pickle.dump(data_list, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     else:
@@ -176,15 +199,18 @@ def process_data(pandemic_name = 'Covid-19',
 ## Edited Jan21
 def get_pandemic_meta_data(meta_data_file, pandemic_name, year, country, region):
     meta_data_row = meta_data_file[(meta_data_file['Country'] == country) & (meta_data_file['Pandemic'] == pandemic_name)]
-    if len(meta_data_row) > 0:
-        meta_data_row_domain = meta_data_row[(meta_data_file['Region'] == region) & (meta_data_file['Pandemic'] == pandemic_name)]
-        if len(meta_data_row_domain) == 0:
-            print(f"No meta data found for {country} {pandemic_name} data in {year}")
-        else:
-            meta_data_row = meta_data_row_domain
+    # if len(meta_data_row) > 0:
+    #     meta_data_row_domain = meta_data_row[(meta_data_file['Region'] == region) & (meta_data_file['Pandemic'] == pandemic_name)]
+    #     if len(meta_data_row_domain) == 0:
+    #         print(f"No meta data found for {country} {pandemic_name} data in {year}")
+    #     else:
+    #         meta_data_row = meta_data_row_domain
 
-    meta_data_row = meta_data_row.iloc[0,6:].T
-    return(meta_data_row.to_dict())
+    if len(meta_data_row) == 0:
+        print(f"No meta data found for {country} {pandemic_name} data")
+        return None
+    else:
+        return meta_data_row.iloc[0,6:].T.to_dict()
 
 def get_population_data(geological_meta_data,country,domain,subdomain):
     
@@ -241,79 +267,76 @@ def get_data(pandemic_name='covid',country_name='United States of America',domai
 
 # print(get_population())
 
-# a = process_data(cumulative_case_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Covid_19/Covid_World_Domain_Daily_CumCases.csv',
-#                    cumulative_death_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Covid_19/Covid_World_Domain_Daily_CumDeaths.csv',
-#                    meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/past_pandemic_metadata.csv',
-#                    geological_meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/Population_Data.csv',
-#                    pandemic_name='Covid-19',
-#                    update_frequency='Daily',
-#                    ts_type=['CumCases','CumDeaths'],
-#                    save_file_path='/Users/alex/Documents/Github/Hospitalization_Prediction/data/compartment_model_covid_data_objects.pickle',
-#                    )
+if __name__ == '__main__':
 
-# a = process_data(processed_data_path='/Users/alex/Documents/Github/Hospitalization_Prediction/compartment_model_covid_data_objects.pickle',
-#                  raw_data=False)
+    covid_data = process_data(cumulative_case_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Processed_Time_Series_Data/Covid_19/Covid_World_Domain_Daily_CumCases.csv',
+                cumulative_death_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Processed_Time_Series_Data/Covid_19/Covid_World_Domain_Daily_CumDeaths.csv',
+                    meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/past_pandemic_metadata.csv',
+                    geological_meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/Population_Data.csv',
+                    pandemic_name='Covid-19',
+                    update_frequency='Daily',
+                    ts_type=['CumCases','CumDeaths'],
+                    save_file_path='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_covid_data_objects_no_smoothing.pickle',
+                    smoothing=False,
+                    # true_delphi_parameter_filepath='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_true_parameters/DELPHI_params_covid.csv'
+                    )
 
+    # ebola_data = process_data(cumulative_case_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Processed_Time_Series_Data/Ebola/Ebola_AFRO_Country_Weekly_CumCases.csv',
+    #                 meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/past_pandemic_metadata.csv',
+    #                 geological_meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/Population_Data.csv',
+    #                 pandemic_name='Ebola',
+    #                 update_frequency='Weekly',
+    #                 ts_type=['CumCases'],
+    #                 save_file_path='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_ebola_data_objects.pickle',
+    #                 true_delphi_parameter_filepath='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_true_parameters/DELPHI_params_ebola.csv'
+    #                 )
 
-# a = process_data(cumulative_case_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Ebola/Ebola_AFRO_Country_Weekly_CumCases.csv',
-#                    # cumulative_death_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Covid_19/Covid_World_Domain_Daily_CumDeaths.csv',
-#                    meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/past_pandemic_metadata.csv',
-#                    geological_meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/Population_Data.csv',
-#                    pandemic_name='Ebola',
-#                    update_frequency='Weekly',
-#                    ts_type=['CumCases'],
-#                    save_file_path='/Users/alex/Documents/Github/Hospitalization_Prediction/data/compartment_model_ebola_data_objects.pickle'
-#                    )
+    # dengue_data = process_data(cumulative_case_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Processed_Time_Series_Data/Dengue_Fever/Dengue_AMRO_Country_Weekly_CumCases.csv',
+    #                 meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/past_pandemic_metadata.csv',
+    #                 geological_meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/Population_Data.csv',
+    #                 pandemic_name='Dengue',
+    #                 update_frequency='Weekly',
+    #                 ts_type=['CumCases'],
+    #                 save_file_path='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_dengue_data_objects.pickle',
+    #                 true_delphi_parameter_filepath='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_true_parameters/DELPHI_params_dengue.csv'
+    #                 )
 
-# a = process_data(cumulative_case_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Ebola/Ebola_AFRO_Country_Weekly_CumCases.csv',
-#                    # cumulative_death_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Covid_19/Covid_World_Domain_Daily_CumDeaths.csv',
-#                    meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/past_pandemic_metadata.csv',
-#                    geological_meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/Population_Data.csv',
-#                    pandemic_name='Ebola',
-#                    update_frequency='Weekly',
-#                    ts_type=['CumCases'],
-#                    save_file_path='/Users/alex/Documents/Github/Hospitalization_Prediction/data/compartment_model_ebola_data_objects.pickle'
-#                    )
+    # mpox_data = process_data(cumulative_case_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Processed_Time_Series_Data/Monkeypox/Mpox_World_Country_Daily_CumCases.csv',
+    #                 cumulative_death_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Processed_Time_Series_Data/Monkeypox/Mpox_World_Country_Daily_CumDeaths.csv',
+    #                 meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/past_pandemic_metadata.csv',
+    #                 geological_meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/Population_Data.csv',
+    #                 pandemic_name='MPox',
+    #                 update_frequency='Daily',
+    #                 ts_type=['CumCases','CumDeaths'],
+    #                 save_file_path='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_mpox_data_objects.pickle',
+    #                 true_delphi_parameter_filepath='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_true_parameters/DELPHI_params_mpox.csv'
+    #                )
 
-# a = process_data(cumulative_case_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Dengue_Fever/Dengue_AMRO_Country_Weekly_CumCases.csv',
-#                   # cumulative_death_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Covid_19/Covid_World_Domain_Daily_CumDeaths.csv',
-#                   meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/past_pandemic_metadata.csv',
-#                   geological_meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/Population_Data.csv',
-#                   pandemic_name='Dengue',
-#                   update_frequency='Weekly',
-#                   ts_type=['CumCases'],
-#                   save_file_path='/Users/alex/Documents/Github/Hospitalization_Prediction/data/compartment_model_dengue_data_objects.pickle'
-#                   )
+    # sars_data = process_data(cumulative_case_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Processed_Time_Series_Data/SARS/SARS_World_Country_Daily_CumCases.csv',
+    #                 meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/past_pandemic_metadata.csv',
+    #                 geological_meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/Population_Data.csv',
+    #                 pandemic_name='SARS',
+    #                 update_frequency='Daily',
+    #                 ts_type=['CumCases'],
+    #                 save_file_path='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_sars_data_objects.pickle',
+    #                 true_delphi_parameter_filepath='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_true_parameters/DELPHI_params_sars.csv'
+    #                 )
 
-# a = process_data(cumulative_case_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Monkeypox/Mpox_World_Country_Daily_CumCases.csv',
-#                   cumulative_death_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Monkeypox/Mpox_World_Country_Daily_CumDeaths.csv',
-#                   meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/past_pandemic_metadata.csv',
-#                   geological_meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/Population_Data.csv',
-#                   pandemic_name='MPox',
-#                   update_frequency='Daily',
-#                   ts_type=['CumCases','CumDeaths'],
-#                   save_file_path='/Users/alex/Documents/Github/Hospitalization_Prediction/data/compartment_model_mpox_data_objects.pickle'
-#                  )
+    # influenza_data = process_data(cumulative_case_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Processed_Time_Series_Data/Influenza/Influenza_World_Domain_Weekly_CumCases.csv',
+    #                 meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/past_pandemic_metadata.csv',
+    #                 geological_meta_data_filepath='/export/home/dor/zwei/Documents/GitHub/Pandemic-Database/Meta_Data/Population_Data.csv',
+    #                 pandemic_name='Influenza',
+    #                 update_frequency='Weekly',
+    #                 ts_type=['CumCases'],
+    #                 save_file_path='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_influenza_data_objects.pickle',
+    #                 true_delphi_parameter_filepath='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_true_parameters/DELPHI_params_influenza.csv'
+    #                 )
 
-# a = process_data(cumulative_case_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/SARS/SARS_World_Country_Daily_CumCases.csv',
-#                  # cumulative_death_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Monkeypox/Mpox_World_Country_Daily_CumDeaths.csv',
-#                  meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/past_pandemic_metadata.csv',
-#                  geological_meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/Population_Data.csv',
-#                  pandemic_name='SARS',
-#                  update_frequency='Daily',
-#                  ts_type=['CumCases'],
-#                  save_file_path='/Users/alex/Documents/Github/Hospitalization_Prediction/data/compartment_model_sars_data_objects.pickle'
-#                  )
+    print('Covid No Meta Data:', [item.country_name for item in covid_data if item.pandemic_meta_data is None])
+    # print('Ebola No Meta Data:', [item.country_name for item in ebola_data if item.pandemic_meta_data is None])
+    # print('Dengue No Meta Data:', [item.country_name for item in dengue_data if item.pandemic_meta_data is None])
+    # print('Mpox No Meta Data:', [item.country_name for item in mpox_data if item.pandemic_meta_data is None])
+    # print('SARS No Meta Data:', [item.country_name for item in sars_data if item.pandemic_meta_data is None])
+    # print('Influenza No Meta Data:', [item.country_name for item in influenza_data if item.pandemic_meta_data is None])
 
-# a = process_data(cumulative_case_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Influenza/Influenza_World_Domain_Weekly_CumCases.csv',# 
-#                  # cumulative_death_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Processed_Time_Series_Data/Monkeypox/Mpox_World_Country_Daily_CumDeaths.csv',
-#                  meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/past_pandemic_metadata.csv',
-#                  geological_meta_data_filepath='/Users/alex/Documents/Github/Past-Pandemic-Metadata/Meta_Data/Population_Data.csv',
-#                  pandemic_name='Influenza',
-#                  update_frequency='Weekly',
-#                  ts_type=['CumCases'],
-#                  save_file_path='/Users/alex/Documents/Github/Hospitalization_Prediction/data/compartment_model_influenza_data_objects.pickle'
-#                  )
-
-# print(len(a))
-# print(a[0])
+    #print(influenza_data[0].country_name, influenza_data[0].domain_name, influenza_data[0].true_delphi_params)

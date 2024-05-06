@@ -5,6 +5,8 @@ from pytorch_lightning.utilities.types import EVAL_DATALOADERS, TRAIN_DATALOADER
 import torch
 from torch.utils.data import DataLoader
 from data.data_utils import pandemic_meta_data_imputation
+from utils.data_augmentation import data_augmentation
+from matplotlib import pyplot as plt
 
 class Pandemic_Data():
     def __init__(self, look_back_len, pred_len, meta_data_len):
@@ -71,6 +73,9 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
                  batch_size = 64,
                  meta_data_impute_value = -999,
                  normalize_by_population = False,
+                 augmentation = False,
+                 augmentation_method = 'shifting',
+                 max_shifting_len = 10,
                  ):
         
         self.pandemic_data = pandemic_data
@@ -79,24 +84,35 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
 
 
         pandemic_data = [item for item in pandemic_data if item.pandemic_meta_data is not None]
-
-        for item in pandemic_data:
-
-            if normalize_by_population:
-                item.model_input = list(item.cumulative_case_number[:target_training_len] / float(item.population.replace(',',''))) + list(item.pandemic_meta_data.values())
-            else:
-                item.model_input = list(item.cumulative_case_number[:target_training_len]) + list(item.pandemic_meta_data.values())
-            item.model_input = [float(i) for i in item.model_input]
-            item.model_input = pandemic_meta_data_imputation(item.model_input,
-                                                             method = 'from_same_pandemic',
-                                                             impute_value=meta_data_impute_value)
-
-        pandemic_data = [item for item in pandemic_data if len(item.model_input) == 27 + target_training_len]
-
         pandemic_data = [item for item in pandemic_data if len(item.cumulative_case_number) >= (target_training_len + pred_len)]
 
-        self.pandemic_data = pandemic_data
+        for item in pandemic_data:
+            if normalize_by_population:
+                # item.model_input = list(item.cumulative_case_number[:target_training_len] / float(item.population.replace(',',''))) + list(item.pandemic_meta_data.values())
+                item.ts_case_input = list(item.cumulative_case_number / float(item.population.replace(',','')))
+                item.ts_death_input = list(item.cumulative_death_number / float(item.population.replace(',','')) * 100)
+            else:
+                # item.model_input = list(item.cumulative_case_number[:target_training_len]) + list(item.pandemic_meta_data.values())
+                item.ts_case_input = list(item.cumulative_case_number)
+                item.ts_death_input = list(item.cumulative_death_number)
+            
+            item.ts_case_input = item.ts_case_input[:target_training_len]
+            item.ts_death_input = item.ts_death_input[:target_training_len]
 
+            item.meta_input = pandemic_meta_data_imputation(list(item.pandemic_meta_data.values()),
+                                                            impute_value=meta_data_impute_value,)
+
+            item.augmentation_length = min(len(item.cumulative_case_number) - target_training_len - pred_len, max_shifting_len)
+
+        if augmentation:
+            pandemic_data = data_augmentation(pandemic_data,
+                                            method = augmentation_method,
+                                            ts_len=target_training_len,)            
+
+        print(f"Raw Data Num: {len(self.pandemic_data)}")
+        print(f"Data Num after Window SHifting: {len(pandemic_data)}")
+
+        self.pandemic_data = pandemic_data
 
     def __len__(self):
         return len(self.pandemic_data)
@@ -110,7 +126,7 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
         population = [float(item.population.replace(',','')) for item in batch]
         cumulative_case_number = [item.cumulative_case_number for item in batch]
         cumulative_death_number = [item.cumulative_death_number for item in batch]
-        model_input = [item.model_input for item in batch]
+        # model_input = [item.model_input for item in batch]
 
         country_name = [item.country_name for item in batch]
         domain_name = [item.domain_name for item in batch]
@@ -129,7 +145,15 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
         cumulative_death_number = [item.cumulative_death_number for item in batch]
         timestamps = [item.timestamps for item in batch]
 
-        return dict(model_input = torch.tensor(model_input),
+
+        ts_case_input = [item.ts_case_input for item in batch]
+        ts_death_input = [item.ts_death_input for item in batch]
+        meta_input = [item.meta_input for item in batch]
+        # true_delphi_params = [item.true_delphi_params for item in batch]
+
+        return dict(ts_case_input = torch.tensor(ts_case_input).float(),
+                    ts_death_input = torch.tensor(ts_death_input).float(),
+                    meta_input = torch.tensor(meta_input).float(),
                     pandemic_name = pandemic_name,
                     population = torch.tensor(population),
                     cumulative_case_number = cumulative_case_number,
@@ -144,6 +168,7 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
                     pandemic_meta_data = pandemic_meta_data,
                     case_number = case_number,
                     death_number = death_number,
-                    timestamps = timestamps
+                    timestamps = timestamps,
+                    # true_delphi_params = torch.tensor(true_delphi_params),
                     )
     

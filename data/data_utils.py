@@ -2,9 +2,11 @@ import pandas as pd
 import numpy as np
 import math
 
+parameter_max = [1.0, 2.0, 1.0, 1.0, 0.32, 4.5, 0.2, 454.0, 8.22, 209.0, 2.0, 1.0]
+
 def process_daily_data(data, smoothing, look_back, pred_len, avg_len):
     
-    if smoothing == 'False':
+    if not smoothing:
         look_back_data, pred_data, look_back_timestamp, pred_data_timestamp = data_padding(data,
                                                                                            look_back,
                                                                                            pred_len, 
@@ -15,15 +17,15 @@ def process_daily_data(data, smoothing, look_back, pred_len, avg_len):
                                                                                              pred_len,
                                                                                              method = 'linear')
     
-    look_back_data = moving_average(look_back_data, avg_len)
+    # look_back_data = moving_average(look_back_data, avg_len)
 
-    pred_data = moving_average(pred_data, avg_len)
+    # pred_data = moving_average(pred_data, avg_len)
 
     return look_back_data, pred_data, look_back_timestamp, pred_data_timestamp
 
 def process_weekly_data(data, smoothing, look_back, pred_len):
 
-    if smoothing == 'False':
+    if smoothing == False:
         look_back_data, pred_data, look_back_timestamp, pred_data_timestamp = data_padding(data,
                                                                                            look_back,
                                                                                            pred_len, 

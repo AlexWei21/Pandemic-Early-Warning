@@ -89,7 +89,13 @@ def get_initial_conditions(params_fitted: tuple, global_params_fixed: tuple) -> 
     return x_0_cases
 
 def get_residuals_value(
-        optimizer: str, balance: float, x_sol: list, cases_data_fit: list, deaths_data_fit: list, weights: list, balance_total_difference: float
+        optimizer: str, 
+        x_sol: list, 
+        cases_data_fit: list, 
+        weights: list, 
+        balance_total_difference: float,
+        balance: float = None,
+        deaths_data_fit: list = None, 
 ) -> float:
     """
     Obtain the value of the loss function depending on the optimizer (as it is different for global optimization using
@@ -102,32 +108,52 @@ def get_residuals_value(
     :param weights: time-related weights to give more importance to recent data points in the fit (in the loss function)
     :return: float, corresponding to the value of the loss function
     """
-    if optimizer in ["trust-constr"]:
-        residuals_value = sum(
-            np.multiply((x_sol[15, :] - cases_data_fit) ** 2, weights)
-            + balance
-            * balance
-            * np.multiply((x_sol[14, :] - deaths_data_fit) ** 2, weights)
-        )
-    elif optimizer in ["tnc", "annealing"]:
-        residuals_value =  sum(      
-            np.multiply(
-                (x_sol[15, 7:] - x_sol[15, :-7] - cases_data_fit[7:] + cases_data_fit[:-7]) ** 2,
-                weights[7:],
+    if deaths_data_fit is not None:
+        if optimizer in ["trust-constr"]:
+            residuals_value = sum(
+                np.multiply((x_sol[15, :] - cases_data_fit) ** 2, weights)
+                + balance
+                * balance
+                * np.multiply((x_sol[14, :] - deaths_data_fit) ** 2, weights)
             )
-            + balance * balance * np.multiply(
-                (x_sol[14, 7:] - x_sol[14, :-7] - deaths_data_fit[7:] + deaths_data_fit[:-7]) ** 2,
-                weights[7:],
-            )
-        ) + sum(
-            np.multiply((x_sol[15, :] - cases_data_fit) ** 2, weights)
-            + balance
-            * balance
-            * np.multiply((x_sol[14, :] - deaths_data_fit) ** 2, weights)
-        ) * balance_total_difference * balance_total_difference
-    else:
-        raise ValueError("Optimizer not in 'tnc', 'trust-constr' or 'annealing' so not supported")
+        elif optimizer in ["tnc", "annealing"]:
+            residuals_value =  sum(      
+                np.multiply(
+                    (x_sol[15, 7:] - x_sol[15, :-7] - cases_data_fit[7:] + cases_data_fit[:-7]) ** 2,
+                    weights[7:],
+                )
+                + balance * balance * np.multiply(
+                    (x_sol[14, 7:] - x_sol[14, :-7] - deaths_data_fit[7:] + deaths_data_fit[:-7]) ** 2,
+                    weights[7:],
+                )
+            ) + sum(
+                np.multiply((x_sol[15, :] - cases_data_fit) ** 2, weights)
+                + balance
+                * balance
+                * np.multiply((x_sol[14, :] - deaths_data_fit) ** 2, weights)
+            ) * balance_total_difference * balance_total_difference
+        else:
+            raise ValueError("Optimizer not in 'tnc', 'trust-constr' or 'annealing' so not supported")
 
+    else: 
+        if optimizer in ["trust-constr"]:
+            residuals_value = sum(
+                np.multiply((x_sol[15, :] - cases_data_fit) ** 2, weights)
+            )
+        elif optimizer in ["tnc", "annealing"]:
+
+            residuals_value =  sum(      
+                np.multiply(
+                    (x_sol[15, 7:] - x_sol[15, :-7] - cases_data_fit[7:] + cases_data_fit[:-7]) ** 2,
+                    weights[7:],
+                )
+            )
+            + sum(
+                np.multiply((x_sol[15, :] - cases_data_fit) ** 2, weights)
+            ) * balance_total_difference * balance_total_difference 
+        else:
+            raise ValueError("Optimizer not in 'tnc', 'trust-constr' or 'annealing' so not supported")
+        
     return residuals_value
 
 #################################################
