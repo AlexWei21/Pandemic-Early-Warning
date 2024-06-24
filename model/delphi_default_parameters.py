@@ -31,6 +31,9 @@ percentage_drift_lower_bound = 0.2
 default_bounds_params = (
     (0.1, 1.5), (-200, 100), (1, 15), (0.02, 0.5), (0.01, 0.25), (-0.2, 5.0), (0.001, 5), (0.001, 5), (0, 5), (0, 300), (0.1, 100), (0.2,2.0)
 )   # Bounds for the solver
+maximum_bounds_params = (
+    (0.1, 3.0), (-200, 200), (1, 30), (0.02, 1.0), (0.01, 0.5), (-0.2, 10.0), (0.001, 10.0), (0.001, 10.0), (0, 10), (0, 600), (0.1, 200), (0.2,4.0)
+)
 validcases_threshold = 7  # Minimum number of cases to fit the base-DELPHI
 validcases_threshold_policy = 15  # Minimum number of cases to train the country-level policy predictions
 max_iter = 500  # Maximum number of iterations for the algorithm

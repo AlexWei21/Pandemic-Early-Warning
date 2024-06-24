@@ -4,13 +4,13 @@ import torch.optim as optim
 import torchode as to
 import numpy as np
 from model.Compartment_Pytorch_Models import DELPHI_pytorch
-from torchdiffeq import odeint as odeint
+# from torchdiffeq import odeint as odeint
 from utils.training_utils import get_initial_conditions
 import random
-from model.resnet_conv1d import res_net
 import pytorch_lightning as lightning
-from model.resnet18_1d import ResNet18
-from model.delphi_default_parameters import default_bounds_params
+from model.resnet18_1d import ResNet18 as ResNet18_raw
+from model.resnet_1d import ResNet18, ResNet34, ResNet50
+from model.delphi_default_parameters import default_bounds_params, maximum_bounds_params
 
 from model.delphi_default_parameters import (
     p_v,
@@ -37,7 +37,8 @@ class pandemic_early_warning_model_with_DELPHI(nn.Module):
         self.parameter_prediction_layer = parameter_prediction_layer(dropout=dropout,
                                                                      include_death = include_death) 
         
-        self.output_range = default_bounds_params
+        # self.output_range = default_bounds_params
+        self.output_range = maximum_bounds_params
         self.output_min = torch.tensor([item[0] for item in default_bounds_params])
         self.output_max = torch.tensor([item[1] for item in default_bounds_params])
 
@@ -53,13 +54,11 @@ class pandemic_early_warning_model_with_DELPHI(nn.Module):
 
         delphi_parameters = self.range_restriction_function(delphi_parameters) * self.output_max.to(delphi_parameters) + self.output_min.to(delphi_parameters)
 
-        # print(delphi_parameters)
-
         output = self.delphi_layer(delphi_parameters,
                                    global_params_fixed,
                                    population,)
 
-        return output
+        return output, delphi_parameters
 
 class parameter_prediction_layer(nn.Module):
     def __init__(self,
@@ -68,11 +67,16 @@ class parameter_prediction_layer(nn.Module):
         
         super().__init__()
 
-        input_dim = 2 if include_death else 1
+        channels = 2 if include_death else 1
 
-        self.encoding_layer = ResNet18(input_dim= input_dim,
+        self.encoding_layer = ResNet18(channels=channels,
                                        output_dim=12,
-                                       dropout_percentage=dropout,)
+                                       batch_norm=False,
+                                       layer_norm=False,)
+
+        # self.encoding_layer = ResNet34(output_dim=12,
+        #                                channels=channels,
+        #                                batch_norm=False,)
 
     def forward(self,
                 time_series_x,):
@@ -97,7 +101,7 @@ class delphi_layer(nn.Module):
 
         term = to.ODETerm(DELPHI_model, with_args=True)
         step_method = to.Tsit5(term=term)
-        step_size_controller = to.IntegralController(atol=1e-6, rtol=1e-3, term=term)
+        step_size_controller = to.IntegralController(atol=1e-8, rtol=1e-4, term=term) ## atol=1e-6 rtol=1e-3 
         solver = to.AutoDiffAdjoint(step_method, step_size_controller)
 
         y0 = [None] * x.shape[0]

@@ -12,7 +12,9 @@ def data_augmentation(data: list,
         for item in data:
             for i in range(item.augmentation_length):
                 new_data_point = copy.deepcopy(item)
-                new_data_point.ts_input = item.cumulative_case_number[i:ts_len+i]
+                new_data_point.ts_case_input = item.ts_case_input_full[i:ts_len+i]
+                if item.ts_death_input is not None:
+                    new_data_point.ts_death_input = item.ts_death_input_full[i:ts_len+i]
                 new_data.append(new_data_point)         
         
         return new_data

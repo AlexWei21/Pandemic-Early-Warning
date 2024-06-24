@@ -73,9 +73,11 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
                  batch_size = 64,
                  meta_data_impute_value = -999,
                  normalize_by_population = False,
+                 input_log_transform = False,
                  augmentation = False,
                  augmentation_method = 'shifting',
                  max_shifting_len = 10,
+                 loss_weight:int = 1,
                  ):
         
         self.pandemic_data = pandemic_data
@@ -89,20 +91,45 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
         for item in pandemic_data:
             if normalize_by_population:
                 # item.model_input = list(item.cumulative_case_number[:target_training_len] / float(item.population.replace(',',''))) + list(item.pandemic_meta_data.values())
-                item.ts_case_input = list(item.cumulative_case_number / float(item.population.replace(',','')))
-                item.ts_death_input = list(item.cumulative_death_number / float(item.population.replace(',','')) * 100)
+                item.ts_case_input_full = list(item.cumulative_case_number / float(item.population.replace(',','')))
+                if item.cumulative_death_number is not None:
+                    item.ts_death_input_full = list(item.cumulative_death_number / float(item.population.replace(',','')) * 100)
+                else:
+                    item.ts_death_input_full = None
             else:
                 # item.model_input = list(item.cumulative_case_number[:target_training_len]) + list(item.pandemic_meta_data.values())
-                item.ts_case_input = list(item.cumulative_case_number)
-                item.ts_death_input = list(item.cumulative_death_number)
+                item.ts_case_input_full = list(item.cumulative_case_number)
+                if item.cumulative_death_number is not None:
+                    item.ts_death_input_full = list(item.cumulative_death_number)
+                else:
+                    item.ts_death_input_full = None
             
-            item.ts_case_input = item.ts_case_input[:target_training_len]
-            item.ts_death_input = item.ts_death_input[:target_training_len]
+            # Compute Daily case use as input
+            item.daily_case_list = [0]
+            for n in range(1,len(item.ts_case_input_full)):
+                item.daily_case_list.append(item.ts_case_input_full[n] - item.ts_case_input_full[n-1])
+
+            item.ts_case_input = item.daily_case_list[:target_training_len]
+            if input_log_transform:
+                item.ts_case_input = [x+1 for x in item.ts_case_input]
+                if not all(x>0 for x in item.ts_case_input):
+                    print(f"{item.country_name} {item.pandemic_name} data has negative daily cases, please check. Here negative daily cases are set to 0")
+                    item.ts_case_input = [x if x >= 1 else 1 for x in item.ts_case_input]
+                item.ts_case_input = np.log(item.ts_case_input)
+
+            if item.ts_death_input_full is not None:
+                item.ts_death_input = item.ts_death_input_full[:target_training_len]
+            else:
+                item.ts_death_input = None
 
             item.meta_input = pandemic_meta_data_imputation(list(item.pandemic_meta_data.values()),
                                                             impute_value=meta_data_impute_value,)
 
             item.augmentation_length = min(len(item.cumulative_case_number) - target_training_len - pred_len, max_shifting_len)
+
+            item.time_dependent_weight = list(range(1, pred_len + 1))
+
+            item.loss_weight = loss_weight
 
         if augmentation:
             pandemic_data = data_augmentation(pandemic_data,
@@ -148,11 +175,19 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
 
         ts_case_input = [item.ts_case_input for item in batch]
         ts_death_input = [item.ts_death_input for item in batch]
+        if None in ts_death_input:
+            ts_death_input = None
+        else:
+            torch.tensor(ts_death_input).float()
+
         meta_input = [item.meta_input for item in batch]
         # true_delphi_params = [item.true_delphi_params for item in batch]
 
-        return dict(ts_case_input = torch.tensor(ts_case_input).float(),
-                    ts_death_input = torch.tensor(ts_death_input).float(),
+        time_dependent_weight = [item.time_dependent_weight for item in batch]
+        sample_weight = [item.loss_weight for item in batch]
+
+        return dict(ts_case_input = torch.tensor(np.array(ts_case_input)).float(),
+                    ts_death_input = ts_death_input,
                     meta_input = torch.tensor(meta_input).float(),
                     pandemic_name = pandemic_name,
                     population = torch.tensor(population),
@@ -169,6 +204,8 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
                     case_number = case_number,
                     death_number = death_number,
                     timestamps = timestamps,
+                    time_dependent_weight = torch.tensor(time_dependent_weight),
+                    sample_weight = torch.tensor(sample_weight),
                     # true_delphi_params = torch.tensor(true_delphi_params),
                     )
     

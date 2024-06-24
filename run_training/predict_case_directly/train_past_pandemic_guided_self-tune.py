@@ -21,6 +21,9 @@ def run_training(lr: float = 1e-3,
                  dropout: float = 0.5,
                  past_pandemics: list = [],
                  include_death: bool = False,
+                 target_self_tuning: bool = True,
+                 selftune_weight:float = 1.0,
+                 output_dir:str = None,
                  ):
 
     ## Load Past Pandemic Data
@@ -57,24 +60,40 @@ def run_training(lr: float = 1e-3,
                                               pred_len = pred_len,
                                               batch_size=batch_size,
                                               meta_data_impute_value=0,
-                                              normalize_by_population=True)
+                                              normalize_by_population=False,
+                                              input_log_transform=True,
+                                              augmentation=False,
+                                              max_shifting_len=10)
 
-    ## Remove Samples with no change in case num in first 30 days
-    past_pandemic_dataset.pandemic_data = [item for item in past_pandemic_dataset if item.ts_case_input[0] != item.ts_case_input[-1]]
-    print(f"Train Length:{len(past_pandemic_dataset)}")
+    past_pandemic_dataset.pandemic_data = [item for item in past_pandemic_dataset if sum(item.ts_case_input) != 0]
+
+    print(f"Past Pandemic Training Size:{len(past_pandemic_dataset)}")
     
-    ## Past Data Normalization
-    for item in past_pandemic_dataset:
-        ## Log Transformation for Scaling Problem
-        log_case_input = np.log10(item.ts_case_input)
-        if include_death:
-            log_death_input = np.log10([x+1 for x in item.ts_death_input])
-        ## Min-Max Normalization
-        item.ts_case_input = (log_case_input - min(log_case_input)) / (max(log_case_input) - min(log_case_input))
-        ## No Death Count Samples
-        if ((max(log_death_input) - min(log_death_input)) != 0) and (include_death):
-            item.ts_death_input = (log_death_input - min(log_death_input)) / (max(log_death_input) - min(log_death_input))
+    ## Load Self-Tune Data
+    self_tune_data = process_data(processed_data_path='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_covid_data_objects_no_smoothing.pickle',
+                                        raw_data=False)
 
+    self_tune_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=self_tune_data,
+                                              target_training_len=target_training_len,
+                                              pred_len = pred_len,
+                                              batch_size=batch_size,
+                                              meta_data_impute_value=0,
+                                              augmentation=False,
+                                              normalize_by_population=False,
+                                              input_log_transform=True,
+                                              loss_weight=selftune_weight)
+    
+    # Prevent Leakage in Self Tune Dataset
+    for item in self_tune_dataset:
+        item.time_dependent_weight = [1]*target_training_len + [0]*(pred_len-target_training_len)
+        # item.time_dependent_weight = list(range(1, target_training_len + 1)) + [0]*(pred_len-target_training_len)
+    
+    self_tune_dataset.pandemic_data = [item for item in self_tune_dataset if sum(item.ts_case_input) != 0]
+
+    ## Combine Past Pandemic and Self-Tuning Data
+    past_pandemic_dataset.pandemic_data = past_pandemic_dataset.pandemic_data + self_tune_dataset.pandemic_data
+
+    print(f"Past Pandemic + Self-Tune Training Size:{len(past_pandemic_dataset)}")
 
     ## Load Target Pandemic Data
     target_pandemic_data = process_data(processed_data_path='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_covid_data_objects_no_smoothing.pickle',
@@ -85,23 +104,15 @@ def run_training(lr: float = 1e-3,
                                               pred_len = pred_len,
                                               batch_size=batch_size,
                                               meta_data_impute_value=0,
-                                              normalize_by_population=True)
+                                              normalize_by_population=False,
+                                              input_log_transform=True,)
 
     ## Remove Samples with no change in case num in first 30 days
-    target_pandemic_dataset.pandemic_data = [item for item in target_pandemic_dataset if item.ts_case_input[0] != item.ts_case_input[-1]]
+    target_pandemic_dataset.pandemic_data = [item for item in target_pandemic_dataset if sum(item.ts_case_input) != 0]
     print(f"Validation Length:{len(target_pandemic_dataset)}")
 
-    ## Target Data Normalization
     for item in target_pandemic_dataset:
-        ## Log Transformation for Scaling Problem
-        log_case_input = np.log10(item.ts_case_input)
-        if include_death:
-            log_death_input = np.log10([x+1 for x in item.ts_death_input])
-        ## Min-Max Normalization
-        item.ts_case_input = (log_case_input - min(log_case_input)) / (max(log_case_input) - min(log_case_input))
-        ## No Death Count Samples
-        if ((max(log_death_input) - min(log_death_input)) != 0) and (include_death):
-            item.ts_death_input = (log_death_input - min(log_death_input)) / (max(log_death_input) - min(log_death_input))
+        item.time_dependent_weight = [1]*pred_len
 
     ## Dataloaders
     train_data_loader = DataLoader(past_pandemic_dataset,
@@ -109,20 +120,24 @@ def run_training(lr: float = 1e-3,
                                    shuffle=True,
                                    collate_fn=past_pandemic_dataset.collate_fn,
                                    drop_last=False,
+                                   num_workers=1,
                                    )
     
-    validation_data_loader = DataLoader(past_pandemic_dataset,
+    validation_data_loader = DataLoader(target_pandemic_dataset,
                                         batch_size=batch_size,
                                         shuffle=False,
-                                        collate_fn=past_pandemic_dataset.collate_fn,
-                                        drop_last=False,)
+                                        collate_fn=target_pandemic_dataset.collate_fn,
+                                        drop_last=False,
+                                        num_workers=1,)
 
     model = TrainingModule(lr = lr,
                            loss = loss,
                            train_len=target_training_len,
                            pred_len = pred_len,
                            dropout=dropout,
-                           include_death = include_death,)
+                           include_death = include_death,
+                           batch_size = batch_size,
+                           output_dir=output_dir)
     
     print(model)
     
@@ -130,7 +145,7 @@ def run_training(lr: float = 1e-3,
         
         logger = WandbLogger(save_dir=log_dir,
                              project = 'Pandemic_Early_Warning',
-                             name = '(DirectCase)')
+                             name = 'Past_Guided_Self-Tune')
     else:
         logger = None
     
@@ -148,14 +163,18 @@ def run_training(lr: float = 1e-3,
                 validation_data_loader)
     
 run_training(### Training Args
-             lr = 1e-6,
+             lr = 1e-5,
              batch_size = 32,
              target_training_len = 46, # 46
              pred_len = 71, # 71
              record_run = True,
-             max_epochs = 10000,
+             max_epochs = 5000,
              log_dir = '/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/logs/',
              ### Model Args
              loss = 'MAE',
              dropout=0.0,
-             past_pandemics=['dengue','ebola','sars','mpox','2010-2017_influenza'])
+             past_pandemics=['dengue','ebola','sars','mpox','2010-2017_influenza'],
+             target_self_tuning=True,
+             include_death=False,
+             selftune_weight=1,
+             output_dir='/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/output/DeepCompartmentModel/past_pandemic_guided/',)

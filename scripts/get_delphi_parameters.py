@@ -355,25 +355,28 @@ def get_perfect_parameters(data_object,
 
     return best_params, np.array(x_sol_final, dtype = object), np.array(data_object.cumulative_case_number[:maxT]), data_object
 
-def visualize_result(pred_case, true_case, output_dir, data_object, type = 'case', train_len = 40,):
+def visualize_result(pred_case, true_case, output_dir, data_object, type = 'case', train_len = 46,):
+    
+    print(len(pred_case))
+    print(len(true_case))
 
-    case_loss = compute_mape(true_case[-15:],
-                             pred_case[len(true_case)-15:len(true_case)])  
-
-    full_case_loss = compute_mape(true_case,
-                                  pred_case) 
+    outsample_mae = mean_absolute_error(true_case[train_len:],
+                                        pred_case[train_len:])  
     
-    train_loss = compute_mape(true_case[:train_len],
-                              pred_case[:train_len])
+    overall_mae = mean_absolute_error(true_case,
+                                      pred_case)
     
-    case_mae = mean_absolute_error(true_case[-15:],
-                             pred_case[len(true_case)-15:len(true_case)])  
+    insample_mae = mean_absolute_error(true_case[:train_len],
+                                       pred_case[:train_len])
     
-    full_case_mae = mean_absolute_error(true_case,
-                                  pred_case)
+    outsample_mape = compute_mape(true_case[train_len:],
+                                  pred_case[train_len:])  
     
-    train_mae = mean_absolute_error(true_case[:train_len],
-                              pred_case[:train_len])
+    overall_mape = compute_mape(true_case,
+                                pred_case)
+    
+    insample_mape = compute_mape(true_case[:train_len],
+                                 pred_case[:train_len])
     
     fig = go.Figure()
     fig.add_trace(go.Scatter(x = np.arange(1,len(pred_case)),
@@ -397,7 +400,7 @@ def visualize_result(pred_case, true_case, output_dir, data_object, type = 'case
     
     fig.write_image(output_dir + f'{data_object.country_name}_{data_object.domain_name}_{data_object.pandemic_name}_{len(true_case)}_{type}_prediction.png')   
 
-    return case_loss, full_case_loss, train_loss, case_mae, full_case_mae, train_mae
+    return outsample_mae, overall_mae, insample_mae, outsample_mape, overall_mape, insample_mape
 
 def compute_mape(y_true: list, y_pred: list) -> float:
     """
