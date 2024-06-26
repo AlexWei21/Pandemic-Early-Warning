@@ -1,0 +1,9 @@
+name: hospitalization_prediction
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - cudatoolkit
+prefix: /export/home/dor/zwei/.conda/envs/hospitalization_prediction
