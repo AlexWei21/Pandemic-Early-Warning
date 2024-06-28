@@ -46,11 +46,11 @@ class pandemic_early_warning_model_with_DELPHI(nn.Module):
 
         self.delphi_layer = delphi_layer(pred_len=pred_len)
 
-    def forward(self, ts_input, global_params_fixed):
+    def forward(self, ts_input, global_params_fixed, meta_input):
 
         population = global_params_fixed[:,0]
 
-        delphi_parameters = self.parameter_prediction_layer(ts_input)
+        delphi_parameters = self.parameter_prediction_layer(ts_input, meta_input)
 
         delphi_parameters = self.range_restriction_function(delphi_parameters) * self.output_max.to(delphi_parameters) + self.output_min.to(delphi_parameters)
 
@@ -79,9 +79,10 @@ class parameter_prediction_layer(nn.Module):
         #                                batch_norm=False,)
 
     def forward(self,
-                time_series_x,):
+                time_series_x,
+                meta_input):
         
-        x = self.encoding_layer(time_series_x)
+        x = self.encoding_layer(time_series_x, meta_input)
 
         return x
     

@@ -96,6 +96,8 @@ class TrainingModule(LightningModule):
         else:
             ts_input = ts_case_input
 
+        meta_input = batch['meta_input'].to(self.device)
+
         N = batch['population']
 
         mortality_rate = torch.tensor([item['mortality_rate'] for item in batch['pandemic_meta_data']]).to(N)
@@ -117,7 +119,8 @@ class TrainingModule(LightningModule):
         global_params_fixed = torch.stack((N, R_upperbound, R_heuristic, R_0, PopulationD, PopulationI, p_d, p_h, p_v)).t()
 
         predicted_casenum, predicted_params = self.model(ts_input,
-                                                         global_params_fixed)
+                                                         global_params_fixed,
+                                                         meta_input)
 
         return predicted_casenum, predicted_params
     
@@ -376,6 +379,7 @@ class TrainingModule(LightningModule):
     def configure_optimizers(self):
         
         optimizer = torch.optim.Adam(self.parameters(), lr = self.lr)
+        # optimizer = torch.optim.SGD(self.parameters(), lr = self.lr)
 
         return optimizer
     

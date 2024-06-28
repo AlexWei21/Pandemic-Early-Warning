@@ -122,7 +122,7 @@ def run_training(lr: float = 1e-3,
                                    drop_last=False,
                                    num_workers=1,
                                    )
-    
+
     validation_data_loader = DataLoader(target_pandemic_dataset,
                                         batch_size=batch_size,
                                         shuffle=False,

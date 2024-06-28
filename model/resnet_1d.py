@@ -168,9 +168,13 @@ class ResNet(nn.Module):
         self.layer4, self.input_shape = self._make_layer(ResBlock, layer_list[3], planes=512, stride=2, bn=bn,ln=self.ln, input_shape=self.input_shape)
         
         self.avgpool = nn.AdaptiveAvgPool1d(1)
-        self.fc = nn.Linear(512*ResBlock.expansion, output_dim)
+
+        self.meta_data_layer1 = nn.Linear(27,64)
+        self.meta_data_layer2 = nn.Linear(64,128)
+
+        self.fc = nn.Linear(512*ResBlock.expansion + 128, output_dim)
         
-    def forward(self, x):
+    def forward(self, x, meta_data):
 
         x = self.conv1(x)
         if self.bn:
@@ -188,6 +192,12 @@ class ResNet(nn.Module):
         
         x = self.avgpool(x)
         x = x.reshape(x.shape[0], -1)
+
+        meta_data = self.meta_data_layer1(meta_data)
+        meta_data = self.meta_data_layer2(meta_data)
+
+        x = torch.cat([x,meta_data], dim = 1)
+
         x = self.fc(x)
         
         return x
