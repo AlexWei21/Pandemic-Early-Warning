@@ -4,7 +4,7 @@ from pytorch_lightning import LightningDataModule
 from pytorch_lightning.utilities.types import EVAL_DATALOADERS, TRAIN_DATALOADERS
 import torch
 from torch.utils.data import DataLoader
-from data.data_utils import pandemic_meta_data_imputation
+from utils.data_utils import pandemic_meta_data_imputation
 from utils.data_augmentation import data_augmentation
 from matplotlib import pyplot as plt
 

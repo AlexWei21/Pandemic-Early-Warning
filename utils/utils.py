@@ -1,6 +1,46 @@
 import torch
 from torch import Tensor
 
+def get_initial_conditions(params_fitted: tuple, global_params_fixed: tuple) -> list:
+    """
+    Generates the initial conditions for the DELPHI model based on global fixed parameters (mostly populations and some
+    constant rates) and fitted parameters (the internal parameters k1 and k2)
+    :param params_fitted: tuple of parameters being fitted, mostly interested in k1 and k2 here (parameters 7 and 8)
+    :param global_params_fixed: tuple of fixed and constant parameters for the model defined a while ago
+    :return: a list of initial conditions for all 16 states of the DELPHI model
+    """
+    alpha, days, r_s, r_dth, p_dth, r_dthdecay, k1, k2, jump, t_jump, std_normal, k3 = params_fitted 
+    N, R_upperbound, R_heuristic, R_0, PopulationD, PopulationI, p_d, p_h, p_v = global_params_fixed
+
+    PopulationR = min(R_upperbound - 1, min(int(R_0*p_d), R_heuristic))
+    PopulationCI = (PopulationI - PopulationD - PopulationR)*k3
+
+    S_0 = (
+        (N - PopulationCI / p_d)
+        - (PopulationCI / p_d * (k1 + k2))
+        - (PopulationR / p_d)
+        - (PopulationD / p_d)
+    )
+    E_0 = PopulationCI / p_d * k1
+    I_0 = PopulationCI / p_d * k2
+    UR_0 = (PopulationCI / p_d - PopulationCI) * (1 - p_dth)
+    DHR_0 = (PopulationCI * p_h) * (1 - p_dth)
+    DQR_0 = PopulationCI * (1 - p_h) * (1 - p_dth)
+    UD_0 = (PopulationCI / p_d - PopulationCI) * p_dth
+    DHD_0 = PopulationCI * p_h * p_dth
+    DQD_0 = PopulationCI * (1 - p_h) * p_dth
+    R_0 = PopulationR / p_d
+    D_0 = PopulationD / p_d
+    TH_0 = PopulationCI * p_h
+    DVR_0 = (PopulationCI * p_h * p_v) * (1 - p_dth)
+    DVD_0 = (PopulationCI * p_h * p_v) * p_dth
+    DD_0 = PopulationD
+    DT_0 = PopulationI
+    x_0_cases = [
+        S_0, E_0, I_0, UR_0, DHR_0, DQR_0, UD_0, DHD_0, DQD_0, R_0,
+        D_0, TH_0, DVR_0, DVD_0, DD_0, DT_0,
+    ]
+    return x_0_cases
 
 def generate_square_subsequent_mask(dim1: int, dim2: int) -> Tensor:
     """
