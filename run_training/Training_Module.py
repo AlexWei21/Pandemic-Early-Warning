@@ -25,6 +25,7 @@ class TrainingModule(LightningModule):
                  include_death: bool = True,
                  plot_validation: bool = False,
                  batch_size: int = 32,
+                 population_weighting: bool = False,
                  ):
         
         super().__init__()
@@ -47,6 +48,8 @@ class TrainingModule(LightningModule):
                                                               dropout = dropout,
                                                               include_death=include_death)
         
+        self.population_weighting = population_weighting
+
         if loss == 'MAPE':
             self.loss_fn = MeanAbsolutePercentageError()
         elif loss == 'MAE':
@@ -172,8 +175,9 @@ class TrainingModule(LightningModule):
         loss = case_loss + balance * death_loss
 
         # Balance for population
-        # population = batch['population']
-        # loss = torch.div(loss, population) * 1000 # [10]
+        if self.population_weighting:
+            population = batch['population']
+            loss = torch.div(loss, population) * 10000 # [10]
 
         loss = torch.mean(loss)
 
@@ -194,7 +198,7 @@ class TrainingModule(LightningModule):
         return loss
     
     def validation_step(self, batch):
-        
+
         preds, predicted_params = self.forward(batch)
     
         self.validation_country = self.validation_country + batch['country_name']

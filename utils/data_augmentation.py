@@ -20,8 +20,17 @@ def data_augmentation(data: list,
         return new_data
 
 
-    elif method == 'sampling':
-        raise NotImplementedError
+    elif method == 'masking':
+        new_data = []
+        for item in data:
+            for i in range(item.augmentation_length):
+                new_data_point = copy.deepcopy(item)
+                new_data_point.ts_case_input[i:i+7] = [0]*7
+                if item.ts_death_input is not None:
+                    new_data_point.ts_death_input[i:i+7] = [0]*7
+                new_data.append(new_data_point)
+        
+        return new_data
     else:
         raise NotImplementedError
     

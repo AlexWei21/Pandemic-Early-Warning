@@ -19,9 +19,6 @@ def compare_results(delphi_performance_dir:str,
     combined_df = delphi_baseline.merge(selftune_model_performance, on = ['country','domain'])
     combined_df = combined_df.merge(guided_model_performance, on = ['country','domain'])
     
-    combined_df.to_csv(out_dir,
-                       index=False)
-    
     ## Compute Mean MAE & MAPE
     delphi_valid_predictions = delphi_baseline[delphi_baseline['delphi_outsample_mae'] != 999] 
     delphi_mean_mae = np.mean(delphi_valid_predictions['delphi_outsample_mae'])
@@ -37,17 +34,48 @@ def compare_results(delphi_performance_dir:str,
     print(f"Selftune: Mean MAE = {selftune_mean_mae}, Mean MAPE = {selftune_mean_mape}")
     print(f"Past Guided: Mean MAE = {guided_mean_mae}, Mean MAPE = {guided_mean_mape}")
 
-    ## Compare Results
-    combined_df['selftune_better'] = np.where((combined_df['selftune_outsample_mae'] < combined_df['delphi_outsample_mae']) & (combined_df['selftune_outsample_mae'] < combined_df['guided_outsample_mae']), 1, 0)
-    combined_df['guided_better'] = np.where((combined_df['guided_outsample_mae'] < combined_df['delphi_outsample_mae']) & (combined_df['guided_outsample_mae'] < combined_df['selftune_outsample_mae']), 1, 0)
+    ## Rank Results
+    rank_df = combined_df[['delphi_outsample_mae','selftune_outsample_mae','guided_outsample_mae']].rank(axis=1,
+                                                                                                         numeric_only=True)
+    
+    delphi_total_rank = sum(rank_df['delphi_outsample_mae'])
+    selftune_total_rank = sum(rank_df['selftune_outsample_mae'])
+    guided_total_rank = sum(rank_df['guided_outsample_mae'])
+    print("DELPHI Total Rank:", delphi_total_rank)
+    print("Selftune Total Rank:", selftune_total_rank)
+    print("Guided Total Rank:", guided_total_rank)
 
-    print(f"Selftune Model does the best in {sum(combined_df['selftune_better'])} / {len(combined_df)} Locations than DELPHI")
-    print(f"Guided Model does the best in {sum(combined_df['guided_better'])} / {len(combined_df)} Locations than DELPHI")
+    ## Compare Results
+    combined_df['selftune_delphi_diff'] = combined_df['delphi_outsample_mae'] - combined_df['selftune_outsample_mae']
+    combined_df['guided_selftune_diff'] = combined_df['selftune_outsample_mae'] - combined_df['guided_outsample_mae']
+    combined_df['guided_delphi_diff'] = combined_df['delphi_outsample_mae'] - combined_df['guided_outsample_mae']
+
+    combined_df['best_method'] = np.nan
+
+    conditions = [(combined_df['delphi_outsample_mae'] < combined_df['selftune_outsample_mae']) & (combined_df['delphi_outsample_mae'] < combined_df['guided_outsample_mae']),
+                  (combined_df['selftune_outsample_mae'] < combined_df['delphi_outsample_mae']) & (combined_df['selftune_outsample_mae'] < combined_df['guided_outsample_mae']),
+                  (combined_df['guided_outsample_mae'] < combined_df['delphi_outsample_mae']) & (combined_df['guided_outsample_mae'] < combined_df['selftune_outsample_mae'])]
+
+    values = ['DELPHI','Self-tune','Past-Guided']
+
+    combined_df['best_method'] = np.select(conditions,values)
+    
+    combined_df.to_csv(out_dir,
+                       index=False)
+
+    print(f"Selftune Model does better in these {len(combined_df[combined_df['selftune_delphi_diff']>0])} Locations than DELPHI")
+    print(f"Selftune Model does significantly better in these {len(combined_df[combined_df['selftune_delphi_diff']>500])} Locations than DELPHI")
+    print(combined_df.sort_values(by=['selftune_delphi_diff'], ascending=False))
+    print(f"Guided Model does the better in these {len(combined_df[combined_df['guided_selftune_diff']>0])} Locations than Self-tune Model")
+    print(combined_df.sort_values(by=['guided_selftune_diff'], ascending=False))
+    print(f"Guided Model does the better in these {len(combined_df[combined_df['guided_delphi_diff']>0])} Locations than DELPHI Model")
+    print(combined_df.sort_values(by=['guided_delphi_diff'], ascending=False))
 
 
 if __name__ == '__main__':
 
     compare_results(delphi_performance_dir='/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_46_71_case_only_performance.csv',
-                    selftune_model_performance_dir='/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/validation_location_loss.csv',
-                    past_pandemic_guided_model_performance_dir= '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/validation_location_loss.csv',
+                    # selftune_model_performance_dir='/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/validation_location_loss.csv',
+                    selftune_model_performance_dir='/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/07-07-18/validation_location_loss.csv',
+                    past_pandemic_guided_model_performance_dir= '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/07-10-0100/validation_location_loss.csv',
                     out_dir='/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/result_comparison/result_comparison.csv')

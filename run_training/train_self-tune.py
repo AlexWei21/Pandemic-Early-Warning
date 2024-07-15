@@ -9,6 +9,8 @@ from data.data import Compartment_Model_Pandemic_Dataset
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
+from datetime import datetime
+from pathlib import Path
 
 from evaluation.data_inspection.low_quality_data import covid_low_quality_data
 
@@ -26,9 +28,12 @@ def run_training(lr: float = 1e-3,
                  target_self_tuning: bool = True,
                  selftune_weight:float = 1.0,
                  output_dir:str = None,
+                 population_weighting:bool = False,
                  ):
     
     data_file_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/'
+
+    Path(output_dir).mkdir(parents=False, exist_ok=True)
 
     ## Load Self-Tune Data
     self_tune_data = process_data(processed_data_path = data_file_dir+'compartment_model_covid_data_objects_no_smoothing.pickle',
@@ -50,7 +55,7 @@ def run_training(lr: float = 1e-3,
     
     # Remove Samples with too few change
     # self_tune_dataset.pandemic_data = [item for item in self_tune_dataset if sum(item.ts_case_input) != 0]
-    self_tune_dataset.pandemic_data = [item for item in self_tune_dataset if sum(item.ts_case_input) >= 100]
+    # self_tune_dataset.pandemic_data = [item for item in self_tune_dataset if sum(item.ts_case_input) >= 100] # Put in Dataset Creation
 
     # Remove Sample with low quality
     self_tune_dataset.pandemic_data = [item for item in self_tune_dataset if (item.country_name, item.domain_name) not in covid_low_quality_data]
@@ -70,7 +75,7 @@ def run_training(lr: float = 1e-3,
                                               input_log_transform=True,)
 
     ## Remove Samples with too few change
-    target_pandemic_dataset.pandemic_data = [item for item in target_pandemic_dataset if sum(item.ts_case_input) >= 100]
+    # target_pandemic_dataset.pandemic_data = [item for item in target_pandemic_dataset if sum(item.ts_case_input) >= 100] # Put in Dataset Creation
 
     # Remove Sample with low quality
     target_pandemic_dataset.pandemic_data = [item for item in target_pandemic_dataset if (item.country_name, item.domain_name) not in covid_low_quality_data]
@@ -103,7 +108,8 @@ def run_training(lr: float = 1e-3,
                            dropout=dropout,
                            include_death = include_death,
                            batch_size = batch_size,
-                           output_dir=output_dir)
+                           output_dir=output_dir,
+                           population_weighting=population_weighting)
     
     print(model)
     
@@ -130,7 +136,7 @@ def run_training(lr: float = 1e-3,
     
 run_training(### Training Args
              lr = 1e-5,
-             batch_size = 176,
+             batch_size = 245,
              target_training_len = 46, # 46
              pred_len = 71, # 71
              record_run = True,
@@ -142,5 +148,6 @@ run_training(### Training Args
              past_pandemics=[],
              target_self_tuning=True,
              include_death=False,
+             population_weighting=True,
              selftune_weight=1,
-             output_dir='/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/',)
+             output_dir=f"/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/{datetime.today().strftime('%m-%d-%H')}/",)

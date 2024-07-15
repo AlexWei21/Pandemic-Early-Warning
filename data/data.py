@@ -87,6 +87,7 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
 
         pandemic_data = [item for item in pandemic_data if item.pandemic_meta_data is not None]
         pandemic_data = [item for item in pandemic_data if len(item.cumulative_case_number) >= (target_training_len + pred_len)]
+        pandemic_data = [item for item in pandemic_data if (item.cumulative_case_number[target_training_len-1] - item.cumulative_case_number[0]) >= 100]
 
         for item in pandemic_data:
             if normalize_by_population:
