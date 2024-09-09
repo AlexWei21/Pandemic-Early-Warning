@@ -5,11 +5,10 @@ import pickle
 import multiprocessing
 from tqdm import tqdm
 
+train_length = 14
+test_length = 84
 
 def generate_and_save_delphi_performance(data_object):
-
-    train_length = 46
-    test_length = 71
 
     try: 
 
@@ -20,7 +19,7 @@ def generate_and_save_delphi_performance(data_object):
         ## Case Plot
         outsample_mae, overall_mae, insample_mae, outsample_mape, overall_mape, insample_mape = visualize_result(x_sol[15],
                                     y_true,
-                                    output_dir = '/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_Baseline/covid_figures/case_only_figures/case/',
+                                    output_dir = f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/case_only_{train_length}_{test_length}_plots/',
                                     data_object=data,
                                     type = 'case',
                                     train_len=train_length)
@@ -63,7 +62,7 @@ if __name__ == '__main__':
 
     failure_list = []
 
-    with open('/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/data/compartment_model_covid_data_objects_no_smoothing.pickle', 'rb') as f:
+    with open('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/compartment_model_covid_data_objects_no_smoothing.pickle', 'rb') as f:
         data_object_list = pickle.load(f)
 
     for item in data_object_list:
@@ -85,11 +84,11 @@ if __name__ == '__main__':
                                         'outsample_mape','overall_mape','train_mape',
                                         'outsample_mae','overall_mae','train_mae',])
     
-    case_column_name = [str(item) for item in np.arange(0,71,1)]
+    case_column_name = [str(item) for item in np.arange(0,test_length,1)]
 
     predicted_case_df = pd.DataFrame(predicted_case_df,
                                      columns=['country', 'domain', 'first_day_above_hundred'] + case_column_name)
 
-    parameter_df.to_csv('/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_Baseline/covid_46_71_case_only_parameters.csv')
-    performance_df.to_csv('/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_Baseline/covid_46_71_case_only_performance.csv')
-    predicted_case_df.to_csv('/export/home/dor/zwei/Documents/GitHub/Hospitalization_Prediction/DELPHI_Baseline/covid_46_71_case_only_pred_case.csv')
+    parameter_df.to_csv(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_{train_length}_{test_length}_case_only_parameters.csv')
+    performance_df.to_csv(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_{train_length}_{test_length}_case_only_performance.csv')
+    predicted_case_df.to_csv(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_{train_length}_{test_length}_case_only_pred_case.csv')

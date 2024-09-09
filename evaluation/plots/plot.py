@@ -4,14 +4,21 @@ from matplotlib import pyplot as plt
 from utils.data_processing_compartment_model import process_data
 from data.data import Compartment_Model_Pandemic_Dataset
 from tqdm import tqdm
+from pathlib import Path
+
+compare_trial_name = "ResNet50_Combined_Loss_[0.5,100]"
+Path(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/{compare_trial_name}/').mkdir(parents=False, exist_ok=True)
+Path(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/{compare_trial_name}/delphi_best').mkdir(parents=False, exist_ok=True)
+Path(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/{compare_trial_name}/selftune_best').mkdir(parents=False, exist_ok=True)
+Path(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/{compare_trial_name}/guided_best').mkdir(parents=False, exist_ok=True)
 
 
 delphi_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_46_71_case_only_pred_case.csv')
-selftune_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/07-07-18/case_prediction.csv')
-guided_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/07-10-0100/case_prediction.csv')
+selftune_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/07-28-16/case_prediction.csv')
+guided_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/07-29-0900/case_prediction.csv')
 comparison_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/result_comparison/result_comparison.csv')
 
-target_pandemic_data = process_data(processed_data_path = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/compartment_model_covid_data_objects_no_smoothing.pickle',
+target_pandemic_data = process_data(processed_data_path = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/data_with_country_metadata/compartment_model_covid_data_objects.pickle',
                                         raw_data=False)
     
 target_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=target_pandemic_data,
@@ -24,7 +31,7 @@ target_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=targe
 
 time_stamp = np.arange(0,71,1)
 
-for index, row in tqdm(selftune_pred_case.iterrows()):
+for index, row in tqdm(selftune_pred_case.iterrows(), total=len(selftune_pred_case)):
 
     country = row['Country']
     domain = row['Domain']
@@ -58,11 +65,11 @@ for index, row in tqdm(selftune_pred_case.iterrows()):
     plt.legend()
 
     if best_method == 'DELPHI':
-        plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/delphi_best/{country}_{domain}.png')
+        plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/{compare_trial_name}/delphi_best/{country}_{domain}.png')
     elif best_method == 'Self-tune':
-        plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/selftune_best/{country}_{domain}.png')
+        plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/{compare_trial_name}/selftune_best/{country}_{domain}.png')
     else:
-        plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/guided_best/{country}_{domain}.png')
+        plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/{compare_trial_name}/guided_best/{country}_{domain}.png')
     
     plt.close()
     

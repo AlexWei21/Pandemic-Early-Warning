@@ -84,7 +84,6 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
         self.train_len = target_training_len
         self.batch_size = batch_size
 
-
         pandemic_data = [item for item in pandemic_data if item.pandemic_meta_data is not None]
         pandemic_data = [item for item in pandemic_data if len(item.cumulative_case_number) >= (target_training_len + pred_len)]
         pandemic_data = [item for item in pandemic_data if (item.cumulative_case_number[target_training_len-1] - item.cumulative_case_number[0]) >= 100]
@@ -110,6 +109,7 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
             for n in range(1,len(item.ts_case_input_full)):
                 item.daily_case_list.append(item.ts_case_input_full[n] - item.ts_case_input_full[n-1])
 
+            # Transform Input Data
             item.ts_case_input = item.daily_case_list[:target_training_len]
             if input_log_transform:
                 item.ts_case_input = [x+1 for x in item.ts_case_input]

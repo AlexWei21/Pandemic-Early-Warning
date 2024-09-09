@@ -1,0 +1,934 @@
+Microbe Family,Microbe Genus,Microbe Species,Region,Country,Domain,Sub-Domain,date,type,number
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-07-03,Cumulative_Cases,26643.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-07-03,Cumulative_Cases,2.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-07-03,Cumulative_Cases,482.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-07-03,Cumulative_Cases,279.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-07-03,Cumulative_Cases,497.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-07-03,Cumulative_Cases,625.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-07-03,Cumulative_Cases,44.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-07-03,Cumulative_Cases,351.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-07-03,Cumulative_Cases,65.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-07-03,Cumulative_Cases,346.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-07-03,Cumulative_Cases,358.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-07-03,Cumulative_Cases,362.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-07-03,Cumulative_Cases,111.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-07-03,Cumulative_Cases,49.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-07-03,Cumulative_Cases,670.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-07-03,Cumulative_Cases,127.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-07-03,Cumulative_Cases,20.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-07-03,Cumulative_Cases,1380.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-07-03,Cumulative_Cases,372.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-07-03,Cumulative_Cases,29.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-07-03,Cumulative_Cases,107.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-07-03,Cumulative_Cases,14.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-07-03,Cumulative_Cases,72.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-07-03,Cumulative_Cases,6.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-07-03,Cumulative_Cases,2850.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-07-03,Cumulative_Cases,288.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-07-03,Cumulative_Cases,129.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-07-03,Cumulative_Cases,72.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-07-03,Cumulative_Cases,173.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-07-03,Cumulative_Cases,32.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-07-03,Cumulative_Cases,53.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-07-03,Cumulative_Cases,130.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-07-03,Cumulative_Cases,92.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-07-03,Cumulative_Cases,5465.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-07-03,Cumulative_Cases,456.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-07-03,Cumulative_Cases,321.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-07-03,Cumulative_Cases,46.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-07-03,Cumulative_Cases,104.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-07-03,Cumulative_Cases,4981.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-07-03,Cumulative_Cases,949.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-07-03,Cumulative_Cases,541.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-07-03,Cumulative_Cases,57.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-07-03,Cumulative_Cases,424.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-07-03,Cumulative_Cases,598.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-07-03,Cumulative_Cases,331.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-07-03,Cumulative_Cases,10.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-07-03,Cumulative_Cases,53.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-07-03,Cumulative_Cases,170.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-07-03,Cumulative_Cases,280.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-07-03,Cumulative_Cases,92.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-07-03,Cumulative_Cases,439.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-07-03,Cumulative_Cases,425.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-07-03,Cumulative_Cases,380.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-07-03,Cumulative_Cases,193.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-07-03,Cumulative_Cases,131.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-07-10,Cumulative_Cases,147.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-07-10,Cumulative_Cases,123.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-07-10,Cumulative_Cases,701.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-07-10,Cumulative_Cases,637.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-07-10,Cumulative_Cases,694.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-07-10,Cumulative_Cases,3.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-07-10,Cumulative_Cases,1194.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-07-10,Cumulative_Cases,1069.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-07-10,Cumulative_Cases,540.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-07-10,Cumulative_Cases,954.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-07-10,Cumulative_Cases,125.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-07-10,Cumulative_Cases,72.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-07-10,Cumulative_Cases,703.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-07-10,Cumulative_Cases,2678.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-07-10,Cumulative_Cases,565.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-07-10,Cumulative_Cases,1373.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-07-10,Cumulative_Cases,263.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-07-10,Cumulative_Cases,41.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-07-10,Cumulative_Cases,711.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-07-10,Cumulative_Cases,71.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-07-10,Cumulative_Cases,200.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-07-10,Cumulative_Cases,21.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-07-10,Cumulative_Cases,130.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-07-10,Cumulative_Cases,8.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-07-10,Cumulative_Cases,5490.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-07-10,Cumulative_Cases,72.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-07-10,Cumulative_Cases,297.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-07-10,Cumulative_Cases,106.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-07-10,Cumulative_Cases,333.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-07-10,Cumulative_Cases,67.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-07-10,Cumulative_Cases,913.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-07-10,Cumulative_Cases,96.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-07-10,Cumulative_Cases,243.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-07-10,Cumulative_Cases,173.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-07-10,Cumulative_Cases,10484.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-07-10,Cumulative_Cases,925.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-07-10,Cumulative_Cases,617.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-07-10,Cumulative_Cases,84.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-07-10,Cumulative_Cases,220.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-07-10,Cumulative_Cases,9934.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-07-10,Cumulative_Cases,1975.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-07-10,Cumulative_Cases,1109.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-07-10,Cumulative_Cases,52533.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-07-10,Cumulative_Cases,808.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-07-10,Cumulative_Cases,391.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-07-10,Cumulative_Cases,750.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-07-10,Cumulative_Cases,1229.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-07-10,Cumulative_Cases,954.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-07-10,Cumulative_Cases,165.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-07-10,Cumulative_Cases,279.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-07-10,Cumulative_Cases,350.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-07-10,Cumulative_Cases,109.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-07-10,Cumulative_Cases,28.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-07-10,Cumulative_Cases,663.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-07-10,Cumulative_Cases,631.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-07-17,Cumulative_Cases,1035.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-07-17,Cumulative_Cases,867.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-07-17,Cumulative_Cases,222.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-07-17,Cumulative_Cases,1066.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-07-17,Cumulative_Cases,117.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-07-17,Cumulative_Cases,1672.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-07-17,Cumulative_Cases,815.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-07-17,Cumulative_Cases,1467.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-07-17,Cumulative_Cases,4.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-07-17,Cumulative_Cases,194.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-07-17,Cumulative_Cases,1776.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-07-17,Cumulative_Cases,1022.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-07-17,Cumulative_Cases,3989.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-07-17,Cumulative_Cases,888.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-07-17,Cumulative_Cases,2012.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-07-17,Cumulative_Cases,387.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-07-17,Cumulative_Cases,65.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-07-17,Cumulative_Cases,169.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-07-17,Cumulative_Cases,1040.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-07-17,Cumulative_Cases,113.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-07-17,Cumulative_Cases,295.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-07-17,Cumulative_Cases,33.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-07-17,Cumulative_Cases,188.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-07-17,Cumulative_Cases,11.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-07-17,Cumulative_Cases,8183.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-07-17,Cumulative_Cases,107.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-07-17,Cumulative_Cases,450.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-07-17,Cumulative_Cases,139.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-07-17,Cumulative_Cases,473.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-07-17,Cumulative_Cases,1372.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-07-17,Cumulative_Cases,150.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-07-17,Cumulative_Cases,338.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-07-17,Cumulative_Cases,247.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-07-17,Cumulative_Cases,15231.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-07-17,Cumulative_Cases,1348.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-07-17,Cumulative_Cases,937.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-07-17,Cumulative_Cases,136.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-07-17,Cumulative_Cases,354.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-07-17,Cumulative_Cases,14995.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-07-17,Cumulative_Cases,3026.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-07-17,Cumulative_Cases,1760.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-07-17,Cumulative_Cases,78317.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-07-17,Cumulative_Cases,1216.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-07-17,Cumulative_Cases,431.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-07-17,Cumulative_Cases,593.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-07-17,Cumulative_Cases,1096.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-07-17,Cumulative_Cases,1826.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-07-17,Cumulative_Cases,1378.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-07-17,Cumulative_Cases,90.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-07-17,Cumulative_Cases,992.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-07-17,Cumulative_Cases,528.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-07-17,Cumulative_Cases,165.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-07-17,Cumulative_Cases,49.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-07-17,Cumulative_Cases,1001.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-07-17,Cumulative_Cases,246.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-07-24,Cumulative_Cases,1379.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-07-24,Cumulative_Cases,1103.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-07-24,Cumulative_Cases,313.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-07-24,Cumulative_Cases,1391.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-07-24,Cumulative_Cases,156.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-07-24,Cumulative_Cases,1087.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-07-24,Cumulative_Cases,2278.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-07-24,Cumulative_Cases,1962.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-07-24,Cumulative_Cases,5.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-07-24,Cumulative_Cases,223.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-07-24,Cumulative_Cases,2394.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-07-24,Cumulative_Cases,284.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-07-24,Cumulative_Cases,1200.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-07-24,Cumulative_Cases,132.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-07-24,Cumulative_Cases,2672.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-07-24,Cumulative_Cases,528.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-07-24,Cumulative_Cases,80.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-07-24,Cumulative_Cases,10920.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-07-24,Cumulative_Cases,1336.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-07-24,Cumulative_Cases,159.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-07-24,Cumulative_Cases,396.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-07-24,Cumulative_Cases,53.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-07-24,Cumulative_Cases,243.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-07-24,Cumulative_Cases,12.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-07-24,Cumulative_Cases,616.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-07-24,Cumulative_Cases,1347.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-07-24,Cumulative_Cases,5307.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-07-24,Cumulative_Cases,125.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-07-24,Cumulative_Cases,610.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-07-24,Cumulative_Cases,645.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-07-24,Cumulative_Cases,104726.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-07-24,Cumulative_Cases,1881.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-07-24,Cumulative_Cases,204.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-07-24,Cumulative_Cases,456.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-07-24,Cumulative_Cases,319.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-07-24,Cumulative_Cases,19818.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-07-24,Cumulative_Cases,1266.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-07-24,Cumulative_Cases,198.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-07-24,Cumulative_Cases,472.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-07-24,Cumulative_Cases,20371.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-07-24,Cumulative_Cases,4183.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-07-24,Cumulative_Cases,1754.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-07-24,Cumulative_Cases,179.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-07-24,Cumulative_Cases,2428.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-07-24,Cumulative_Cases,1452.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-07-24,Cumulative_Cases,2443.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-07-24,Cumulative_Cases,1810.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-07-24,Cumulative_Cases,336.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-07-24,Cumulative_Cases,1365.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-07-24,Cumulative_Cases,775.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-07-24,Cumulative_Cases,237.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-07-24,Cumulative_Cases,70.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-07-24,Cumulative_Cases,1318.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-07-24,Cumulative_Cases,1656.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-07-24,Cumulative_Cases,757.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-07-31,Cumulative_Cases,328.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-07-31,Cumulative_Cases,1735.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-07-31,Cumulative_Cases,1344.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-07-31,Cumulative_Cases,393.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-07-31,Cumulative_Cases,1733.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-07-31,Cumulative_Cases,2851.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-07-31,Cumulative_Cases,3020.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-07-31,Cumulative_Cases,1332.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-07-31,Cumulative_Cases,2481.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-07-31,Cumulative_Cases,7.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-07-31,Cumulative_Cases,188.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-07-31,Cumulative_Cases,1706.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-07-31,Cumulative_Cases,288.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-07-31,Cumulative_Cases,1505.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-07-31,Cumulative_Cases,3429.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-07-31,Cumulative_Cases,667.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-07-31,Cumulative_Cases,96.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-07-31,Cumulative_Cases,6674.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-07-31,Cumulative_Cases,1693.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-07-31,Cumulative_Cases,197.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-07-31,Cumulative_Cases,524.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-07-31,Cumulative_Cases,62.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-07-31,Cumulative_Cases,286.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-07-31,Cumulative_Cases,14.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-07-31,Cumulative_Cases,13813.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-07-31,Cumulative_Cases,159.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-07-31,Cumulative_Cases,753.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-07-31,Cumulative_Cases,215.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-07-31,Cumulative_Cases,800.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-07-31,Cumulative_Cases,131609.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-07-31,Cumulative_Cases,2447.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-07-31,Cumulative_Cases,247.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-07-31,Cumulative_Cases,579.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-07-31,Cumulative_Cases,390.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-07-31,Cumulative_Cases,24364.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-07-31,Cumulative_Cases,2144.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-07-31,Cumulative_Cases,1604.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-07-31,Cumulative_Cases,255.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-07-31,Cumulative_Cases,560.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-07-31,Cumulative_Cases,25789.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-07-31,Cumulative_Cases,5377.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-07-31,Cumulative_Cases,3126.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-07-31,Cumulative_Cases,147.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-07-31,Cumulative_Cases,2222.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-07-31,Cumulative_Cases,947.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-07-31,Cumulative_Cases,1788.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-07-31,Cumulative_Cases,3049.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-07-31,Cumulative_Cases,2249.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-07-31,Cumulative_Cases,419.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-07-31,Cumulative_Cases,833.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-07-31,Cumulative_Cases,953.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-07-31,Cumulative_Cases,291.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-07-31,Cumulative_Cases,99.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-07-31,Cumulative_Cases,1662.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-07-31,Cumulative_Cases,1744.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-08-07,Cumulative_Cases,389.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-08-07,Cumulative_Cases,2051.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-08-07,Cumulative_Cases,1620.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-08-07,Cumulative_Cases,536.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-08-07,Cumulative_Cases,2063.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-08-07,Cumulative_Cases,3454.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-08-07,Cumulative_Cases,1709.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-08-07,Cumulative_Cases,3019.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-08-07,Cumulative_Cases,11.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-08-07,Cumulative_Cases,1936.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-08-07,Cumulative_Cases,223.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-08-07,Cumulative_Cases,186.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-08-07,Cumulative_Cases,2038.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-08-07,Cumulative_Cases,4164.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-08-07,Cumulative_Cases,795.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-08-07,Cumulative_Cases,113.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-08-07,Cumulative_Cases,8140.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-08-07,Cumulative_Cases,335.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-08-07,Cumulative_Cases,249.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-08-07,Cumulative_Cases,647.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-08-07,Cumulative_Cases,75.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-08-07,Cumulative_Cases,312.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-08-07,Cumulative_Cases,18.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-08-07,Cumulative_Cases,16824.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-08-07,Cumulative_Cases,1920.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-08-07,Cumulative_Cases,881.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-08-07,Cumulative_Cases,3708.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-08-07,Cumulative_Cases,160910.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-08-07,Cumulative_Cases,967.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-08-07,Cumulative_Cases,3177.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-08-07,Cumulative_Cases,306.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-08-07,Cumulative_Cases,729.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-08-07,Cumulative_Cases,501.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-08-07,Cumulative_Cases,29164.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-08-07,Cumulative_Cases,2627.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-08-07,Cumulative_Cases,1969.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-08-07,Cumulative_Cases,319.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-08-07,Cumulative_Cases,683.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-08-07,Cumulative_Cases,31543.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-08-07,Cumulative_Cases,7079.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-08-07,Cumulative_Cases,3815.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-08-07,Cumulative_Cases,180.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-08-07,Cumulative_Cases,2755.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-08-07,Cumulative_Cases,271.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-08-07,Cumulative_Cases,1137.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-08-07,Cumulative_Cases,2177.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-08-07,Cumulative_Cases,3714.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-08-07,Cumulative_Cases,2736.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-08-07,Cumulative_Cases,523.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-08-07,Cumulative_Cases,1133.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-08-07,Cumulative_Cases,2195.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-08-07,Cumulative_Cases,1172.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-08-07,Cumulative_Cases,363.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-08-07,Cumulative_Cases,128.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-08-07,Cumulative_Cases,2089.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-08-14,Cumulative_Cases,1902.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-08-14,Cumulative_Cases,608.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-08-14,Cumulative_Cases,2431.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-08-14,Cumulative_Cases,273.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-08-14,Cumulative_Cases,4065.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-08-14,Cumulative_Cases,385.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-08-14,Cumulative_Cases,2206.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-08-14,Cumulative_Cases,3522.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-08-14,Cumulative_Cases,11.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-08-14,Cumulative_Cases,2431.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-08-14,Cumulative_Cases,4570.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-08-14,Cumulative_Cases,458.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-08-14,Cumulative_Cases,9824.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-08-14,Cumulative_Cases,213.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-08-14,Cumulative_Cases,2566.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-08-14,Cumulative_Cases,5057.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-08-14,Cumulative_Cases,935.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-08-14,Cumulative_Cases,136.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-08-14,Cumulative_Cases,2369.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-08-14,Cumulative_Cases,290.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-08-14,Cumulative_Cases,748.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-08-14,Cumulative_Cases,87.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-08-14,Cumulative_Cases,357.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-08-14,Cumulative_Cases,23.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-08-14,Cumulative_Cases,19994.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-08-14,Cumulative_Cases,2410.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-08-14,Cumulative_Cases,1049.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-08-14,Cumulative_Cases,204.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-08-14,Cumulative_Cases,1524.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-08-14,Cumulative_Cases,194558.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-08-14,Cumulative_Cases,4236.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-08-14,Cumulative_Cases,369.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-08-14,Cumulative_Cases,924.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-08-14,Cumulative_Cases,631.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-08-14,Cumulative_Cases,34158.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-08-14,Cumulative_Cases,3174.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-08-14,Cumulative_Cases,2339.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-08-14,Cumulative_Cases,392.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-08-14,Cumulative_Cases,808.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-08-14,Cumulative_Cases,38032.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-08-14,Cumulative_Cases,9955.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-08-14,Cumulative_Cases,1155.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-08-14,Cumulative_Cases,311.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-08-14,Cumulative_Cases,1307.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-08-14,Cumulative_Cases,2482.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-08-14,Cumulative_Cases,4316.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-08-14,Cumulative_Cases,4596.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-08-14,Cumulative_Cases,600.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-08-14,Cumulative_Cases,3258.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-08-14,Cumulative_Cases,1482.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-08-14,Cumulative_Cases,441.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-08-14,Cumulative_Cases,159.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-08-14,Cumulative_Cases,2666.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-08-14,Cumulative_Cases,3356.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-08-14,Cumulative_Cases,2709.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-08-21,Cumulative_Cases,2207.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-08-21,Cumulative_Cases,726.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-08-21,Cumulative_Cases,2894.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-08-21,Cumulative_Cases,298.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-08-21,Cumulative_Cases,428.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-08-21,Cumulative_Cases,4673.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-08-21,Cumulative_Cases,2792.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-08-21,Cumulative_Cases,4102.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-08-21,Cumulative_Cases,12.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-08-21,Cumulative_Cases,2815.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-08-21,Cumulative_Cases,5625.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-08-21,Cumulative_Cases,521.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-08-21,Cumulative_Cases,11825.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-08-21,Cumulative_Cases,249.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-08-21,Cumulative_Cases,3370.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-08-21,Cumulative_Cases,6385.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-08-21,Cumulative_Cases,1114.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-08-21,Cumulative_Cases,152.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-08-21,Cumulative_Cases,2766.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-08-21,Cumulative_Cases,360.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-08-21,Cumulative_Cases,880.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-08-21,Cumulative_Cases,112.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-08-21,Cumulative_Cases,412.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-08-21,Cumulative_Cases,40.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-08-21,Cumulative_Cases,1253.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-08-21,Cumulative_Cases,3199.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-08-21,Cumulative_Cases,23030.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-08-21,Cumulative_Cases,242.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-08-21,Cumulative_Cases,1905.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-08-21,Cumulative_Cases,1335.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-08-21,Cumulative_Cases,235517.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-08-21,Cumulative_Cases,5824.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-08-21,Cumulative_Cases,435.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-08-21,Cumulative_Cases,1118.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-08-21,Cumulative_Cases,823.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-08-21,Cumulative_Cases,39649.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-08-21,Cumulative_Cases,2708.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-08-21,Cumulative_Cases,457.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-08-21,Cumulative_Cases,954.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-08-21,Cumulative_Cases,47137.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-08-21,Cumulative_Cases,13107.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-08-21,Cumulative_Cases,3935.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-08-21,Cumulative_Cases,365.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-08-21,Cumulative_Cases,5580.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-08-21,Cumulative_Cases,2883.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-08-21,Cumulative_Cases,4996.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-08-21,Cumulative_Cases,3799.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-08-21,Cumulative_Cases,698.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-08-21,Cumulative_Cases,3573.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-08-21,Cumulative_Cases,1478.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-08-21,Cumulative_Cases,531.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-08-21,Cumulative_Cases,197.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-08-21,Cumulative_Cases,3345.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-08-21,Cumulative_Cases,4172.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-08-21,Cumulative_Cases,1971.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-08-28,Cumulative_Cases,587.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-08-28,Cumulative_Cases,3248.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-08-28,Cumulative_Cases,2490.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-08-28,Cumulative_Cases,858.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-08-28,Cumulative_Cases,3451.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-08-28,Cumulative_Cases,5267.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-08-28,Cumulative_Cases,6745.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-08-28,Cumulative_Cases,3368.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-08-28,Cumulative_Cases,4636.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-08-28,Cumulative_Cases,16.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-08-28,Cumulative_Cases,338.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-08-28,Cumulative_Cases,4033.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-08-28,Cumulative_Cases,443.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-08-28,Cumulative_Cases,4171.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-08-28,Cumulative_Cases,8483.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-08-28,Cumulative_Cases,1323.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-08-28,Cumulative_Cases,163.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-08-28,Cumulative_Cases,14201.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-08-28,Cumulative_Cases,3262.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-08-28,Cumulative_Cases,547.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-08-28,Cumulative_Cases,1005.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-08-28,Cumulative_Cases,143.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-08-28,Cumulative_Cases,492.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-08-28,Cumulative_Cases,48.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-08-28,Cumulative_Cases,26275.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-08-28,Cumulative_Cases,275.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-08-28,Cumulative_Cases,1502.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-08-28,Cumulative_Cases,1650.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-08-28,Cumulative_Cases,281.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-08-28,Cumulative_Cases,279567.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-08-28,Cumulative_Cases,7355.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-08-28,Cumulative_Cases,491.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-08-28,Cumulative_Cases,1341.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-08-28,Cumulative_Cases,1130.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-08-28,Cumulative_Cases,45699.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-08-28,Cumulative_Cases,4818.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-08-28,Cumulative_Cases,535.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-08-28,Cumulative_Cases,1130.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-08-28,Cumulative_Cases,56388.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-08-28,Cumulative_Cases,15736.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-08-28,Cumulative_Cases,6548.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-08-28,Cumulative_Cases,3119.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-08-28,Cumulative_Cases,5158.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-08-28,Cumulative_Cases,426.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-08-28,Cumulative_Cases,1668.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-08-28,Cumulative_Cases,3395.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-08-28,Cumulative_Cases,5643.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-08-28,Cumulative_Cases,4408.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-08-28,Cumulative_Cases,767.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-08-28,Cumulative_Cases,2265.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-08-28,Cumulative_Cases,2592.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-08-28,Cumulative_Cases,659.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-08-28,Cumulative_Cases,234.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-08-28,Cumulative_Cases,4128.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-08-28,Cumulative_Cases,4593.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-09-04,Cumulative_Cases,4689.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-09-04,Cumulative_Cases,648.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-09-04,Cumulative_Cases,3823.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-09-04,Cumulative_Cases,2838.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-09-04,Cumulative_Cases,1017.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-09-04,Cumulative_Cases,4144.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-09-04,Cumulative_Cases,5869.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-09-04,Cumulative_Cases,8193.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-09-04,Cumulative_Cases,4016.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-09-04,Cumulative_Cases,5311.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-09-04,Cumulative_Cases,22.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-09-04,Cumulative_Cases,399.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-09-04,Cumulative_Cases,311.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-09-04,Cumulative_Cases,325.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-09-04,Cumulative_Cases,10010.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-09-04,Cumulative_Cases,1530.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-09-04,Cumulative_Cases,191.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-09-04,Cumulative_Cases,16884.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-09-04,Cumulative_Cases,3827.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-09-04,Cumulative_Cases,745.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-09-04,Cumulative_Cases,1149.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-09-04,Cumulative_Cases,187.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-09-04,Cumulative_Cases,577.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-09-04,Cumulative_Cases,65.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-09-04,Cumulative_Cases,29512.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-09-04,Cumulative_Cases,515.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-09-04,Cumulative_Cases,4859.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-09-04,Cumulative_Cases,1807.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-09-04,Cumulative_Cases,851.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-09-04,Cumulative_Cases,2077.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-09-04,Cumulative_Cases,323963.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-09-04,Cumulative_Cases,8697.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-09-04,Cumulative_Cases,569.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-09-04,Cumulative_Cases,1541.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-09-04,Cumulative_Cases,1404.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-09-04,Cumulative_Cases,51642.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-09-04,Cumulative_Cases,5726.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-09-04,Cumulative_Cases,626.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-09-04,Cumulative_Cases,1375.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-09-04,Cumulative_Cases,65374.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-09-04,Cumulative_Cases,18182.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-09-04,Cumulative_Cases,7443.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-09-04,Cumulative_Cases,3653.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-09-04,Cumulative_Cases,6114.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-09-04,Cumulative_Cases,511.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-09-04,Cumulative_Cases,1815.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-09-04,Cumulative_Cases,4061.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-09-04,Cumulative_Cases,6406.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-09-04,Cumulative_Cases,5142.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-09-04,Cumulative_Cases,2544.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-09-04,Cumulative_Cases,3202.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-09-04,Cumulative_Cases,800.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-09-04,Cumulative_Cases,284.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-09-04,Cumulative_Cases,4958.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-09-04,Cumulative_Cases,5499.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-09-11,Cumulative_Cases,5388.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-09-11,Cumulative_Cases,719.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-09-11,Cumulative_Cases,4479.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-09-11,Cumulative_Cases,3233.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-09-11,Cumulative_Cases,1230.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-09-11,Cumulative_Cases,4819.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-09-11,Cumulative_Cases,6625.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-09-11,Cumulative_Cases,9765.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-09-11,Cumulative_Cases,4561.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-09-11,Cumulative_Cases,6078.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-09-11,Cumulative_Cases,26.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-09-11,Cumulative_Cases,470.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-09-11,Cumulative_Cases,351.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-09-11,Cumulative_Cases,367.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-09-11,Cumulative_Cases,11620.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-09-11,Cumulative_Cases,1748.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-09-11,Cumulative_Cases,200.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-09-11,Cumulative_Cases,19652.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-09-11,Cumulative_Cases,4422.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-09-11,Cumulative_Cases,919.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-09-11,Cumulative_Cases,1350.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-09-11,Cumulative_Cases,238.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-09-11,Cumulative_Cases,653.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-09-11,Cumulative_Cases,80.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-09-11,Cumulative_Cases,33213.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-09-11,Cumulative_Cases,583.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-09-11,Cumulative_Cases,5555.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-09-11,Cumulative_Cases,2071.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-09-11,Cumulative_Cases,6308.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-09-11,Cumulative_Cases,2448.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-09-11,Cumulative_Cases,9794.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-09-11,Cumulative_Cases,681.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-09-11,Cumulative_Cases,1757.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-09-11,Cumulative_Cases,1682.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-09-11,Cumulative_Cases,57894.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-09-11,Cumulative_Cases,6599.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-09-11,Cumulative_Cases,4244.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-09-11,Cumulative_Cases,1654.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-09-11,Cumulative_Cases,73390.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-09-11,Cumulative_Cases,20666.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-09-11,Cumulative_Cases,8452.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-09-11,Cumulative_Cases,588.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-09-11,Cumulative_Cases,716.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-09-11,Cumulative_Cases,5690.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-09-11,Cumulative_Cases,7163.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-09-11,Cumulative_Cases,2044.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-09-11,Cumulative_Cases,4822.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-09-11,Cumulative_Cases,7255.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-09-11,Cumulative_Cases,5901.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-09-11,Cumulative_Cases,2814.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-09-11,Cumulative_Cases,368911.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-09-11,Cumulative_Cases,3726.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-09-11,Cumulative_Cases,908.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-09-11,Cumulative_Cases,313.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-09-11,Cumulative_Cases,956.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-09-18,Cumulative_Cases,5233.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-09-18,Cumulative_Cases,3632.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-09-18,Cumulative_Cases,1475.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-09-18,Cumulative_Cases,5558.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-09-18,Cumulative_Cases,539.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-09-18,Cumulative_Cases,7580.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-09-18,Cumulative_Cases,5204.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-09-18,Cumulative_Cases,6929.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-09-18,Cumulative_Cases,36.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-09-18,Cumulative_Cases,875.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-09-18,Cumulative_Cases,11402.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-09-18,Cumulative_Cases,6096.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-09-18,Cumulative_Cases,38269.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-09-18,Cumulative_Cases,6237.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-09-18,Cumulative_Cases,12706.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-09-18,Cumulative_Cases,1957.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-09-18,Cumulative_Cases,228.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-09-18,Cumulative_Cases,22458.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-09-18,Cumulative_Cases,5012.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-09-18,Cumulative_Cases,1143.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-09-18,Cumulative_Cases,1614.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-09-18,Cumulative_Cases,292.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-09-18,Cumulative_Cases,776.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-09-18,Cumulative_Cases,92.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-09-18,Cumulative_Cases,640.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-09-18,Cumulative_Cases,427.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-09-18,Cumulative_Cases,2302.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-09-18,Cumulative_Cases,1072.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-09-18,Cumulative_Cases,2809.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-09-18,Cumulative_Cases,416527.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-09-18,Cumulative_Cases,10817.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-09-18,Cumulative_Cases,800.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-09-18,Cumulative_Cases,1975.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-09-18,Cumulative_Cases,1937.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-09-18,Cumulative_Cases,64122.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-09-18,Cumulative_Cases,7550.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-09-18,Cumulative_Cases,411.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-09-18,Cumulative_Cases,842.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-09-18,Cumulative_Cases,1965.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-09-18,Cumulative_Cases,81482.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-09-18,Cumulative_Cases,23388.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-09-18,Cumulative_Cases,9416.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-09-18,Cumulative_Cases,4979.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-09-18,Cumulative_Cases,8265.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-09-18,Cumulative_Cases,671.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-09-18,Cumulative_Cases,2360.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-09-18,Cumulative_Cases,5638.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-09-18,Cumulative_Cases,8245.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-09-18,Cumulative_Cases,6751.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-09-18,Cumulative_Cases,3093.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-09-18,Cumulative_Cases,7107.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-09-18,Cumulative_Cases,4260.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-09-18,Cumulative_Cases,1020.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-09-18,Cumulative_Cases,363.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-09-18,Cumulative_Cases,6557.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-09-25,Cumulative_Cases,6819.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-09-25,Cumulative_Cases,5939.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-09-25,Cumulative_Cases,4085.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-09-25,Cumulative_Cases,1720.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-09-25,Cumulative_Cases,6247.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-09-25,Cumulative_Cases,12873.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-09-25,Cumulative_Cases,44.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-09-25,Cumulative_Cases,8516.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-09-25,Cumulative_Cases,5866.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-09-25,Cumulative_Cases,7875.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-09-25,Cumulative_Cases,578.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-09-25,Cumulative_Cases,488.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-09-25,Cumulative_Cases,1013.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-09-25,Cumulative_Cases,14103.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-09-25,Cumulative_Cases,2185.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-09-25,Cumulative_Cases,262.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-09-25,Cumulative_Cases,25299.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-09-25,Cumulative_Cases,5647.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-09-25,Cumulative_Cases,1312.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-09-25,Cumulative_Cases,1877.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-09-25,Cumulative_Cases,355.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-09-25,Cumulative_Cases,889.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-09-25,Cumulative_Cases,100.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-09-25,Cumulative_Cases,43488.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-09-25,Cumulative_Cases,711.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-09-25,Cumulative_Cases,6966.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-09-25,Cumulative_Cases,2570.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-09-25,Cumulative_Cases,3136.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-09-25,Cumulative_Cases,465.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-09-25,Cumulative_Cases,464989.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-09-25,Cumulative_Cases,11823.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-09-25,Cumulative_Cases,926.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-09-25,Cumulative_Cases,2214.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-09-25,Cumulative_Cases,2179.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-09-25,Cumulative_Cases,70652.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-09-25,Cumulative_Cases,8607.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-09-25,Cumulative_Cases,945.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-09-25,Cumulative_Cases,2243.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-09-25,Cumulative_Cases,90076.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-09-25,Cumulative_Cases,26195.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-09-25,Cumulative_Cases,10417.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-09-25,Cumulative_Cases,5677.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-09-25,Cumulative_Cases,9343.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-09-25,Cumulative_Cases,742.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-09-25,Cumulative_Cases,2664.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-09-25,Cumulative_Cases,6584.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-09-25,Cumulative_Cases,9274.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-09-25,Cumulative_Cases,7602.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-09-25,Cumulative_Cases,1202.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-09-25,Cumulative_Cases,3343.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-09-25,Cumulative_Cases,4840.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-09-25,Cumulative_Cases,1116.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-09-25,Cumulative_Cases,399.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-09-25,Cumulative_Cases,7403.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-09-25,Cumulative_Cases,7852.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-10-02,Cumulative_Cases,1162.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-10-02,Cumulative_Cases,6700.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-10-02,Cumulative_Cases,4546.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-10-02,Cumulative_Cases,1890.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-10-02,Cumulative_Cases,6898.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-10-02,Cumulative_Cases,593.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-10-02,Cumulative_Cases,6571.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-10-02,Cumulative_Cases,9498.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-10-02,Cumulative_Cases,8849.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-10-02,Cumulative_Cases,73.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-10-02,Cumulative_Cases,1496.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-10-02,Cumulative_Cases,14380.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-10-02,Cumulative_Cases,7585.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-10-02,Cumulative_Cases,510.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-10-02,Cumulative_Cases,7739.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-10-02,Cumulative_Cases,15793.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-10-02,Cumulative_Cases,2412.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-10-02,Cumulative_Cases,293.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-10-02,Cumulative_Cases,28320.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-10-02,Cumulative_Cases,6458.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-10-02,Cumulative_Cases,1509.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-10-02,Cumulative_Cases,2236.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-10-02,Cumulative_Cases,394.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-10-02,Cumulative_Cases,1018.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-10-02,Cumulative_Cases,127.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-10-02,Cumulative_Cases,2818.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-10-02,Cumulative_Cases,555.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-10-02,Cumulative_Cases,48998.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-10-02,Cumulative_Cases,1322.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-10-02,Cumulative_Cases,3777.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-10-02,Cumulative_Cases,520203.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-10-02,Cumulative_Cases,12847.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-10-02,Cumulative_Cases,1060.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-10-02,Cumulative_Cases,3660.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-10-02,Cumulative_Cases,2429.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-10-02,Cumulative_Cases,77115.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-10-02,Cumulative_Cases,3501.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-10-02,Cumulative_Cases,6464.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-10-02,Cumulative_Cases,1070.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-10-02,Cumulative_Cases,2546.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-10-02,Cumulative_Cases,99994.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-10-02,Cumulative_Cases,29066.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-10-02,Cumulative_Cases,9588.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-10-02,Cumulative_Cases,832.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-10-02,Cumulative_Cases,11366.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-10-02,Cumulative_Cases,2907.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-10-02,Cumulative_Cases,8053.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-10-02,Cumulative_Cases,10507.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-10-02,Cumulative_Cases,8863.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-10-02,Cumulative_Cases,8761.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-10-02,Cumulative_Cases,1276.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-10-02,Cumulative_Cases,430.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-10-02,Cumulative_Cases,8666.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-10-02,Cumulative_Cases,10447.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-10-02,Cumulative_Cases,5343.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-10-09,Cumulative_Cases,7362.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-10-09,Cumulative_Cases,7659.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-10-09,Cumulative_Cases,5017.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-10-09,Cumulative_Cases,2089.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-10-09,Cumulative_Cases,633.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-10-09,Cumulative_Cases,2338.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-10-09,Cumulative_Cases,10396.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-10-09,Cumulative_Cases,7277.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-10-09,Cumulative_Cases,9829.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-10-09,Cumulative_Cases,103.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-10-09,Cumulative_Cases,1294.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-10-09,Cumulative_Cases,15957.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-10-09,Cumulative_Cases,8382.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-10-09,Cumulative_Cases,3891.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-10-09,Cumulative_Cases,8468.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-10-09,Cumulative_Cases,17478.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-10-09,Cumulative_Cases,2619.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-10-09,Cumulative_Cases,320.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-10-09,Cumulative_Cases,31465.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-10-09,Cumulative_Cases,7213.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-10-09,Cumulative_Cases,1678.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-10-09,Cumulative_Cases,2586.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-10-09,Cumulative_Cases,457.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-10-09,Cumulative_Cases,1086.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-10-09,Cumulative_Cases,147.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-10-09,Cumulative_Cases,54260.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-10-09,Cumulative_Cases,601.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-10-09,Cumulative_Cases,3133.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-10-09,Cumulative_Cases,9912.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-10-09,Cumulative_Cases,4220.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-10-09,Cumulative_Cases,553.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,,,2023-10-09,Cumulative_Cases,575865.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-10-09,Cumulative_Cases,13892.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-10-09,Cumulative_Cases,1253.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-10-09,Cumulative_Cases,4988.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-10-09,Cumulative_Cases,2722.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-10-09,Cumulative_Cases,84201.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-10-09,Cumulative_Cases,10744.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-10-09,Cumulative_Cases,1190.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-10-09,Cumulative_Cases,2874.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-10-09,Cumulative_Cases,110263.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-10-09,Cumulative_Cases,32000.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-10-09,Cumulative_Cases,7139.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-10-09,Cumulative_Cases,909.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-10-09,Cumulative_Cases,3230.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-10-09,Cumulative_Cases,12282.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-10-09,Cumulative_Cases,11631.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-10-09,Cumulative_Cases,9892.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-10-09,Cumulative_Cases,1478.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-10-09,Cumulative_Cases,9582.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-10-09,Cumulative_Cases,1447.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-10-09,Cumulative_Cases,499.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-10-09,Cumulative_Cases,9912.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-10-09,Cumulative_Cases,5860.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-10-09,Cumulative_Cases,11540.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-10-16,Cumulative_Cases,130.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-10-16,Cumulative_Cases,8183.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-10-16,Cumulative_Cases,5448.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-10-16,Cumulative_Cases,2367.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-10-16,Cumulative_Cases,8450.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-10-16,Cumulative_Cases,17560.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-10-16,Cumulative_Cases,11295.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-10-16,Cumulative_Cases,8092.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-10-16,Cumulative_Cases,10871.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-10-16,Cumulative_Cases,1423.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-10-16,Cumulative_Cases,674.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-10-16,Cumulative_Cases,9252.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-10-16,Cumulative_Cases,168.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-10-16,Cumulative_Cases,9157.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-10-16,Cumulative_Cases,19456.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-10-16,Cumulative_Cases,2857.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-10-16,Cumulative_Cases,363.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-10-16,Cumulative_Cases,34884.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-10-16,Cumulative_Cases,7974.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-10-16,Cumulative_Cases,1821.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-10-16,Cumulative_Cases,2941.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-10-16,Cumulative_Cases,543.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-10-16,Cumulative_Cases,1204.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-10-16,Cumulative_Cases,3262.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-10-16,Cumulative_Cases,59915.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-10-16,Cumulative_Cases,660.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-10-16,Cumulative_Cases,3444.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-10-16,Cumulative_Cases,1591.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-10-16,Cumulative_Cases,4235.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-10-16,Cumulative_Cases,15013.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-10-16,Cumulative_Cases,1424.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-10-16,Cumulative_Cases,6378.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-10-16,Cumulative_Cases,3061.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-10-16,Cumulative_Cases,92594.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-10-16,Cumulative_Cases,12055.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-10-16,Cumulative_Cases,604.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-10-16,Cumulative_Cases,1315.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-10-16,Cumulative_Cases,3273.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-10-16,Cumulative_Cases,121366.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-10-16,Cumulative_Cases,34885.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-10-16,Cumulative_Cases,12420.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-10-16,Cumulative_Cases,7852.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-10-16,Cumulative_Cases,12624.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-10-16,Cumulative_Cases,986.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-10-16,Cumulative_Cases,4725.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-10-16,Cumulative_Cases,3539.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-10-16,Cumulative_Cases,12920.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-10-16,Cumulative_Cases,11101.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-10-16,Cumulative_Cases,11120.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-10-16,Cumulative_Cases,6420.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-10-16,Cumulative_Cases,1640.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-10-16,Cumulative_Cases,557.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-10-16,Cumulative_Cases,11181.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-10-16,Cumulative_Cases,11180.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Dakota,,2023-10-23,Cumulative_Cases,746.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oregon,,2023-10-23,Cumulative_Cases,5899.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Oklahoma,,2023-10-23,Cumulative_Cases,2701.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Ohio,,2023-10-23,Cumulative_Cases,9278.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,North Carolina,,2023-10-23,Cumulative_Cases,19369.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Pennsylvania,,2023-10-23,Cumulative_Cases,9005.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Mexico,,2023-10-23,Cumulative_Cases,8905.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Jersey,,2023-10-23,Cumulative_Cases,11893.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New Hampshire,,2023-10-23,Cumulative_Cases,164.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nevada,,2023-10-23,Cumulative_Cases,4227.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York,,2023-10-23,Cumulative_Cases,12154.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Rhode Island,,2023-10-23,Cumulative_Cases,1578.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Nebraska,,2023-10-23,Cumulative_Cases,3762.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Dakota,,2023-10-23,Cumulative_Cases,741.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Tennessee,,2023-10-23,Cumulative_Cases,9940.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Texas,,2023-10-23,Cumulative_Cases,21452.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Utah,,2023-10-23,Cumulative_Cases,3078.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Vermont,,2023-10-23,Cumulative_Cases,397.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virginia,,2023-10-23,Cumulative_Cases,38636.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Washington,,2023-10-23,Cumulative_Cases,8688.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,West Virginia,,2023-10-23,Cumulative_Cases,2021.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wisconsin,,2023-10-23,Cumulative_Cases,3293.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Wyoming,,2023-10-23,Cumulative_Cases,611.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Puerto Rico,,2023-10-23,Cumulative_Cases,1361.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,South Carolina,,2023-10-23,Cumulative_Cases,10261.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Montana,,2023-10-23,Cumulative_Cases,646.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Virgin Islands,,2023-10-23,Cumulative_Cases,190.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Mississippi,,2023-10-23,Cumulative_Cases,5340.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alabama,,2023-10-23,Cumulative_Cases,16381.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Alaska,,2023-10-23,Cumulative_Cases,1595.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arizona,,2023-10-23,Cumulative_Cases,7800.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Arkansas,,2023-10-23,Cumulative_Cases,3365.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,California,,2023-10-23,Cumulative_Cases,101281.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Colorado,,2023-10-23,Cumulative_Cases,13331.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Connecticut,,2023-10-23,Cumulative_Cases,8658.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Delaware,,2023-10-23,Cumulative_Cases,1434.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,District of Columbia,,2023-10-23,Cumulative_Cases,3673.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Florida,,2023-10-23,Cumulative_Cases,133675.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Georgia,,2023-10-23,Cumulative_Cases,38249.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Missouri,,2023-10-23,Cumulative_Cases,4681.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Hawaii,,2023-10-23,Cumulative_Cases,12507.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Illinois,,2023-10-23,Cumulative_Cases,13701.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Indiana,,2023-10-23,Cumulative_Cases,12269.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Iowa,,2023-10-23,Cumulative_Cases,595.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kansas,,2023-10-23,Cumulative_Cases,1844.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Kentucky,,2023-10-23,Cumulative_Cases,6936.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Louisiana,,2023-10-23,Cumulative_Cases,12665.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maine,,2023-10-23,Cumulative_Cases,1725.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Maryland,,2023-10-23,Cumulative_Cases,12251.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Massachusetts,,2023-10-23,Cumulative_Cases,14140.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Michigan,,2023-10-23,Cumulative_Cases,12861.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Minnesota,,2023-10-23,Cumulative_Cases,3831.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,Idaho,,2023-10-23,Cumulative_Cases,1040.0
+Orthomyxovididae,"Influenza A, B, and C Virus",,AMRO,United States,New York City,,2023-10-23,Cumulative_Cases,65609.0

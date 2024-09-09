@@ -8,7 +8,7 @@ from utils.utils import get_initial_conditions
 import random
 import pytorch_lightning as lightning
 
-from model.resnet_1d import ResNet18, ResNet34, ResNet50
+from model.resnet_1d import ResNet18, ResNet34, ResNet50, ResNet101
 
 from utils.delphi_default_parameters import (
     p_v,
@@ -67,14 +67,24 @@ class parameter_prediction_layer(nn.Module):
 
         channels = 2 if include_death else 1
 
-        self.encoding_layer = ResNet18(channels=channels,
-                                       output_dim=12,
-                                       batch_norm=False,
-                                       layer_norm=False,)
+        # self.encoding_layer = ResNet18(channels=channels,
+        #                                output_dim=12,
+        #                                batch_norm=False,
+        #                                layer_norm=False,)
 
         # self.encoding_layer = ResNet34(output_dim=12,
         #                                channels=channels,
         #                                batch_norm=False,)
+
+        self.encoding_layer = ResNet50(channels=channels,
+                                       output_dim=12,
+                                       batch_norm=False,
+                                       layer_norm=False,)
+
+        # self.encoding_layer = ResNet101(channels=channels,
+        #                                 output_dim=12,
+        #                                 batch_norm=False,
+        #                                 layer_norm=False,)
 
     def forward(self,
                 time_series_x,

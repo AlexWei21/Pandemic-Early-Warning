@@ -11,6 +11,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from datetime import datetime
 from pathlib import Path
+from pytorch_lightning.callbacks import LearningRateMonitor
 
 from evaluation.data_inspection.low_quality_data import covid_low_quality_data
 
@@ -29,14 +30,16 @@ def run_training(lr: float = 1e-3,
                  selftune_weight:float = 1.0,
                  output_dir:str = None,
                  population_weighting:bool = False,
+                 input_normalization:bool = False,
+                 use_scheduler:bool=False,
                  ):
     
-    data_file_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/'
+    data_file_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/data_with_country_metadata/'
 
     Path(output_dir).mkdir(parents=False, exist_ok=True)
 
     ## Load Self-Tune Data
-    self_tune_data = process_data(processed_data_path = data_file_dir+'compartment_model_covid_data_objects_no_smoothing.pickle',
+    self_tune_data = process_data(processed_data_path = data_file_dir+'compartment_model_covid_data_objects.pickle',
                                   raw_data=False)
 
     self_tune_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=self_tune_data,
@@ -60,10 +63,16 @@ def run_training(lr: float = 1e-3,
     # Remove Sample with low quality
     self_tune_dataset.pandemic_data = [item for item in self_tune_dataset if (item.country_name, item.domain_name) not in covid_low_quality_data]
 
+    if input_normalization:
+        input_max = max([max(item.ts_case_input) for item in self_tune_dataset])
+        input_min = min([min(item.ts_case_input) for item in self_tune_dataset])
+        for item in self_tune_dataset:
+            item.ts_case_input = [((x - input_min) / (input_max - input_min)) for x in item.ts_case_input]
+
     print(f"Self-tune Dataset Length: {len(self_tune_dataset)}")
 
     ## Load Target Pandemic Data
-    target_pandemic_data = process_data(processed_data_path = data_file_dir+'compartment_model_covid_data_objects_no_smoothing.pickle',
+    target_pandemic_data = process_data(processed_data_path = data_file_dir+'compartment_model_covid_data_objects.pickle',
                                         raw_data=False)
     
     target_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=target_pandemic_data,
@@ -80,6 +89,12 @@ def run_training(lr: float = 1e-3,
     # Remove Sample with low quality
     target_pandemic_dataset.pandemic_data = [item for item in target_pandemic_dataset if (item.country_name, item.domain_name) not in covid_low_quality_data]
 
+    if input_normalization:
+        input_max = max([max(item.ts_case_input) for item in target_pandemic_dataset])
+        input_min = min([min(item.ts_case_input) for item in target_pandemic_dataset])
+        for item in target_pandemic_dataset:
+            item.ts_case_input = [((x - input_min) / (input_max - input_min)) for x in item.ts_case_input]
+    
     print(f"Target Dataset Length: {len(target_pandemic_dataset)}")
 
     for item in target_pandemic_dataset:
@@ -109,7 +124,9 @@ def run_training(lr: float = 1e-3,
                            include_death = include_death,
                            batch_size = batch_size,
                            output_dir=output_dir,
-                           population_weighting=population_weighting)
+                           population_weighting=population_weighting,
+                           use_scheduler=use_scheduler,
+                           )
     
     print(model)
     
@@ -121,6 +138,8 @@ def run_training(lr: float = 1e-3,
     else:
         logger = None
     
+    lr_monitor = LearningRateMonitor(logging_interval='step')
+
     trainer = Trainer(
         devices = 1,
         max_epochs=max_epochs,
@@ -128,6 +147,7 @@ def run_training(lr: float = 1e-3,
         num_sanity_val_steps = 0,
         default_root_dir= log_dir,
         log_every_n_steps=1,
+        callbacks=[lr_monitor]
     )
 
     trainer.fit(model,
@@ -140,14 +160,16 @@ run_training(### Training Args
              target_training_len = 46, # 46
              pred_len = 71, # 71
              record_run = True,
-             max_epochs = 10000,
+             max_epochs = 100000,
              log_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/logs/',
              ### Model Args
-             loss = 'MAE',
+             loss = 'Combined_Loss',
              dropout=0.0,
              past_pandemics=[],
              target_self_tuning=True,
              include_death=False,
-             population_weighting=True,
+             population_weighting=False,
+             input_normalization=False,
              selftune_weight=1,
-             output_dir=f"/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/{datetime.today().strftime('%m-%d-%H')}/",)
+             output_dir=f"/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/{datetime.today().strftime('%m-%d-%H')}/",
+             use_scheduler=False,)

@@ -94,6 +94,8 @@ def data_padding(data, look_back, pred_len, replace_value = 'prev'):
 
     ts_data.index = pd.DatetimeIndex(ts_data.index)
 
+    ts_data = ts_data[~ts_data.index.duplicated()]
+
     ts_data = ts_data.reindex(idx).ffill()
 
     look_back_data = ts_data.to_numpy()[:look_back]

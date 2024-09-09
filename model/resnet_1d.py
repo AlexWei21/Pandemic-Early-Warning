@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 class Bottleneck(nn.Module):
     expansion = 4
-    def __init__(self, in_channels, out_channels, i_downsample=None, stride=1, bn = True):
+    def __init__(self, in_channels, out_channels, i_downsample=None, stride=1, bn = True, ln = False, input_shape = None):
         super(Bottleneck, self).__init__()
         
         self.bn = bn
@@ -169,10 +169,13 @@ class ResNet(nn.Module):
         
         self.avgpool = nn.AdaptiveAvgPool1d(1)
 
-        self.meta_data_layer1 = nn.Linear(27,64)
+        self.meta_data_layer1 = nn.Linear(40,64)
         self.meta_data_layer2 = nn.Linear(64,128)
 
-        self.fc = nn.Linear(512*ResBlock.expansion + 128, output_dim)
+        self.fc1 = nn.Linear(512*ResBlock.expansion + 128, 512)
+        self.fc2 = nn.Linear(512, 256)
+        self.fc3 = nn.Linear(256, 64)
+        self.fc4 = nn.Linear(64,output_dim)
         
     def forward(self, x, meta_data):
 
@@ -198,7 +201,10 @@ class ResNet(nn.Module):
 
         x = torch.cat([x,meta_data], dim = 1)
 
-        x = self.fc(x)
+        x = self.fc1(x)
+        x = self.fc2(x)
+        x = self.fc3(x)
+        x = self.fc4(x)
         
         return x
     
@@ -230,14 +236,14 @@ class ResNet(nn.Module):
                             kernel_size=1, 
                             stride=stride)
                 )
-            
+   
         layers.append(ResBlock(self.in_channels, 
-                               planes, 
-                               i_downsample=ii_downsample, 
-                               stride=stride,
-                               input_shape = input_shape,
-                               bn=bn,
-                               ln=ln,))
+                                planes, 
+                                i_downsample=ii_downsample, 
+                                stride=stride,
+                                input_shape = input_shape,
+                                bn=bn,
+                                ln=ln,))
         
         self.in_channels = planes*ResBlock.expansion
 
@@ -249,7 +255,7 @@ class ResNet(nn.Module):
             
         return nn.Sequential(*layers), input_shape
     
-def ResNet18(output_dim, channels=1, batch_norm=True, layer_norm=True):
+def ResNet18(output_dim, channels=1, batch_norm=True, layer_norm=False):
     return ResNet(ResBlock=Block, 
                   output_dim=output_dim, 
                   num_channels=channels, 
@@ -258,7 +264,7 @@ def ResNet18(output_dim, channels=1, batch_norm=True, layer_norm=True):
                   input_shape=46, 
                   layer_list=[2,2,2,2])
 
-def ResNet34(output_dim, channels=1, batch_norm=False, layer_norm=True):
+def ResNet34(output_dim, channels=1, batch_norm=False, layer_norm=False):
     return ResNet(ResBlock=Block, 
                   output_dim=output_dim, 
                   num_channels=channels, 
@@ -267,18 +273,29 @@ def ResNet34(output_dim, channels=1, batch_norm=False, layer_norm=True):
                   input_shape=46, 
                   layer_list=[3,4,6,3])
 
-def ResNet50(output_dim, channels=1, batch_norm=True):
-    return ResNet(Bottleneck, [3,4,6,3], output_dim, channels, bn=batch_norm)
+def ResNet50(output_dim, channels=1, batch_norm=False, layer_norm=False):
+    return ResNet(ResBlock = Bottleneck, 
+                  output_dim = output_dim, 
+                  num_channels = channels, 
+                  bn=batch_norm,
+                  ln=layer_norm,
+                  # input_shape=46,
+                  layer_list = [3,4,6,3], )
     
-def ResNet101(output_dim, channels=3, batch_norm=True):
-    return ResNet(Bottleneck, [3,4,23,3], output_dim, channels, bn=batch_norm)
+def ResNet101(output_dim, channels=1, batch_norm=True, layer_norm=False):
+    return ResNet(ResBlock = Bottleneck, 
+                  output_dim = output_dim,
+                  num_channels = channels,
+                  bn=batch_norm,
+                  ln=layer_norm,
+                  layer_list = [3,4,23,3], )
 
 def ResNet152(output_dim, channels=3, batch_norm=True):
     return ResNet(Bottleneck, [3,8,36,3], output_dim, channels, bn=batch_norm)
 
 if __name__ == '__main__':
 
-    model = ResNet18(output_dim=12,
+    model = ResNet50(output_dim=12,
                       channels=2,
                       batch_norm=False,
                       layer_norm=False,)

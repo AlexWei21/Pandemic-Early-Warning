@@ -13,6 +13,7 @@ from utils.sampler import Location_Fixed_Batch_Sampler
 from evaluation.data_inspection.low_quality_data import covid_low_quality_data
 from datetime import datetime
 from pathlib import Path
+from pytorch_lightning.callbacks import LearningRateMonitor
 
 def run_training(lr: float = 1e-3,
                  batch_size: int = 10,
@@ -29,12 +30,13 @@ def run_training(lr: float = 1e-3,
                  selftune_weight:float = 1.0,
                  output_dir:str = None,
                  population_weighting:bool = False,
+                 use_lr_scheduler:bool=False,
                  ):
 
     Path(output_dir).mkdir(parents=False, exist_ok=True)
 
     ########## Load Past Pandemic Data ##########
-    data_file_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/'
+    data_file_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/data_with_country_metadata/'
     past_pandemic_data = []
 
     for pandemic in past_pandemics:
@@ -84,7 +86,7 @@ def run_training(lr: float = 1e-3,
     print(f"Past Pandemic Training Size:{len(past_pandemic_dataset)}")
     
     ########## Load Self-Tune Data ##########
-    self_tune_data = process_data(processed_data_path=data_file_dir+'compartment_model_covid_data_objects_no_smoothing.pickle',
+    self_tune_data = process_data(processed_data_path=data_file_dir+'compartment_model_covid_data_objects.pickle',
                                         raw_data=False)
 
     self_tune_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=self_tune_data,
@@ -114,7 +116,7 @@ def run_training(lr: float = 1e-3,
     print(f"Past Pandemic + Self-Tune Training Size:{len(past_pandemic_dataset)}")
 
     ########## Load Target Pandemic Data ##########
-    target_pandemic_data = process_data(processed_data_path=data_file_dir+'compartment_model_covid_data_objects_no_smoothing.pickle',
+    target_pandemic_data = process_data(processed_data_path=data_file_dir+'compartment_model_covid_data_objects.pickle',
                                         raw_data=False)
     
     target_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=target_pandemic_data,
@@ -162,7 +164,8 @@ def run_training(lr: float = 1e-3,
                            include_death = include_death,
                            batch_size = batch_size,
                            output_dir=output_dir,
-                           population_weighting=population_weighting,)
+                           population_weighting=population_weighting,
+                           use_scheduler=use_lr_scheduler)
     
     print(model)
     
@@ -174,6 +177,8 @@ def run_training(lr: float = 1e-3,
     else:
         logger = None
     
+    lr_monitor = LearningRateMonitor(logging_interval='step')
+
     trainer = Trainer(
         devices = 1,
         max_epochs=max_epochs,
@@ -181,26 +186,33 @@ def run_training(lr: float = 1e-3,
         num_sanity_val_steps = 0,
         default_root_dir= log_dir,
         log_every_n_steps=1,
+        callbacks=[lr_monitor]
     )
 
     trainer.fit(model,
                 train_data_loader,
                 validation_data_loader)
-    
-run_training(### Training Args
-             lr = 1e-5,
-             batch_size = 1024,
-             target_training_len = 46, # 46
-             pred_len = 71, # 71
-             record_run = True,
-             max_epochs = 5000,
-             log_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/logs/',
-             ### Model Args
-             loss = 'MAE',
-             dropout=0.0,
-             past_pandemics=['dengue','ebola','sars','mpox','2010-2017_influenza'],
-             target_self_tuning=True,
-             include_death=False,
-             population_weighting= False,
-             selftune_weight=1,
-             output_dir=f"/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/{datetime.today().strftime('%m-%d-%H00')}/",)
+
+if __name__ == '__main__':
+
+    target_training_len = 42
+    pred_len = 84
+
+    run_training(### Training Args
+                lr = 1e-5,
+                batch_size = 1024,
+                target_training_len = target_training_len, # 46
+                pred_len = pred_len, # 71
+                record_run = False,
+                max_epochs = 50000,
+                log_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/logs/',
+                ### Model Args
+                loss = 'Combined_Loss',
+                dropout=0.0,
+                past_pandemics=['dengue','ebola','sars','mpox','2010-2017_influenza'],
+                target_self_tuning=True,
+                include_death=False,
+                population_weighting= False,
+                selftune_weight=1,
+                use_lr_scheduler=False,
+                output_dir=f"/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/{datetime.today().strftime('%m-%d-%H00')}_{target_training_len}-{pred_len}/",)
