@@ -11,7 +11,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from datetime import datetime
 from pathlib import Path
-from pytorch_lightning.callbacks import LearningRateMonitor
+from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
 from evaluation.data_inspection.low_quality_data import covid_low_quality_data
 
@@ -32,11 +32,14 @@ def run_training(lr: float = 1e-3,
                  population_weighting:bool = False,
                  input_normalization:bool = False,
                  use_scheduler:bool=False,
+                 loss_mae_weight: float = 0.5,
+                 loss_mape_weight: float = 100,
                  ):
     
     data_file_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/data_with_country_metadata/'
 
     Path(output_dir).mkdir(parents=False, exist_ok=True)
+    torch.manual_seed(15)
 
     ## Load Self-Tune Data
     self_tune_data = process_data(processed_data_path = data_file_dir+'compartment_model_covid_data_objects.pickle',
@@ -126,6 +129,8 @@ def run_training(lr: float = 1e-3,
                            output_dir=output_dir,
                            population_weighting=population_weighting,
                            use_scheduler=use_scheduler,
+                           loss_mae_weight=loss_mae_weight,
+                           loss_mape_weight=loss_mape_weight,
                            )
     
     print(model)
@@ -139,6 +144,7 @@ def run_training(lr: float = 1e-3,
         logger = None
     
     lr_monitor = LearningRateMonitor(logging_interval='step')
+    checkpoint_callback = ModelCheckpoint(dirpath=output_dir)
 
     trainer = Trainer(
         devices = 1,
@@ -147,29 +153,36 @@ def run_training(lr: float = 1e-3,
         num_sanity_val_steps = 0,
         default_root_dir= log_dir,
         log_every_n_steps=1,
-        callbacks=[lr_monitor]
+        callbacks=[lr_monitor, checkpoint_callback]
     )
 
     trainer.fit(model,
                 train_data_loader,
                 validation_data_loader)
     
-run_training(### Training Args
-             lr = 1e-5,
-             batch_size = 245,
-             target_training_len = 46, # 46
-             pred_len = 71, # 71
-             record_run = True,
-             max_epochs = 100000,
-             log_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/logs/',
-             ### Model Args
-             loss = 'Combined_Loss',
-             dropout=0.0,
-             past_pandemics=[],
-             target_self_tuning=True,
-             include_death=False,
-             population_weighting=False,
-             input_normalization=False,
-             selftune_weight=1,
-             output_dir=f"/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/{datetime.today().strftime('%m-%d-%H')}/",
-             use_scheduler=False,)
+if __name__ == '__main__':
+
+    target_training_len = 42
+    pred_len = 84
+
+    run_training(### Training Args
+                lr = 1e-5,
+                batch_size = 256,
+                target_training_len = target_training_len,
+                pred_len = pred_len,
+                record_run = True,
+                max_epochs = 20000,
+                log_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/logs/',
+                ### Model Args
+                loss = 'Combined_Loss',
+                dropout=0.0,
+                past_pandemics=[],
+                target_self_tuning=True,
+                include_death=False,
+                population_weighting=False,
+                input_normalization=False,
+                selftune_weight=1,
+                output_dir=f"/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/{datetime.today().strftime('%m-%d-%H00')}_{target_training_len}-{pred_len}/",
+                use_scheduler=False,
+                loss_mae_weight = 0.5,
+                loss_mape_weight = 100,)

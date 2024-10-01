@@ -8,7 +8,7 @@ import torch.nn as nn
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
-from torch.optim.lr_scheduler import ExponentialLR
+from torch.optim.lr_scheduler import ExponentialLR, StepLR
 
 from utils.delphi_default_parameters import (
     p_v,
@@ -28,9 +28,13 @@ class TrainingModule(LightningModule):
                  batch_size: int = 32,
                  population_weighting: bool = False,
                  use_scheduler:bool = False,
+                 loss_mape_weight:float = 100,
+                 loss_mae_weight:float = 0.5,
                  ):
         
         super().__init__()
+
+        self.save_hyperparameters()
 
         self.lr = lr
 
@@ -61,8 +65,8 @@ class TrainingModule(LightningModule):
             self.loss_fn = nn.MSELoss(reduction='none')
         elif loss == 'Combined_Loss':
             self.loss_fn = Combined_Loss(reduction='none',
-                                         mae_weight=0.5,
-                                         mape_weight=100)
+                                         mae_weight=loss_mae_weight,
+                                         mape_weight=loss_mape_weight)
 
         self.loss_name = loss
         
@@ -254,7 +258,8 @@ class TrainingModule(LightningModule):
         validation_outsample_mae = self.calculate_mae(outsample_pred, outsample_true)
         validation_outsample_mape = self.calculate_mape(outsample_pred, outsample_true)
         
-        if torch.mean(validation_train_mape).item() < self.best_validation_insample_mape: 
+        # if torch.mean(validation_train_mape).item() < self.best_validation_insample_mape: 
+        if self.epoch_id % 100 == 0:
             validation_loss_df = pd.DataFrame()
             validation_loss_df['Country'] = self.validation_country
             validation_loss_df['Domain'] = self.validation_domain
@@ -413,8 +418,9 @@ class TrainingModule(LightningModule):
             #                     dim_embed=2048 * 10,
             #                     warmup_steps=2000,)
 
-            scheduler = ExponentialLR(optimizer=optimizer,
-                                      gamma=0.9995)
+            scheduler = StepLR(optimizer=optimizer,
+                               step_size=40000,
+                               gamma=0.1)
 
             return [optimizer], [scheduler]
         else:

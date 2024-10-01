@@ -13,7 +13,7 @@ from utils.sampler import Location_Fixed_Batch_Sampler
 from evaluation.data_inspection.low_quality_data import covid_low_quality_data
 from datetime import datetime
 from pathlib import Path
-from pytorch_lightning.callbacks import LearningRateMonitor
+from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
 def run_training(lr: float = 1e-3,
                  batch_size: int = 10,
@@ -31,6 +31,8 @@ def run_training(lr: float = 1e-3,
                  output_dir:str = None,
                  population_weighting:bool = False,
                  use_lr_scheduler:bool=False,
+                 loss_mae_weight: float=0.5,
+                 loss_mape_weight: float=100,
                  ):
 
     Path(output_dir).mkdir(parents=False, exist_ok=True)
@@ -109,7 +111,6 @@ def run_training(lr: float = 1e-3,
     self_tune_dataset.pandemic_data = [item for item in self_tune_dataset if (item.country_name, item.domain_name) not in covid_low_quality_data]
     print(f"Self-Tune Training Size:{len(self_tune_dataset)}")
 
-
     ## Combine Past Pandemic and Self-Tuning Data
     past_pandemic_dataset.pandemic_data = past_pandemic_dataset.pandemic_data + self_tune_dataset.pandemic_data
 
@@ -165,7 +166,9 @@ def run_training(lr: float = 1e-3,
                            batch_size = batch_size,
                            output_dir=output_dir,
                            population_weighting=population_weighting,
-                           use_scheduler=use_lr_scheduler)
+                           use_scheduler=use_lr_scheduler,
+                           loss_mae_weight=loss_mae_weight,
+                           loss_mape_weight=loss_mape_weight)
     
     print(model)
     
@@ -178,6 +181,7 @@ def run_training(lr: float = 1e-3,
         logger = None
     
     lr_monitor = LearningRateMonitor(logging_interval='step')
+    checkpoint_callback = ModelCheckpoint(dirpath=output_dir)
 
     trainer = Trainer(
         devices = 1,
@@ -195,7 +199,7 @@ def run_training(lr: float = 1e-3,
 
 if __name__ == '__main__':
 
-    target_training_len = 56
+    target_training_len = 28
     pred_len = 84
 
     run_training(### Training Args
@@ -203,7 +207,7 @@ if __name__ == '__main__':
                 batch_size = 1024,
                 target_training_len = target_training_len, # 46
                 pred_len = pred_len, # 71
-                record_run = False,
+                record_run = True,
                 max_epochs = 50000,
                 log_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/logs/',
                 ### Model Args
@@ -213,6 +217,8 @@ if __name__ == '__main__':
                 target_self_tuning=True,
                 include_death=False,
                 population_weighting= False,
-                selftune_weight=1,
+                selftune_weight=100,
                 use_lr_scheduler=False,
+                loss_mae_weight = 0.5,
+                loss_mape_weight = 100,
                 output_dir=f"/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/mpox_forecasting/past_guided/{datetime.today().strftime('%m-%d-%H00')}_{target_training_len}-{pred_len}/",)
