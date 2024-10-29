@@ -16,7 +16,7 @@ early-stage forecasting tasks. Our model demonstrates the potential of using
 historical data through deep compartmental models to improve the accuracy of
 early-stage pandemic forecasting.
 
-![architecture](/figures/architecture.png)
+![architecture](/architecture.png)
 
 ## Environment 
 
