@@ -20,4 +20,6 @@ early-stage pandemic forecasting.
 
 ## Environment 
 
-
+'''
+conda env create --name hgdcm --file=full_environment.yml
+'''
