@@ -2,7 +2,7 @@
 This repository is the official implementation of "[HG-DCM: History Guided Deep Compartmental Model for Early Pandemic Forecasting]()" based on the official implementation of [DELPHI](https://github.com/COVIDAnalytics/DELPHI).
 The data used to train HG-DCM is from [Pandemic-Database]() that includes data from current and past pandemics.
 
-## Abstract
+## Overview
 ![architecture](/architecture.png)
 The COVID-19 pandemic has warned the public of the importance of pandemic
 forecasting. Millions of lives could be saved if we can estimate the severity of
@@ -19,7 +19,12 @@ early-stage forecasting tasks. Our model demonstrates the potential of using
 historical data through deep compartmental models to improve the accuracy of
 early-stage pandemic forecasting.
 
-## Environment 
+## Installation 
+```shell
+git clone https://github.com/AlexWei21/Pandemic-Early-Warning.git
+cd Pandemic-Early-Warning
+```
+
 ```shell
 conda env create --name hgdcm --file=full_environment.yml
 conda activate hgdcm
