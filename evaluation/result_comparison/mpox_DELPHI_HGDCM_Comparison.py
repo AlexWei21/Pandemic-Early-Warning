@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 import seaborn as sns
+from statsmodels.robust import mad
 
 ## 56 Days - 84 Days
 
@@ -14,9 +15,9 @@ combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain']
 
 # Print Metric Comparison Table
 print("56 Days - 84 Days DELPHI vs. HGDCM")
-print("Mean MAE:", np.mean(combined_df['outsample_mae']), np.mean(combined_df['OutSample_MAE']))
+print("Mean MAE:", np.mean(combined_df['outsample_mae']) ,"+/-", np.std(combined_df['outsample_mae']), np.mean(combined_df['OutSample_MAE']), "+/-", np.std(combined_df['OutSample_MAE']))
 print("Mean MAPE:", np.mean(combined_df['outsample_mape']), np.mean(combined_df['OutSample_MAPE']))
-print("Median MAE:", np.median(combined_df['outsample_mae']), np.median(combined_df['OutSample_MAE']))
+print("Median MAE:", np.median(combined_df['outsample_mae']),"+/-",mad(combined_df['outsample_mae']), np.median(combined_df['OutSample_MAE']), "+/-", mad(combined_df['OutSample_MAE']))
 print("Median MAPE:", np.median(combined_df['outsample_mape']), np.median(combined_df['OutSample_MAPE']))
 print("Perform Better:", 
       len(combined_df[combined_df['outsample_mape'] < combined_df['OutSample_MAPE']]),
@@ -88,9 +89,9 @@ combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain']
 
 # Print Metric Comparison Table
 print("42 Days - 84 Days DELPHI vs. HGDCM")
-print("Mean MAE:", np.mean(combined_df['outsample_mae']), np.mean(combined_df['OutSample_MAE']))
+print("Mean MAE:", np.mean(combined_df['outsample_mae']) ,"+/-", np.std(combined_df['outsample_mae']), np.mean(combined_df['OutSample_MAE']), "+/-", np.std(combined_df['OutSample_MAE']))
 print("Mean MAPE:", np.mean(combined_df['outsample_mape']), np.mean(combined_df['OutSample_MAPE']))
-print("Median MAE:", np.median(combined_df['outsample_mae']), np.median(combined_df['OutSample_MAE']))
+print("Median MAE:", np.median(combined_df['outsample_mae']),"+/-",mad(combined_df['outsample_mae']), np.median(combined_df['OutSample_MAE']), "+/-", mad(combined_df['OutSample_MAE']))
 print("Median MAPE:", np.median(combined_df['outsample_mape']), np.median(combined_df['OutSample_MAPE']))
 print("Perform Better:", 
       len(combined_df[combined_df['outsample_mape'] < combined_df['OutSample_MAPE']]),
@@ -162,9 +163,9 @@ combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain']
 
 # Print Metric Comparison Table
 print("28 Days - 84 Days DELPHI vs. HGDCM")
-print("Mean MAE:", np.mean(combined_df['outsample_mae']), np.mean(combined_df['OutSample_MAE']))
+print("Mean MAE:", np.mean(combined_df['outsample_mae']) ,"+/-", np.std(combined_df['outsample_mae']), np.mean(combined_df['OutSample_MAE']), "+/-", np.std(combined_df['OutSample_MAE']))
 print("Mean MAPE:", np.mean(combined_df['outsample_mape']), np.mean(combined_df['OutSample_MAPE']))
-print("Median MAE:", np.median(combined_df['outsample_mae']), np.median(combined_df['OutSample_MAE']))
+print("Median MAE:", np.median(combined_df['outsample_mae']),"+/-",mad(combined_df['outsample_mae']), np.median(combined_df['OutSample_MAE']), "+/-", mad(combined_df['OutSample_MAE']))
 print("Median MAPE:", np.median(combined_df['outsample_mape']), np.median(combined_df['OutSample_MAPE']))
 print("Perform Better:", 
       len(combined_df[combined_df['outsample_mape'] < combined_df['OutSample_MAPE']]),
@@ -235,9 +236,9 @@ combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain']
 
 # Print Metric Comparison Table
 print("14 Days - 84 Days DELPHI vs. HGDCM")
-print("Mean MAE:", np.mean(combined_df['outsample_mae']), np.mean(combined_df['OutSample_MAE']))
+print("Mean MAE:", np.mean(combined_df['outsample_mae']) ,"+/-", np.std(combined_df['outsample_mae']), np.mean(combined_df['OutSample_MAE']), "+/-", np.std(combined_df['OutSample_MAE']))
 print("Mean MAPE:", np.mean(combined_df['outsample_mape']), np.mean(combined_df['OutSample_MAPE']))
-print("Median MAE:", np.median(combined_df['outsample_mae']), np.median(combined_df['OutSample_MAE']))
+print("Median MAE:", np.median(combined_df['outsample_mae']),"+/-",mad(combined_df['outsample_mae']), np.median(combined_df['OutSample_MAE']), "+/-", mad(combined_df['OutSample_MAE']))
 print("Median MAPE:", np.median(combined_df['outsample_mape']), np.median(combined_df['OutSample_MAPE']))
 print("Perform Better:", 
       len(combined_df[combined_df['outsample_mape'] < combined_df['OutSample_MAPE']]),
