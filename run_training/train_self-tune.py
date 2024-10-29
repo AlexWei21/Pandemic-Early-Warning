@@ -162,7 +162,7 @@ def run_training(lr: float = 1e-3,
     
 if __name__ == '__main__':
 
-    target_training_len = 42
+    target_training_len = 14
     pred_len = 84
 
     run_training(### Training Args

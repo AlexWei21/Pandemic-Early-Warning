@@ -190,7 +190,7 @@ def run_training(lr: float = 1e-3,
         num_sanity_val_steps = 0,
         default_root_dir= log_dir,
         log_every_n_steps=1,
-        callbacks=[lr_monitor]
+        callbacks=[lr_monitor, checkpoint_callback]
     )
 
     trainer.fit(model,
@@ -208,16 +208,17 @@ if __name__ == '__main__':
                 target_training_len = target_training_len, # 46
                 pred_len = pred_len, # 71
                 record_run = True,
-                max_epochs = 50000,
+                max_epochs = 600,
                 log_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/logs/',
                 ### Model Args
                 loss = 'Combined_Loss',
                 dropout=0.0,
-                past_pandemics=['dengue','ebola','sars','covid','2010-2017_influenza'],
+                # past_pandemics=['dengue','covid','ebola','sars','2010-2017_influenza'],
+                past_pandemics=['dengue','ebola','sars','2010-2017_influenza'],
                 target_self_tuning=True,
                 include_death=False,
                 population_weighting= False,
-                selftune_weight=100,
+                selftune_weight=20,
                 use_lr_scheduler=False,
                 loss_mae_weight = 0.5,
                 loss_mape_weight = 100,

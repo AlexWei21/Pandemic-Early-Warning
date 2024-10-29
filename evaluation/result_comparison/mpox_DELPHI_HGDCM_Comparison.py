@@ -155,7 +155,7 @@ plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/ma
 
 # DELPHI Performance
 delphi_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/mpox_28_84_case_only_performance.csv')
-hgdcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/mpox_forecasting/past_guided/09-15-0900_28-84/validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/mpox_forecasting/past_guided/10-01-1900_28-84/validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain'], right_on=['country','domain'], how = 'inner')
