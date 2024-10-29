@@ -1,8 +1,8 @@
 # HG-DCM: History Guided Deep Compartmental Model for Early Pandemic Forecasting
 This repository is the official implementation of "[HG-DCM: History Guided Deep Compartmental Model for Early Pandemic Forecasting]()" based on the official implementation of [DELPHI](https://github.com/COVIDAnalytics/DELPHI)
-![architecture](/architecture.png)
 
 ## Abstract
+![architecture](/architecture.png)
 The COVID-19 pandemic has warned the public of the importance of pandemic
 forecasting. Millions of lives could be saved if we can estimate the severity of
 the pandemic at the early stage of the pandemic. Extensive research has been
