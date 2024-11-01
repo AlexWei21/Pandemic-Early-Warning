@@ -5,18 +5,28 @@ import pickle
 import multiprocessing
 from tqdm import tqdm
 
+# Set Fitting Parameter
 train_length = 56
 test_length = 84
 
+'''
+Function for Fitting DELPHI using only Case Data from MPox for one location
+Input 
+    data_object: data object pickle file
+Output
+    parameter_row: list containing fitted DELPHI parameters
+    performance_row: list containing performance matrics of the fitted DELPHI model
+    predicted_case_row: list containing predicted case number from the fitted DELPHI model
+'''
 def generate_and_save_delphi_performance(data_object):
 
     try: 
-
+        ## Run code for fitting DELPHI model using onle case number
         parameters, x_sol, y_true, data = get_perfect_parameters(data_object,
                                 train_length = train_length,
                                 test_length = test_length,)
 
-        ## Case Plot
+        ## Case Plot and Calculating Metrics
         outsample_mae, overall_mae, insample_mae, outsample_mape, overall_mape, insample_mape = visualize_result(x_sol[15],
                                     y_true,
                                     output_dir = f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/mpox_case_only_{train_length}_{test_length}_plots/',
@@ -24,6 +34,7 @@ def generate_and_save_delphi_performance(data_object):
                                     type = 'case',
                                     train_len=train_length)
             
+        ## Obtaining Returning Lists
         performance_row = [data_object.country_name, data_object.domain_name, data_object.first_day_above_hundred]
         parameter_row = [data_object.country_name, data_object.domain_name, data_object.first_day_above_hundred]
         predicted_case_row = [data_object.country_name, data_object.domain_name, data_object.first_day_above_hundred]
@@ -34,6 +45,8 @@ def generate_and_save_delphi_performance(data_object):
     
     except:
         
+        ## Set locations that are unable to fit by DELPHI to extreme values
+
         parameters = [-999] * 12
 
         performance_row = [data_object.country_name, data_object.domain_name, data_object.first_day_above_hundred]

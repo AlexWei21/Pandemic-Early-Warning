@@ -20,6 +20,21 @@ from pytorch_lightning.loggers import WandbLogger
 from torch.utils.data import DataLoader
 from evaluation.data_inspection.low_quality_data import covid_low_quality_data
 
+'''
+Pytorch Lightning Module for Training Gated Recurrent Unit (GRU) on Mpox
+Parameters 
+    output_dir: The output dir for training logs and outputs
+    lr: Initial learning rate
+    loss: Loss function name using for training [MAE, MAPE, Combined_Loss]
+    train_len: Available time window for targeted pandemic training
+    pred_len: The targeted prediction length for target pandemic
+    include_death: Whether to include daily death number into training
+    plot_validation: Whether to plot validation plots
+    batch_size: Batch_size
+    use_scheduler: Whether use learning rate scheduler or not
+    loss_mape_weight: The weight for MAPE in the Combined Loss
+    loss_mae_weight: The weight for MAE in the Combined Loss
+'''
 class TrainingModule(LightningModule):
     def __init__(self,
                  output_dir: str,
@@ -37,10 +52,9 @@ class TrainingModule(LightningModule):
         
         super().__init__()
 
+        ## Setting parameters
         self.save_hyperparameters()
-
         self.lr = lr
-
         self.train_len = train_len
         self.pred_len = pred_len
         self.include_death = include_death
@@ -57,6 +71,7 @@ class TrainingModule(LightningModule):
         
         self.use_scheduler = use_scheduler
 
+        # Define Loss Fcuntion
         if loss == 'MAPE':
             self.loss_fn = MAPE(reduction='none')
         elif loss == 'MAE':

@@ -15,6 +15,28 @@ from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
 from evaluation.data_inspection.low_quality_data import covid_low_quality_data
 
+'''
+Pytorch Lightning Module for Truncated DCM for COVID-19
+Parameters 
+    lr: Initial learning rate
+    batch_size: Batch_size
+    target_training_len: Available time window for targeted pandemic training
+    pred_len: The targeted prediction length for target pandemic
+    record_run: Whether to record run or not on Wandb
+    max_epochs: Number of maximum number of training epochs
+    log_dir: The directory for saving logs
+    loss: Loss function name using for training [MAE, MAPE, Combined_Loss]
+    dropout: The dropout value for model training
+    past_pandemics: The list of pandemics that are used as past pandemic in training HG-DCM
+    include_death: Whether to include daily death number into training
+    target_self_runing: Include current pandemic available data in training
+    selftune_weight: The weight for selftune data in training
+    output_dir: The output dir for training logs and outputs
+    population_weighting: Whether to weight loss by population
+    use_scheduler: Whether use learning rate scheduler or not
+    loss_mape_weight: The weight for MAPE in the Combined Loss
+    loss_mae_weight: The weight for MAE in the Combined Loss
+'''
 def run_training(lr: float = 1e-3,
                  batch_size: int = 10,
                  target_training_len: int = 47,

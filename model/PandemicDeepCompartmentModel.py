@@ -23,6 +23,13 @@ from utils.delphi_default_parameters import (
     maximum_bounds_params,)
 
 
+'''
+Class for History Guided Deep Compartmental Model (HG-DCM) model
+Parameters
+    pred_len: Targeted Forecasting Length of Training
+    dropout: Drop-out value used in training
+    includ_death: Whether to include death into training and fitting
+'''
 class pandemic_early_warning_model_with_DELPHI(nn.Module):
     def __init__(self,
                  # ts_dim: int = 46,
@@ -32,16 +39,18 @@ class pandemic_early_warning_model_with_DELPHI(nn.Module):
         
         super().__init__()       
 
+        ## Create ResNet for Predicting DELPHI parameter 
         self.parameter_prediction_layer = parameter_prediction_layer(dropout=dropout,
                                                                      include_death = include_death) 
         
-        # self.output_range = default_bounds_params
         self.output_range = maximum_bounds_params
         self.output_min = torch.tensor([item[0] for item in default_bounds_params])
         self.output_max = torch.tensor([item[1] for item in default_bounds_params])
 
+        ## Ranging Function
         self.range_restriction_function = nn.Sigmoid()
 
+        ## Create NN layers for fitting DELPHI using predicted DELPHI parameter
         self.delphi_layer = delphi_layer(pred_len=pred_len)
 
     def forward(self, ts_input, global_params_fixed, meta_input):
@@ -108,6 +117,7 @@ class delphi_layer(nn.Module):
                gp, 
                population):
 
+        ## Use TorchODE to fit the DELPHI model from predicted paramters
         term = to.ODETerm(DELPHI_model, with_args=True)
         step_method = to.Tsit5(term=term)
         step_size_controller = to.IntegralController(atol=1e-8, rtol=1e-4, term=term) ## atol=1e-6 rtol=1e-3 
@@ -117,7 +127,7 @@ class delphi_layer(nn.Module):
     
         x = x.t()
 
-        assert len(y0) == x.shape[1]
+        assert len(y0) == x.shape[1] # Check if shape of input matches
 
         for i in range(x.shape[1]):
             y0[i] = get_initial_conditions(params_fitted=x[:,i], 

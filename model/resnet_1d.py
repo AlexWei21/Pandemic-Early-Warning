@@ -2,6 +2,9 @@ import torch.nn as nn
 import torch
 import torch.nn.functional as F
 
+'''
+Implementation of 1-d ResNet
+'''
 class Bottleneck(nn.Module):
     expansion = 4
     def __init__(self, in_channels, out_channels, i_downsample=None, stride=1, bn = True, ln = False, input_shape = None):
