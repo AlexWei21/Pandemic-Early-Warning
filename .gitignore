@@ -1,4 +1,7 @@
 # Ignore Mac System Files
+/archive
+/data_files
+/data
 .DS_store
 .ipynb_checkpoints
 .idea
