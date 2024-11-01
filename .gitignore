@@ -12,4 +12,6 @@
 *.pyc
 *.csv
 *.pyc
+.pickle
 logs/
+/__pycache__
