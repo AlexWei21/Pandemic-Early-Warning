@@ -10,7 +10,6 @@
 *.png
 *.ckpt
 *.pyc
-*.csv
 *.pyc
 .pickle
 logs/
