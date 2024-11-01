@@ -32,5 +32,15 @@ conda activate hgdcm
 
 ## Run Model
 ```python
+### Train HG-DCM
 python -m run_training.train_past_guided
+
+### Train Truncated DCM
+python -m run_training.train_self-tune
+
+### Train GRU
+python -m run_training.run_gru
+
+### Fit DELPHI
+python -m run_training.delphi_with_case_only
 ```
