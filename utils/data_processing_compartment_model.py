@@ -7,6 +7,24 @@ import pickle
 from sklearn.preprocessing import MinMaxScaler
 import wbgapi as wb
 
+'''
+Function for process raw data into data objects
+Input
+    pandemic_name: Name for Pandemic
+    update_frequency: Daily data update frequency
+    ts_type: The type of daily data to include in processing
+    meta_data_filepath: Datapath for Meta-data
+    geological_meta_data_filepath: File Path for Geological Meta-data
+    cumulative_case_data_filepath: File Path for Cumulative Case Number
+    cumulative_death_data_filepath: File Path for Cumulative Death Number
+    processed_data_path: File Path for saving processed data
+    validcase_threshold: The Threshold for considering valid case
+    save_file_path: Saving Directory Path
+    raw_data: Whether the input is raw data
+    true_delphi_parameter_filepath: The file path for true delphi parameter (For Debug and Analysis Only)
+    smoothing: Whether to do smoothing for input data
+    country_level_metadata_path: Path for country level metadata
+'''
 def process_data(pandemic_name = 'Covid-19',
                  update_frequency = 'Daily',
                  ts_type:list = ['CumCases'],

@@ -16,7 +16,7 @@ from pathlib import Path
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
 '''
-Pytorch Lightning Module for HG-DCM for COVID-19
+Training Function for HG-DCM for COVID-19
 Parameters 
     lr: Initial learning rate
     batch_size: Batch_size

@@ -15,6 +15,23 @@ from utils.delphi_default_parameters import (
     p_d,
     p_h,)
 
+'''
+Pytorch Lightning Module for Training Gated Recurrent Unit (GRU) on Mpox
+Parameters 
+    output_dir: The output dir for training logs and outputs
+    lr: Initial learning rate
+    loss: Loss function name using for training [MAE, MAPE, Combined_Loss]
+    train_len: Available time window for targeted pandemic training
+    pred_len: The targeted prediction length for target pandemic
+    dropout: The dropout value for model training
+    include_death: Whether to include daily death number into training
+    plot_validation: Whether to plot validation plots
+    batch_size: Batch_size
+    population_weighting: Whether to weight loss using population data
+    use_scheduler: Whether use learning rate scheduler or not
+    loss_mape_weight: The weight for MAPE in the Combined Loss
+    loss_mae_weight: The weight for MAE in the Combined Loss
+'''
 class TrainingModule(LightningModule):
     def __init__(self,
                  output_dir: str,

@@ -16,7 +16,7 @@ from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 from evaluation.data_inspection.low_quality_data import covid_low_quality_data
 
 '''
-Pytorch Lightning Module for Truncated DCM for COVID-19
+Training Function for Truncated DCM for COVID-19
 Parameters 
     lr: Initial learning rate
     batch_size: Batch_size

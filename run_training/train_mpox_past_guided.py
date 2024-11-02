@@ -16,7 +16,7 @@ from pathlib import Path
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
 '''
-Pytorch Lightning Module for HG-DCM for Mpox
+Training Function for Mpox HG-DCM Model
 Parameters 
     lr: Initial learning rate
     batch_size: Batch_size
