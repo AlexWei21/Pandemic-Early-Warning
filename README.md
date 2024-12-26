@@ -1,6 +1,6 @@
 # HG-DCM: History Guided Deep Compartmental Model for Early Pandemic Forecasting
-This repository is the official implementation of "[HG-DCM: History Guided Deep Compartmental Model for Early Pandemic Forecasting]()" based on the official implementation of [DELPHI](https://github.com/COVIDAnalytics/DELPHI).
-The data used to train HG-DCM is from [Pandemic-Database]() that includes data from current and past pandemics.
+This repository is the official implementation of "[HG-DCM: History Guided Deep Compartmental Model for Early Pandemic Forecasting](https://www.medrxiv.org/content/10.1101/2024.11.18.24317469v1)" based on the official implementation of [DELPHI](https://github.com/COVIDAnalytics/DELPHI).
+The data used to train HG-DCM is from [Pandemic-Database](https://github.com/AlexWei21/Pandemic-Database), which includes data from current and past pandemics.
 
 ## Overview
 ![architecture](/architecture.png)
