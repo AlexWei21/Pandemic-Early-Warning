@@ -224,11 +224,11 @@ def run_training(lr: float = 1e-3,
 
 if __name__ == '__main__':
 
-    target_training_len = 14
+    target_training_len = 28
     pred_len = 84
 
     run_training(### Training Args
-                lr = 1e-4,
+                lr = 1e-5,
                 batch_size = 1024,
                 target_training_len = target_training_len, 
                 pred_len = pred_len, 
@@ -242,7 +242,7 @@ if __name__ == '__main__':
                 target_self_tuning=True,
                 include_death=False,
                 population_weighting= False,
-                selftune_weight=0.01,
+                selftune_weight=1,
                 use_lr_scheduler=True,
                 loss_mae_weight = 0.5,
                 loss_mape_weight = 100,
