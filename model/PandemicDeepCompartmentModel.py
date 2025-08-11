@@ -30,9 +30,10 @@ Parameters
     dropout: Drop-out value used in training
     includ_death: Whether to include death into training and fitting
 '''
-class pandemic_early_warning_model_with_DELPHI(nn.Module):
+class pandemic_early_warning_model(nn.Module):
     def __init__(self,
                  # ts_dim: int = 46,
+                 compartmental_model = 'delphi',
                  pred_len: int = 71,
                  dropout: float = 0.5,
                  include_death: bool = True,):
@@ -40,13 +41,24 @@ class pandemic_early_warning_model_with_DELPHI(nn.Module):
         super().__init__()       
 
         ## Create ResNet for Predicting DELPHI parameter 
+        self.compartmental_model = compartmental_model
+        if compartmental_model == 'delphi':
+            num_compartmental_params = 12
+            self.output_min = torch.tensor([item[0] for item in default_bounds_params])
+            self.output_max = torch.tensor([item[1] for item in default_bounds_params])
+        elif compartmental_model == 'sird':
+            num_compartmental_params = 4
+            self.output_min = torch.tensor([item[0] for item in default_bounds_params]) # TODO
+            self.output_max = torch.tensor([item[1] for item in default_bounds_params]) # TODO
+
         self.parameter_prediction_layer = parameter_prediction_layer(dropout=dropout,
-                                                                     include_death = include_death) 
+                                                                     include_death = include_death,
+                                                                     output_dim=num_compartmental_params) 
         
         self.output_range = maximum_bounds_params
-        self.output_min = torch.tensor([item[0] for item in default_bounds_params])
-        self.output_max = torch.tensor([item[1] for item in default_bounds_params])
-
+        # self.output_min = torch.tensor([item[0] for item in default_bounds_params])
+        # self.output_max = torch.tensor([item[1] for item in default_bounds_params])
+        
         ## Ranging Function
         self.range_restriction_function = nn.Sigmoid()
 
@@ -57,20 +69,26 @@ class pandemic_early_warning_model_with_DELPHI(nn.Module):
 
         population = global_params_fixed[:,0]
 
-        delphi_parameters = self.parameter_prediction_layer(ts_input, meta_input)
+        if self.compartmental_model == 'delphi':
 
-        delphi_parameters = self.range_restriction_function(delphi_parameters) * self.output_max.to(delphi_parameters) + self.output_min.to(delphi_parameters)
+            delphi_parameters = self.parameter_prediction_layer(ts_input, meta_input)
+            delphi_parameters = self.range_restriction_function(delphi_parameters) * self.output_max.to(delphi_parameters) + self.output_min.to(delphi_parameters)
 
-        output = self.delphi_layer(delphi_parameters,
-                                   global_params_fixed,
-                                   population,)
+            output = self.delphi_layer(delphi_parameters,
+                                    global_params_fixed,
+                                    population,)
+        elif self.compartmental_model == 'sird':
+            
+            sird_parameters = self.parameter_prediction_layer(ts_input, meta_input)
+            sird_parameters = self.range_restriction_function(sird_parameters) * self.output_max.to(sird_parameters) + self.output_min.to(sird_parameters) # Output max need to be changed
 
         return output, delphi_parameters
 
 class parameter_prediction_layer(nn.Module):
     def __init__(self,
                  dropout: float = 0.5,
-                 include_death: bool = True):
+                 include_death: bool = True,
+                 output_dim: int = 12,):
         
         super().__init__()
 
@@ -86,7 +104,7 @@ class parameter_prediction_layer(nn.Module):
         #                                batch_norm=False,)
 
         self.encoding_layer = ResNet50(channels=channels,
-                                       output_dim=12,
+                                       output_dim=output_dim,
                                        batch_norm=False,
                                        layer_norm=False,)
 
@@ -191,9 +209,64 @@ def DELPHI_model(t, x, args):
     return torch.stack((dSdt, dEdt, dIdt, dARdt, dDHRdt, dDQRdt, dADdt, dDHDdt,
         dDQDdt, dRdt, dDdt, dTHdt, dDVRdt, dDVDdt, dDDdt, dDTdt), dim = 1)
 
+def get_initial_conditions_sird(params_fitted, global_params_fixed):
+    
+    population = global_params_fixed[0]
+    
+    S0 = global_params_fixed[0]  # or derive from N - other states
+    I0 = 100 # TODO change to real infection number
+    R0 = 0
+    D0 = 0 # TODO change to real death number if not None
+
+    S0 = population - I0 - R0 - D0
+
+    return [S0, I0, R0, D0]
+
+class SIRD_layer(nn.Module):
+    def __init__(self, pred_len):
+        super().__init__()
+        self.pred_len = pred_len
+
+    def forward(self, x, gp, population):
+        term = to.ODETerm(SIRD_model, with_args=True)
+        step_method = to.Tsit5(term=term)
+        step_size_controller = to.IntegralController(atol=1e-8, rtol=1e-4, term=term)
+        solver = to.AutoDiffAdjoint(step_method, step_size_controller)
+
+        y0 = [None] * x.shape[0]
+        x = x.t()
+        assert len(y0) == x.shape[1]
+
+        for i in range(x.shape[1]):
+            y0[i] = get_initial_conditions_sird(params_fitted=x[:, i], global_params_fixed=gp[i])
+
+        y0 = torch.tensor(y0).to(x)
+        t_eval = torch.linspace(0, self.pred_len, self.pred_len).repeat(y0.shape[0], 1).to(y0)
+
+        problem = to.InitialValueProblem(y0=y0, t_eval=t_eval)
+        sol = solver.solve(problem, args=[x, population])
+
+        return sol.ys
+
+def SIRD_model(t, x, args):
+    beta, gamma, mu = args[0]  # Transmission, recovery, death rates
+    N = args[1]                # Population
+
+    x = x.t()
+    assert len(x) == 4, f"Expected 4 states for SIRD, got {len(x)}"
+    S, I, R, D = x
+
+    dSdt = -beta * S * I / N
+    dIdt = beta * S * I / N - gamma * I - mu * I
+    dRdt = gamma * I
+    dDdt = mu * I
+
+    return torch.stack((dSdt, dIdt, dRdt, dDdt), dim=1)
+
 if __name__ == '__main__':
-    model = pandemic_early_warning_model_with_DELPHI(pred_len=71,
-                                                    dropout=0.5)
+    model = pandemic_early_warning_model(pred_len=71,
+                                         dropout=0.5,
+                                         compartmental_model='delphi',)
 
     print(model)
 

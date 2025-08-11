@@ -1,0 +1,840 @@
+==== Hyperparameters ====
+lr: 1e-05
+batch_size: 1247
+target_training_len: 56
+pred_len: 84
+record_run: False
+max_epochs: 10000
+log_dir: logs/
+loss: Combined_Loss
+dropout: 0.0
+past_pandemics: ['dengue', 'ebola', 'sars', 'influenza']
+target_pandemic: covid
+include_death: False
+target_self_tuning: True
+selftune_weight: 1
+output_dir: output/past_guided/07-31-1100_56-84/
+population_weighting: False
+use_lr_scheduler: True
+loss_mae_weight: 0.5
+loss_mape_weight: 100
+compartmental_model: delphi
+input_log_transform: True
+========================
+>>>>>>>>>> Processing Past Pandemic Data >>>>>>>>>>
+Raw Data Num: 1133
+Data Num after shifting: 11410
+Past Pandemic Training Size:11410
+>>>>>>>>>> Processing Self-tune Pandemic Data >>>>>>>>>>
+Raw Data Num: 292
+Data Num after masking: 13260
+Self-Tune Training Size:13260
+Past Pandemic + Self-Tune Training Size:24670
+>>>>>>>>>> Processing Target Pandemic Data >>>>>>>>>>
+Raw Data Num: 292
+Data Num after shifting: 260
+Validation Length:258
+The smallest set has 1 curves
+The largest set has 341 curves
+TrainingModule(
+  (model): pandemic_early_warning_model(
+    (parameter_prediction_layer): parameter_prediction_layer(
+      (encoding_layer): ResNet(
+        (conv1): Conv1d(1, 64, kernel_size=(7,), stride=(2,), padding=(3,), bias=False)
+        (relu): LeakyReLU(negative_slope=0.01)
+        (max_pool): MaxPool1d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+        (layer1): Sequential(
+          (0): Bottleneck(
+            (conv1): Conv1d(64, 64, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(64, 64, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(64, 256, kernel_size=(1,), stride=(1,))
+            (i_downsample): Sequential(
+              (0): Conv1d(64, 256, kernel_size=(1,), stride=(1,))
+            )
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (1): Bottleneck(
+            (conv1): Conv1d(256, 64, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(64, 64, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(64, 256, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (2): Bottleneck(
+            (conv1): Conv1d(256, 64, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(64, 64, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(64, 256, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+        )
+        (layer2): Sequential(
+          (0): Bottleneck(
+            (conv1): Conv1d(256, 128, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(128, 128, kernel_size=(3,), stride=(2,), padding=(1,))
+            (conv3): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+            (i_downsample): Sequential(
+              (0): Conv1d(256, 512, kernel_size=(1,), stride=(2,))
+            )
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (1): Bottleneck(
+            (conv1): Conv1d(512, 128, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(128, 128, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (2): Bottleneck(
+            (conv1): Conv1d(512, 128, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(128, 128, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (3): Bottleneck(
+            (conv1): Conv1d(512, 128, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(128, 128, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+        )
+        (layer3): Sequential(
+          (0): Bottleneck(
+            (conv1): Conv1d(512, 256, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(256, 256, kernel_size=(3,), stride=(2,), padding=(1,))
+            (conv3): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+            (i_downsample): Sequential(
+              (0): Conv1d(512, 1024, kernel_size=(1,), stride=(2,))
+            )
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (1): Bottleneck(
+            (conv1): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(256, 256, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (2): Bottleneck(
+            (conv1): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(256, 256, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (3): Bottleneck(
+            (conv1): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(256, 256, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (4): Bottleneck(
+            (conv1): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(256, 256, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (5): Bottleneck(
+            (conv1): Conv1d(1024, 256, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(256, 256, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(256, 1024, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+        )
+        (layer4): Sequential(
+          (0): Bottleneck(
+            (conv1): Conv1d(1024, 512, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(512, 512, kernel_size=(3,), stride=(2,), padding=(1,))
+            (conv3): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+            (i_downsample): Sequential(
+              (0): Conv1d(1024, 2048, kernel_size=(1,), stride=(2,))
+            )
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (1): Bottleneck(
+            (conv1): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+          (2): Bottleneck(
+            (conv1): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+            (conv2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,))
+            (conv3): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+            (relu): LeakyReLU(negative_slope=0.01)
+          )
+        )
+        (avgpool): AdaptiveAvgPool1d(output_size=1)
+        (meta_data_layer1): Linear(in_features=40, out_features=64, bias=True)
+        (meta_data_layer2): Linear(in_features=64, out_features=128, bias=True)
+        (fc1): Linear(in_features=2176, out_features=512, bias=True)
+        (fc2): Linear(in_features=512, out_features=256, bias=True)
+        (fc3): Linear(in_features=256, out_features=64, bias=True)
+        (fc4): Linear(in_features=64, out_features=12, bias=True)
+      )
+    )
+    (range_restriction_function): Sigmoid()
+    (delphi_layer): delphi_layer()
+  )
+  (loss_fn): Combined_Loss()
+)
+Training: |          | 0/? [00:00<?, ?it/s]Training:   0%|          | 0/341 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/341 [00:00<?, ?it/s] Train Loss: 1496146.375
+Epoch 0:   0%|          | 1/341 [00:09<55:34,  0.10it/s]Epoch 0:   0%|          | 1/341 [00:09<55:34,  0.10it/s, v_num=20]Train Loss: 1494300.75
+Epoch 0:   1%|          | 2/341 [00:11<33:18,  0.17it/s, v_num=20]Epoch 0:   1%|          | 2/341 [00:11<33:18,  0.17it/s, v_num=20]Train Loss: 1493035.125
+Epoch 0:   1%|          | 3/341 [00:14<26:29,  0.21it/s, v_num=20]Epoch 0:   1%|          | 3/341 [00:14<26:29,  0.21it/s, v_num=20]Train Loss: 1491795.375
+Epoch 0:   1%|          | 4/341 [00:16<22:33,  0.25it/s, v_num=20]Epoch 0:   1%|          | 4/341 [00:16<22:33,  0.25it/s, v_num=20]Train Loss: 1490748.125
+Epoch 0:   1%|▏         | 5/341 [00:18<20:36,  0.27it/s, v_num=20]Epoch 0:   1%|▏         | 5/341 [00:18<20:36,  0.27it/s, v_num=20]Train Loss: 1490097.875
+Epoch 0:   2%|▏         | 6/341 [00:20<18:56,  0.29it/s, v_num=20]Epoch 0:   2%|▏         | 6/341 [00:20<18:56,  0.29it/s, v_num=20]Train Loss: 1488363.625
+Epoch 0:   2%|▏         | 7/341 [00:22<18:00,  0.31it/s, v_num=20]Epoch 0:   2%|▏         | 7/341 [00:22<18:00,  0.31it/s, v_num=20]Train Loss: 1487623.125
+Epoch 0:   2%|▏         | 8/341 [00:24<17:03,  0.33it/s, v_num=20]Epoch 0:   2%|▏         | 8/341 [00:24<17:03,  0.33it/s, v_num=20]Train Loss: 1486532.25
+Epoch 0:   3%|▎         | 9/341 [00:26<16:19,  0.34it/s, v_num=20]Epoch 0:   3%|▎         | 9/341 [00:26<16:19,  0.34it/s, v_num=20]Train Loss: 1485663.0
+Epoch 0:   3%|▎         | 10/341 [00:28<15:56,  0.35it/s, v_num=20]Epoch 0:   3%|▎         | 10/341 [00:28<15:56,  0.35it/s, v_num=20]Train Loss: 1483883.875
+Epoch 0:   3%|▎         | 11/341 [00:30<15:25,  0.36it/s, v_num=20]Epoch 0:   3%|▎         | 11/341 [00:30<15:25,  0.36it/s, v_num=20]Train Loss: 1483250.875
+Epoch 0:   4%|▎         | 12/341 [00:33<15:21,  0.36it/s, v_num=20]Epoch 0:   4%|▎         | 12/341 [00:33<15:21,  0.36it/s, v_num=20]Train Loss: 1482327.25
+Epoch 0:   4%|▍         | 13/341 [00:35<14:56,  0.37it/s, v_num=20]Epoch 0:   4%|▍         | 13/341 [00:35<14:56,  0.37it/s, v_num=20]Train Loss: 1481955.375
+Epoch 0:   4%|▍         | 14/341 [00:37<14:35,  0.37it/s, v_num=20]Epoch 0:   4%|▍         | 14/341 [00:37<14:35,  0.37it/s, v_num=20]Train Loss: 1480699.625
+Epoch 0:   4%|▍         | 15/341 [00:39<14:24,  0.38it/s, v_num=20]Epoch 0:   4%|▍         | 15/341 [00:39<14:24,  0.38it/s, v_num=20]Train Loss: 1480446.0
+Epoch 0:   5%|▍         | 16/341 [00:41<14:07,  0.38it/s, v_num=20]Epoch 0:   5%|▍         | 16/341 [00:41<14:07,  0.38it/s, v_num=20]Train Loss: 1479402.25
+Epoch 0:   5%|▍         | 17/341 [00:44<14:00,  0.39it/s, v_num=20]Epoch 0:   5%|▍         | 17/341 [00:44<14:00,  0.39it/s, v_num=20]Train Loss: 1478650.625
+Epoch 0:   5%|▌         | 18/341 [00:46<13:46,  0.39it/s, v_num=20]Epoch 0:   5%|▌         | 18/341 [00:46<13:46,  0.39it/s, v_num=20]Train Loss: 1478474.75
+Epoch 0:   6%|▌         | 19/341 [00:48<13:39,  0.39it/s, v_num=20]Epoch 0:   6%|▌         | 19/341 [00:48<13:39,  0.39it/s, v_num=20]Train Loss: 1477761.75
+Epoch 0:   6%|▌         | 20/341 [00:50<13:27,  0.40it/s, v_num=20]Epoch 0:   6%|▌         | 20/341 [00:50<13:27,  0.40it/s, v_num=20]Train Loss: 1476385.625
+Epoch 0:   6%|▌         | 21/341 [00:52<13:21,  0.40it/s, v_num=20]Epoch 0:   6%|▌         | 21/341 [00:52<13:21,  0.40it/s, v_num=20]Train Loss: 1476225.125
+Epoch 0:   6%|▋         | 22/341 [00:54<13:11,  0.40it/s, v_num=20]Epoch 0:   6%|▋         | 22/341 [00:54<13:11,  0.40it/s, v_num=20]Train Loss: 1475379.375
+Epoch 0:   7%|▋         | 23/341 [00:56<13:07,  0.40it/s, v_num=20]Epoch 0:   7%|▋         | 23/341 [00:56<13:07,  0.40it/s, v_num=20]Train Loss: 1473979.5
+Epoch 0:   7%|▋         | 24/341 [00:58<12:58,  0.41it/s, v_num=20]Epoch 0:   7%|▋         | 24/341 [00:58<12:58,  0.41it/s, v_num=20]Train Loss: 1473151.75
+Epoch 0:   7%|▋         | 25/341 [01:01<12:54,  0.41it/s, v_num=20]Epoch 0:   7%|▋         | 25/341 [01:01<12:54,  0.41it/s, v_num=20]Train Loss: 1472349.875
+Epoch 0:   8%|▊         | 26/341 [01:03<12:45,  0.41it/s, v_num=20]Epoch 0:   8%|▊         | 26/341 [01:03<12:45,  0.41it/s, v_num=20]Train Loss: 1471756.625
+Epoch 0:   8%|▊         | 27/341 [01:05<12:38,  0.41it/s, v_num=20]Epoch 0:   8%|▊         | 27/341 [01:05<12:38,  0.41it/s, v_num=20]Train Loss: 1471504.25
+Epoch 0:   8%|▊         | 28/341 [01:07<12:34,  0.41it/s, v_num=20]Epoch 0:   8%|▊         | 28/341 [01:07<12:34,  0.41it/s, v_num=20]Train Loss: 1470483.75
+Epoch 0:   9%|▊         | 29/341 [01:09<12:27,  0.42it/s, v_num=20]Epoch 0:   9%|▊         | 29/341 [01:09<12:27,  0.42it/s, v_num=20]Train Loss: 1469691.875
+Epoch 0:   9%|▉         | 30/341 [01:11<12:24,  0.42it/s, v_num=20]Epoch 0:   9%|▉         | 30/341 [01:11<12:24,  0.42it/s, v_num=20]Train Loss: 1468888.0
+Epoch 0:   9%|▉         | 31/341 [01:13<12:17,  0.42it/s, v_num=20]Epoch 0:   9%|▉         | 31/341 [01:13<12:17,  0.42it/s, v_num=20]Train Loss: 1467952.625
+Epoch 0:   9%|▉         | 32/341 [01:16<12:14,  0.42it/s, v_num=20]Epoch 0:   9%|▉         | 32/341 [01:16<12:14,  0.42it/s, v_num=20]Train Loss: 1467252.0
+Epoch 0:  10%|▉         | 33/341 [01:18<12:08,  0.42it/s, v_num=20]Epoch 0:  10%|▉         | 33/341 [01:18<12:08,  0.42it/s, v_num=20]Train Loss: 1466284.0
+Epoch 0:  10%|▉         | 34/341 [01:20<12:02,  0.42it/s, v_num=20]Epoch 0:  10%|▉         | 34/341 [01:20<12:02,  0.42it/s, v_num=20]Train Loss: 1465283.0
+Epoch 0:  10%|█         | 35/341 [01:22<11:59,  0.43it/s, v_num=20]Epoch 0:  10%|█         | 35/341 [01:22<11:59,  0.43it/s, v_num=20]Train Loss: 1463997.0
+Epoch 0:  11%|█         | 36/341 [01:24<11:54,  0.43it/s, v_num=20]Epoch 0:  11%|█         | 36/341 [01:24<11:54,  0.43it/s, v_num=20]Train Loss: 1462939.125
+Epoch 0:  11%|█         | 37/341 [01:26<11:51,  0.43it/s, v_num=20]Epoch 0:  11%|█         | 37/341 [01:26<11:51,  0.43it/s, v_num=20]Train Loss: 1462376.5
+Epoch 0:  11%|█         | 38/341 [01:28<11:46,  0.43it/s, v_num=20]Epoch 0:  11%|█         | 38/341 [01:28<11:46,  0.43it/s, v_num=20]Train Loss: 1461179.625
+Epoch 0:  11%|█▏        | 39/341 [01:30<11:43,  0.43it/s, v_num=20]Epoch 0:  11%|█▏        | 39/341 [01:30<11:43,  0.43it/s, v_num=20]Train Loss: 1459507.375
+Epoch 0:  12%|█▏        | 40/341 [01:32<11:38,  0.43it/s, v_num=20]Epoch 0:  12%|█▏        | 40/341 [01:32<11:38,  0.43it/s, v_num=20]Train Loss: 1458703.875
+Epoch 0:  12%|█▏        | 41/341 [01:35<11:36,  0.43it/s, v_num=20]Epoch 0:  12%|█▏        | 41/341 [01:35<11:36,  0.43it/s, v_num=20]Train Loss: 1457497.875
+Epoch 0:  12%|█▏        | 42/341 [01:37<11:31,  0.43it/s, v_num=20]Epoch 0:  12%|█▏        | 42/341 [01:37<11:31,  0.43it/s, v_num=20]Train Loss: 1455793.0
+Epoch 0:  13%|█▎        | 43/341 [01:39<11:29,  0.43it/s, v_num=20]Epoch 0:  13%|█▎        | 43/341 [01:39<11:29,  0.43it/s, v_num=20]Train Loss: 1453769.125
+Epoch 0:  13%|█▎        | 44/341 [01:41<11:25,  0.43it/s, v_num=20]Epoch 0:  13%|█▎        | 44/341 [01:41<11:25,  0.43it/s, v_num=20]Train Loss: 1452136.875
+Epoch 0:  13%|█▎        | 45/341 [01:43<11:20,  0.43it/s, v_num=20]Epoch 0:  13%|█▎        | 45/341 [01:43<11:20,  0.43it/s, v_num=20]Train Loss: 1451058.25
+Epoch 0:  13%|█▎        | 46/341 [01:45<11:18,  0.43it/s, v_num=20]Epoch 0:  13%|█▎        | 46/341 [01:45<11:18,  0.43it/s, v_num=20]Train Loss: 1449457.5
+Epoch 0:  14%|█▍        | 47/341 [01:47<11:14,  0.44it/s, v_num=20]Epoch 0:  14%|█▍        | 47/341 [01:47<11:14,  0.44it/s, v_num=20]Train Loss: 1446472.875
+Epoch 0:  14%|█▍        | 48/341 [01:50<11:12,  0.44it/s, v_num=20]Epoch 0:  14%|█▍        | 48/341 [01:50<11:12,  0.44it/s, v_num=20]Train Loss: 1444823.5
+Epoch 0:  14%|█▍        | 49/341 [01:52<11:07,  0.44it/s, v_num=20]Epoch 0:  14%|█▍        | 49/341 [01:52<11:07,  0.44it/s, v_num=20]Train Loss: 1442082.25
+Epoch 0:  15%|█▍        | 50/341 [01:54<11:05,  0.44it/s, v_num=20]Epoch 0:  15%|█▍        | 50/341 [01:54<11:05,  0.44it/s, v_num=20]Train Loss: 1439606.0
+Epoch 0:  15%|█▍        | 51/341 [01:56<11:01,  0.44it/s, v_num=20]Epoch 0:  15%|█▍        | 51/341 [01:56<11:01,  0.44it/s, v_num=20]Train Loss: 1436558.625
+Epoch 0:  15%|█▌        | 52/341 [01:58<10:57,  0.44it/s, v_num=20]Epoch 0:  15%|█▌        | 52/341 [01:58<10:57,  0.44it/s, v_num=20]Train Loss: 1432740.0
+Epoch 0:  16%|█▌        | 53/341 [02:00<10:55,  0.44it/s, v_num=20]Epoch 0:  16%|█▌        | 53/341 [02:00<10:55,  0.44it/s, v_num=20]Train Loss: 1430160.875
+Epoch 0:  16%|█▌        | 54/341 [02:02<10:51,  0.44it/s, v_num=20]Epoch 0:  16%|█▌        | 54/341 [02:02<10:51,  0.44it/s, v_num=20]Train Loss: 1425425.125
+Epoch 0:  16%|█▌        | 55/341 [02:04<10:48,  0.44it/s, v_num=20]Epoch 0:  16%|█▌        | 55/341 [02:04<10:48,  0.44it/s, v_num=20]Train Loss: 1422284.875
+Epoch 0:  16%|█▋        | 56/341 [02:06<10:45,  0.44it/s, v_num=20]Epoch 0:  16%|█▋        | 56/341 [02:06<10:45,  0.44it/s, v_num=20]Train Loss: 1417814.0
+Epoch 0:  17%|█▋        | 57/341 [02:09<10:42,  0.44it/s, v_num=20]Epoch 0:  17%|█▋        | 57/341 [02:09<10:42,  0.44it/s, v_num=20]Train Loss: 1412828.125
+Epoch 0:  17%|█▋        | 58/341 [02:10<10:39,  0.44it/s, v_num=20]Epoch 0:  17%|█▋        | 58/341 [02:10<10:39,  0.44it/s, v_num=20]Train Loss: 1407304.25
+Epoch 0:  17%|█▋        | 59/341 [02:12<10:35,  0.44it/s, v_num=20]Epoch 0:  17%|█▋        | 59/341 [02:12<10:35,  0.44it/s, v_num=20]Train Loss: 1402051.0
+Epoch 0:  18%|█▊        | 60/341 [02:15<10:33,  0.44it/s, v_num=20]Epoch 0:  18%|█▊        | 60/341 [02:15<10:33,  0.44it/s, v_num=20]Train Loss: 1395549.875
+Epoch 0:  18%|█▊        | 61/341 [02:17<10:29,  0.44it/s, v_num=20]Epoch 0:  18%|█▊        | 61/341 [02:17<10:29,  0.44it/s, v_num=20]Train Loss: 1388342.75
+Epoch 0:  18%|█▊        | 62/341 [02:19<10:27,  0.44it/s, v_num=20]Epoch 0:  18%|█▊        | 62/341 [02:19<10:27,  0.44it/s, v_num=20]Train Loss: 1379225.0
+Epoch 0:  18%|█▊        | 63/341 [02:21<10:24,  0.45it/s, v_num=20]Epoch 0:  18%|█▊        | 63/341 [02:21<10:24,  0.45it/s, v_num=20]Train Loss: 1370864.75
+Epoch 0:  19%|█▉        | 64/341 [02:23<10:22,  0.45it/s, v_num=20]Epoch 0:  19%|█▉        | 64/341 [02:23<10:22,  0.45it/s, v_num=20]Train Loss: 1359612.25
+Epoch 0:  19%|█▉        | 65/341 [02:25<10:18,  0.45it/s, v_num=20]Epoch 0:  19%|█▉        | 65/341 [02:25<10:18,  0.45it/s, v_num=20]Train Loss: 1348349.375
+Epoch 0:  19%|█▉        | 66/341 [02:28<10:16,  0.45it/s, v_num=20]Epoch 0:  19%|█▉        | 66/341 [02:28<10:16,  0.45it/s, v_num=20]Train Loss: 1336231.75
+Epoch 0:  20%|█▉        | 67/341 [02:29<10:13,  0.45it/s, v_num=20]Epoch 0:  20%|█▉        | 67/341 [02:29<10:13,  0.45it/s, v_num=20]Train Loss: 1321348.875
+Epoch 0:  20%|█▉        | 68/341 [02:32<10:11,  0.45it/s, v_num=20]Epoch 0:  20%|█▉        | 68/341 [02:32<10:11,  0.45it/s, v_num=20]Train Loss: 1304059.0
+Epoch 0:  20%|██        | 69/341 [02:34<10:08,  0.45it/s, v_num=20]Epoch 0:  20%|██        | 69/341 [02:34<10:08,  0.45it/s, v_num=20]Train Loss: 1285503.25
+Epoch 0:  21%|██        | 70/341 [02:36<10:06,  0.45it/s, v_num=20]Epoch 0:  21%|██        | 70/341 [02:36<10:06,  0.45it/s, v_num=20]Train Loss: 1262734.125
+Epoch 0:  21%|██        | 71/341 [02:38<10:02,  0.45it/s, v_num=20]Epoch 0:  21%|██        | 71/341 [02:38<10:02,  0.45it/s, v_num=20]Train Loss: 1236097.125
+Epoch 0:  21%|██        | 72/341 [02:40<09:59,  0.45it/s, v_num=20]Epoch 0:  21%|██        | 72/341 [02:40<09:59,  0.45it/s, v_num=20]Train Loss: 1206125.0
+Epoch 0:  21%|██▏       | 73/341 [02:42<09:57,  0.45it/s, v_num=20]Epoch 0:  21%|██▏       | 73/341 [02:42<09:57,  0.45it/s, v_num=20]Train Loss: 1172340.25
+Epoch 0:  22%|██▏       | 74/341 [02:44<09:54,  0.45it/s, v_num=20]Epoch 0:  22%|██▏       | 74/341 [02:44<09:54,  0.45it/s, v_num=20]Train Loss: 1129260.75
+Epoch 0:  22%|██▏       | 75/341 [02:47<09:52,  0.45it/s, v_num=20]Epoch 0:  22%|██▏       | 75/341 [02:47<09:52,  0.45it/s, v_num=20]Train Loss: 1078706.0
+Epoch 0:  22%|██▏       | 76/341 [02:49<09:49,  0.45it/s, v_num=20]Epoch 0:  22%|██▏       | 76/341 [02:49<09:49,  0.45it/s, v_num=20]Train Loss: 1019785.75
+Epoch 0:  23%|██▎       | 77/341 [02:51<09:47,  0.45it/s, v_num=20]Epoch 0:  23%|██▎       | 77/341 [02:51<09:47,  0.45it/s, v_num=20]Train Loss: 952288.0
+Epoch 0:  23%|██▎       | 78/341 [02:53<09:44,  0.45it/s, v_num=20]Epoch 0:  23%|██▎       | 78/341 [02:53<09:44,  0.45it/s, v_num=20]Train Loss: 873000.875
+Epoch 0:  23%|██▎       | 79/341 [02:55<09:42,  0.45it/s, v_num=20]Epoch 0:  23%|██▎       | 79/341 [02:55<09:42,  0.45it/s, v_num=20]Train Loss: 785002.75
+Epoch 0:  23%|██▎       | 80/341 [02:57<09:39,  0.45it/s, v_num=20]Epoch 0:  23%|██▎       | 80/341 [02:57<09:39,  0.45it/s, v_num=20]Train Loss: 692737.4375
+Epoch 0:  24%|██▍       | 81/341 [02:59<09:36,  0.45it/s, v_num=20]Epoch 0:  24%|██▍       | 81/341 [02:59<09:36,  0.45it/s, v_num=20]Train Loss: 594868.3125
+Epoch 0:  24%|██▍       | 82/341 [03:01<09:34,  0.45it/s, v_num=20]Epoch 0:  24%|██▍       | 82/341 [03:01<09:34,  0.45it/s, v_num=20]Train Loss: 496890.1875
+Epoch 0:  24%|██▍       | 83/341 [03:03<09:31,  0.45it/s, v_num=20]Epoch 0:  24%|██▍       | 83/341 [03:03<09:31,  0.45it/s, v_num=20]Train Loss: 402052.90625
+Epoch 0:  25%|██▍       | 84/341 [03:06<09:29,  0.45it/s, v_num=20]Epoch 0:  25%|██▍       | 84/341 [03:06<09:29,  0.45it/s, v_num=20]Train Loss: 316104.90625
+Epoch 0:  25%|██▍       | 85/341 [03:08<09:26,  0.45it/s, v_num=20]Epoch 0:  25%|██▍       | 85/341 [03:08<09:26,  0.45it/s, v_num=20]Train Loss: 241458.8125
+Epoch 0:  25%|██▌       | 86/341 [03:10<09:24,  0.45it/s, v_num=20]Epoch 0:  25%|██▌       | 86/341 [03:10<09:24,  0.45it/s, v_num=20]Train Loss: 180400.09375
+Epoch 0:  26%|██▌       | 87/341 [03:12<09:22,  0.45it/s, v_num=20]Epoch 0:  26%|██▌       | 87/341 [03:12<09:22,  0.45it/s, v_num=20]Train Loss: 131583.515625
+Epoch 0:  26%|██▌       | 88/341 [03:14<09:20,  0.45it/s, v_num=20]Epoch 0:  26%|██▌       | 88/341 [03:14<09:20,  0.45it/s, v_num=20]Train Loss: 93439.203125
+Epoch 0:  26%|██▌       | 89/341 [03:16<09:17,  0.45it/s, v_num=20]Epoch 0:  26%|██▌       | 89/341 [03:16<09:17,  0.45it/s, v_num=20]Train Loss: 65156.6953125
+Epoch 0:  26%|██▋       | 90/341 [03:19<09:15,  0.45it/s, v_num=20]Epoch 0:  26%|██▋       | 90/341 [03:19<09:15,  0.45it/s, v_num=20]Train Loss: 45984.57421875
+Epoch 0:  27%|██▋       | 91/341 [03:20<09:11,  0.45it/s, v_num=20]Epoch 0:  27%|██▋       | 91/341 [03:20<09:11,  0.45it/s, v_num=20]Train Loss: 32969.48046875
+Epoch 0:  27%|██▋       | 92/341 [03:22<09:08,  0.45it/s, v_num=20]Epoch 0:  27%|██▋       | 92/341 [03:22<09:08,  0.45it/s, v_num=20]Train Loss: 23974.103515625
+Epoch 0:  27%|██▋       | 93/341 [03:25<09:06,  0.45it/s, v_num=20]Epoch 0:  27%|██▋       | 93/341 [03:25<09:06,  0.45it/s, v_num=20]Train Loss: 18023.220703125
+Epoch 0:  28%|██▊       | 94/341 [03:27<09:03,  0.45it/s, v_num=20]Epoch 0:  28%|██▊       | 94/341 [03:27<09:03,  0.45it/s, v_num=20]Train Loss: 14273.1416015625
+Epoch 0:  28%|██▊       | 95/341 [03:29<09:02,  0.45it/s, v_num=20]Epoch 0:  28%|██▊       | 95/341 [03:29<09:02,  0.45it/s, v_num=20]Train Loss: 11854.564453125
+Epoch 0:  28%|██▊       | 96/341 [03:31<08:59,  0.45it/s, v_num=20]Epoch 0:  28%|██▊       | 96/341 [03:31<08:59,  0.45it/s, v_num=20]Train Loss: 10221.861328125
+Epoch 0:  28%|██▊       | 97/341 [03:33<08:56,  0.45it/s, v_num=20]Epoch 0:  28%|██▊       | 97/341 [03:33<08:56,  0.45it/s, v_num=20]Train Loss: 9102.7119140625
+Epoch 0:  29%|██▊       | 98/341 [03:35<08:54,  0.45it/s, v_num=20]Epoch 0:  29%|██▊       | 98/341 [03:35<08:54,  0.45it/s, v_num=20]Train Loss: 8334.88671875
+Epoch 0:  29%|██▉       | 99/341 [03:37<08:51,  0.46it/s, v_num=20]Epoch 0:  29%|██▉       | 99/341 [03:37<08:51,  0.46it/s, v_num=20]Train Loss: 7796.72509765625
+Epoch 0:  29%|██▉       | 100/341 [03:39<08:49,  0.46it/s, v_num=20]Epoch 0:  29%|██▉       | 100/341 [03:39<08:49,  0.46it/s, v_num=20]Train Loss: 7442.8466796875
+Epoch 0:  30%|██▉       | 101/341 [03:41<08:46,  0.46it/s, v_num=20]Epoch 0:  30%|██▉       | 101/341 [03:41<08:46,  0.46it/s, v_num=20]Train Loss: 7164.37548828125
+Epoch 0:  30%|██▉       | 102/341 [03:43<08:44,  0.46it/s, v_num=20]Epoch 0:  30%|██▉       | 102/341 [03:43<08:44,  0.46it/s, v_num=20]Train Loss: 6948.6142578125
+Epoch 0:  30%|███       | 103/341 [03:45<08:41,  0.46it/s, v_num=20]Epoch 0:  30%|███       | 103/341 [03:45<08:41,  0.46it/s, v_num=20]Train Loss: 6768.89501953125
+Epoch 0:  30%|███       | 104/341 [03:47<08:38,  0.46it/s, v_num=20]Epoch 0:  30%|███       | 104/341 [03:47<08:38,  0.46it/s, v_num=20]Train Loss: 6676.3369140625
+Epoch 0:  31%|███       | 105/341 [03:49<08:36,  0.46it/s, v_num=20]Epoch 0:  31%|███       | 105/341 [03:49<08:36,  0.46it/s, v_num=20]Train Loss: 6564.1337890625
+Epoch 0:  31%|███       | 106/341 [03:51<08:33,  0.46it/s, v_num=20]Epoch 0:  31%|███       | 106/341 [03:51<08:33,  0.46it/s, v_num=20]Train Loss: 6475.37060546875
+Epoch 0:  31%|███▏      | 107/341 [03:54<08:32,  0.46it/s, v_num=20]Epoch 0:  31%|███▏      | 107/341 [03:54<08:32,  0.46it/s, v_num=20]Train Loss: 6425.03857421875
+Epoch 0:  32%|███▏      | 108/341 [03:56<08:29,  0.46it/s, v_num=20]Epoch 0:  32%|███▏      | 108/341 [03:56<08:29,  0.46it/s, v_num=20]Train Loss: 6382.92138671875
+Epoch 0:  32%|███▏      | 109/341 [03:58<08:27,  0.46it/s, v_num=20]Epoch 0:  32%|███▏      | 109/341 [03:58<08:27,  0.46it/s, v_num=20]Train Loss: 6333.4853515625
+Epoch 0:  32%|███▏      | 110/341 [04:00<08:24,  0.46it/s, v_num=20]Epoch 0:  32%|███▏      | 110/341 [04:00<08:24,  0.46it/s, v_num=20]Train Loss: 6303.615234375
+Epoch 0:  33%|███▎      | 111/341 [04:02<08:21,  0.46it/s, v_num=20]Epoch 0:  33%|███▎      | 111/341 [04:02<08:21,  0.46it/s, v_num=20]Train Loss: 6267.14794921875
+Epoch 0:  33%|███▎      | 112/341 [04:04<08:19,  0.46it/s, v_num=20]Epoch 0:  33%|███▎      | 112/341 [04:04<08:19,  0.46it/s, v_num=20]Train Loss: 6252.44580078125
+Epoch 0:  33%|███▎      | 113/341 [04:06<08:17,  0.46it/s, v_num=20]Epoch 0:  33%|███▎      | 113/341 [04:06<08:17,  0.46it/s, v_num=20]Train Loss: 6232.25439453125
+Epoch 0:  33%|███▎      | 114/341 [04:08<08:15,  0.46it/s, v_num=20]Epoch 0:  33%|███▎      | 114/341 [04:08<08:15,  0.46it/s, v_num=20]Train Loss: 6214.720703125
+Epoch 0:  34%|███▎      | 115/341 [04:10<08:12,  0.46it/s, v_num=20]Epoch 0:  34%|███▎      | 115/341 [04:10<08:12,  0.46it/s, v_num=20]Train Loss: 6196.185546875
+Epoch 0:  34%|███▍      | 116/341 [04:12<08:10,  0.46it/s, v_num=20]Epoch 0:  34%|███▍      | 116/341 [04:12<08:10,  0.46it/s, v_num=20]Train Loss: 6184.1357421875
+Epoch 0:  34%|███▍      | 117/341 [04:14<08:07,  0.46it/s, v_num=20]Epoch 0:  34%|███▍      | 117/341 [04:14<08:07,  0.46it/s, v_num=20]Train Loss: 6171.4541015625
+Epoch 0:  35%|███▍      | 118/341 [04:16<08:04,  0.46it/s, v_num=20]Epoch 0:  35%|███▍      | 118/341 [04:16<08:04,  0.46it/s, v_num=20]Train Loss: 6168.955078125
+Epoch 0:  35%|███▍      | 119/341 [04:18<08:02,  0.46it/s, v_num=20]Epoch 0:  35%|███▍      | 119/341 [04:18<08:02,  0.46it/s, v_num=20]Train Loss: 6157.75439453125
+Epoch 0:  35%|███▌      | 120/341 [04:20<08:00,  0.46it/s, v_num=20]Epoch 0:  35%|███▌      | 120/341 [04:20<08:00,  0.46it/s, v_num=20]Train Loss: 6144.40625
+Epoch 0:  35%|███▌      | 121/341 [04:22<07:58,  0.46it/s, v_num=20]Epoch 0:  35%|███▌      | 121/341 [04:22<07:58,  0.46it/s, v_num=20]Train Loss: 6138.36865234375
+Epoch 0:  36%|███▌      | 122/341 [04:24<07:55,  0.46it/s, v_num=20]Epoch 0:  36%|███▌      | 122/341 [04:24<07:55,  0.46it/s, v_num=20]Train Loss: 6132.50146484375
+Epoch 0:  36%|███▌      | 123/341 [04:27<07:53,  0.46it/s, v_num=20]Epoch 0:  36%|███▌      | 123/341 [04:27<07:53,  0.46it/s, v_num=20]Train Loss: 6127.92333984375
+Epoch 0:  36%|███▋      | 124/341 [04:28<07:50,  0.46it/s, v_num=20]Epoch 0:  36%|███▋      | 124/341 [04:28<07:50,  0.46it/s, v_num=20]Train Loss: 6120.34130859375
+Epoch 0:  37%|███▋      | 125/341 [04:30<07:47,  0.46it/s, v_num=20]Epoch 0:  37%|███▋      | 125/341 [04:30<07:47,  0.46it/s, v_num=20]Train Loss: 6118.8349609375
+Epoch 0:  37%|███▋      | 126/341 [04:33<07:45,  0.46it/s, v_num=20]Epoch 0:  37%|███▋      | 126/341 [04:33<07:45,  0.46it/s, v_num=20]Train Loss: 6114.2783203125
+Epoch 0:  37%|███▋      | 127/341 [04:34<07:43,  0.46it/s, v_num=20]Epoch 0:  37%|███▋      | 127/341 [04:34<07:43,  0.46it/s, v_num=20]Train Loss: 6114.75439453125
+Epoch 0:  38%|███▊      | 128/341 [04:37<07:41,  0.46it/s, v_num=20]Epoch 0:  38%|███▊      | 128/341 [04:37<07:41,  0.46it/s, v_num=20]Train Loss: 6107.84033203125
+Epoch 0:  38%|███▊      | 129/341 [04:39<07:38,  0.46it/s, v_num=20]Epoch 0:  38%|███▊      | 129/341 [04:39<07:38,  0.46it/s, v_num=20]Train Loss: 6104.0849609375
+Epoch 0:  38%|███▊      | 130/341 [04:41<07:36,  0.46it/s, v_num=20]Epoch 0:  38%|███▊      | 130/341 [04:41<07:36,  0.46it/s, v_num=20]Train Loss: 6100.7041015625
+Epoch 0:  38%|███▊      | 131/341 [04:43<07:33,  0.46it/s, v_num=20]Epoch 0:  38%|███▊      | 131/341 [04:43<07:33,  0.46it/s, v_num=20]Train Loss: 6093.76953125
+Epoch 0:  39%|███▊      | 132/341 [04:44<07:31,  0.46it/s, v_num=20]Epoch 0:  39%|███▊      | 132/341 [04:44<07:31,  0.46it/s, v_num=20]Train Loss: 6093.34716796875
+Epoch 0:  39%|███▉      | 133/341 [04:47<07:29,  0.46it/s, v_num=20]Epoch 0:  39%|███▉      | 133/341 [04:47<07:29,  0.46it/s, v_num=20]Train Loss: 6090.14453125
+Epoch 0:  39%|███▉      | 134/341 [04:49<07:26,  0.46it/s, v_num=20]Epoch 0:  39%|███▉      | 134/341 [04:49<07:26,  0.46it/s, v_num=20]Train Loss: 6091.73681640625
+Epoch 0:  40%|███▉      | 135/341 [04:51<07:24,  0.46it/s, v_num=20]Epoch 0:  40%|███▉      | 135/341 [04:51<07:24,  0.46it/s, v_num=20]Train Loss: 6086.70361328125
+Epoch 0:  40%|███▉      | 136/341 [04:53<07:21,  0.46it/s, v_num=20]Epoch 0:  40%|███▉      | 136/341 [04:53<07:21,  0.46it/s, v_num=20]Train Loss: 6081.8828125
+Epoch 0:  40%|████      | 137/341 [04:55<07:19,  0.46it/s, v_num=20]Epoch 0:  40%|████      | 137/341 [04:55<07:19,  0.46it/s, v_num=20]Train Loss: 6075.6357421875
+Epoch 0:  40%|████      | 138/341 [04:57<07:17,  0.46it/s, v_num=20]Epoch 0:  40%|████      | 138/341 [04:57<07:17,  0.46it/s, v_num=20]Train Loss: 6075.45068359375
+Epoch 0:  41%|████      | 139/341 [04:59<07:15,  0.46it/s, v_num=20]Epoch 0:  41%|████      | 139/341 [04:59<07:15,  0.46it/s, v_num=20]Train Loss: 6071.96240234375
+Epoch 0:  41%|████      | 140/341 [05:01<07:12,  0.46it/s, v_num=20]Epoch 0:  41%|████      | 140/341 [05:01<07:12,  0.46it/s, v_num=20]Train Loss: 6071.8525390625
+Epoch 0:  41%|████▏     | 141/341 [05:03<07:10,  0.46it/s, v_num=20]Epoch 0:  41%|████▏     | 141/341 [05:03<07:10,  0.46it/s, v_num=20]Train Loss: 6071.6279296875
+Epoch 0:  42%|████▏     | 142/341 [05:05<07:08,  0.46it/s, v_num=20]Epoch 0:  42%|████▏     | 142/341 [05:05<07:08,  0.46it/s, v_num=20]Train Loss: 6064.2490234375
+Epoch 0:  42%|████▏     | 143/341 [05:07<07:05,  0.47it/s, v_num=20]Epoch 0:  42%|████▏     | 143/341 [05:07<07:05,  0.47it/s, v_num=20]Train Loss: 6062.220703125
+Epoch 0:  42%|████▏     | 144/341 [05:09<07:03,  0.47it/s, v_num=20]Epoch 0:  42%|████▏     | 144/341 [05:09<07:03,  0.47it/s, v_num=20]Train Loss: 6061.0
+Epoch 0:  43%|████▎     | 145/341 [05:11<07:00,  0.47it/s, v_num=20]Epoch 0:  43%|████▎     | 145/341 [05:11<07:00,  0.47it/s, v_num=20]Train Loss: 6060.47314453125
+Epoch 0:  43%|████▎     | 146/341 [05:13<06:58,  0.47it/s, v_num=20]Epoch 0:  43%|████▎     | 146/341 [05:13<06:58,  0.47it/s, v_num=20]Train Loss: 6055.2568359375
+Epoch 0:  43%|████▎     | 147/341 [05:15<06:56,  0.47it/s, v_num=20]Epoch 0:  43%|████▎     | 147/341 [05:15<06:56,  0.47it/s, v_num=20]Train Loss: 6053.8251953125
+Epoch 0:  43%|████▎     | 148/341 [05:17<06:53,  0.47it/s, v_num=20]Epoch 0:  43%|████▎     | 148/341 [05:17<06:53,  0.47it/s, v_num=20]Train Loss: 6052.0537109375
+Epoch 0:  44%|████▎     | 149/341 [05:19<06:51,  0.47it/s, v_num=20]Epoch 0:  44%|████▎     | 149/341 [05:19<06:51,  0.47it/s, v_num=20]Train Loss: 6050.236328125
+Epoch 0:  44%|████▍     | 150/341 [05:21<06:49,  0.47it/s, v_num=20]Epoch 0:  44%|████▍     | 150/341 [05:21<06:49,  0.47it/s, v_num=20]Train Loss: 6046.8369140625
+Epoch 0:  44%|████▍     | 151/341 [05:23<06:47,  0.47it/s, v_num=20]Epoch 0:  44%|████▍     | 151/341 [05:23<06:47,  0.47it/s, v_num=20]Train Loss: 6045.654296875
+Epoch 0:  45%|████▍     | 152/341 [05:25<06:44,  0.47it/s, v_num=20]Epoch 0:  45%|████▍     | 152/341 [05:25<06:44,  0.47it/s, v_num=20]Train Loss: 6043.05712890625
+Epoch 0:  45%|████▍     | 153/341 [05:27<06:42,  0.47it/s, v_num=20]Epoch 0:  45%|████▍     | 153/341 [05:27<06:42,  0.47it/s, v_num=20]Train Loss: 6039.42041015625
+Epoch 0:  45%|████▌     | 154/341 [05:29<06:40,  0.47it/s, v_num=20]Epoch 0:  45%|████▌     | 154/341 [05:29<06:40,  0.47it/s, v_num=20]Train Loss: 6037.7705078125
+Epoch 0:  45%|████▌     | 155/341 [05:31<06:37,  0.47it/s, v_num=20]Epoch 0:  45%|████▌     | 155/341 [05:31<06:37,  0.47it/s, v_num=20]Train Loss: 6035.03515625
+Epoch 0:  46%|████▌     | 156/341 [05:33<06:35,  0.47it/s, v_num=20]Epoch 0:  46%|████▌     | 156/341 [05:33<06:35,  0.47it/s, v_num=20]Train Loss: 6036.154296875
+Epoch 0:  46%|████▌     | 157/341 [05:35<06:33,  0.47it/s, v_num=20]Epoch 0:  46%|████▌     | 157/341 [05:35<06:33,  0.47it/s, v_num=20]Train Loss: 6030.970703125
+Epoch 0:  46%|████▋     | 158/341 [05:37<06:31,  0.47it/s, v_num=20]Epoch 0:  46%|████▋     | 158/341 [05:37<06:31,  0.47it/s, v_num=20]Train Loss: 6027.431640625
+Epoch 0:  47%|████▋     | 159/341 [05:39<06:28,  0.47it/s, v_num=20]Epoch 0:  47%|████▋     | 159/341 [05:39<06:28,  0.47it/s, v_num=20]Train Loss: 6025.806640625
+Epoch 0:  47%|████▋     | 160/341 [05:42<06:26,  0.47it/s, v_num=20]Epoch 0:  47%|████▋     | 160/341 [05:42<06:26,  0.47it/s, v_num=20]Train Loss: 6023.001953125
+Epoch 0:  47%|████▋     | 161/341 [05:43<06:24,  0.47it/s, v_num=20]Epoch 0:  47%|████▋     | 161/341 [05:43<06:24,  0.47it/s, v_num=20]Train Loss: 6022.0771484375
+Epoch 0:  48%|████▊     | 162/341 [05:45<06:22,  0.47it/s, v_num=20]Epoch 0:  48%|████▊     | 162/341 [05:45<06:22,  0.47it/s, v_num=20]Train Loss: 6019.05029296875
+Epoch 0:  48%|████▊     | 163/341 [05:47<06:19,  0.47it/s, v_num=20]Epoch 0:  48%|████▊     | 163/341 [05:47<06:19,  0.47it/s, v_num=20]Train Loss: 6018.78955078125
+Epoch 0:  48%|████▊     | 164/341 [05:49<06:17,  0.47it/s, v_num=20]Epoch 0:  48%|████▊     | 164/341 [05:49<06:17,  0.47it/s, v_num=20]Train Loss: 6017.10986328125
+Epoch 0:  48%|████▊     | 165/341 [05:52<06:15,  0.47it/s, v_num=20]Epoch 0:  48%|████▊     | 165/341 [05:52<06:15,  0.47it/s, v_num=20]Train Loss: 6015.3369140625
+Epoch 0:  49%|████▊     | 166/341 [05:53<06:13,  0.47it/s, v_num=20]Epoch 0:  49%|████▊     | 166/341 [05:53<06:13,  0.47it/s, v_num=20]Train Loss: 6011.994140625
+Epoch 0:  49%|████▉     | 167/341 [05:56<06:11,  0.47it/s, v_num=20]Epoch 0:  49%|████▉     | 167/341 [05:56<06:11,  0.47it/s, v_num=20]Train Loss: 6007.92919921875
+Epoch 0:  49%|████▉     | 168/341 [05:57<06:08,  0.47it/s, v_num=20]Epoch 0:  49%|████▉     | 168/341 [05:57<06:08,  0.47it/s, v_num=20]Train Loss: 6004.00341796875
+Epoch 0:  50%|████▉     | 169/341 [05:59<06:06,  0.47it/s, v_num=20]Epoch 0:  50%|████▉     | 169/341 [05:59<06:06,  0.47it/s, v_num=20]Train Loss: 6002.943359375
+Epoch 0:  50%|████▉     | 170/341 [06:02<06:04,  0.47it/s, v_num=20]Epoch 0:  50%|████▉     | 170/341 [06:02<06:04,  0.47it/s, v_num=20]Train Loss: 6003.42236328125
+Epoch 0:  50%|█████     | 171/341 [06:03<06:01,  0.47it/s, v_num=20]Epoch 0:  50%|█████     | 171/341 [06:03<06:01,  0.47it/s, v_num=20]Train Loss: 5998.615234375
+Epoch 0:  50%|█████     | 172/341 [06:06<05:59,  0.47it/s, v_num=20]Epoch 0:  50%|█████     | 172/341 [06:06<05:59,  0.47it/s, v_num=20]Train Loss: 5999.2900390625
+Epoch 0:  51%|█████     | 173/341 [06:08<05:57,  0.47it/s, v_num=20]Epoch 0:  51%|█████     | 173/341 [06:08<05:57,  0.47it/s, v_num=20]Train Loss: 5995.30615234375
+Epoch 0:  51%|█████     | 174/341 [06:09<05:55,  0.47it/s, v_num=20]Epoch 0:  51%|█████     | 174/341 [06:09<05:55,  0.47it/s, v_num=20]Train Loss: 5991.46240234375
+Epoch 0:  51%|█████▏    | 175/341 [06:12<05:52,  0.47it/s, v_num=20]Epoch 0:  51%|█████▏    | 175/341 [06:12<05:52,  0.47it/s, v_num=20]Train Loss: 5991.62451171875
+Epoch 0:  52%|█████▏    | 176/341 [06:13<05:50,  0.47it/s, v_num=20]Epoch 0:  52%|█████▏    | 176/341 [06:13<05:50,  0.47it/s, v_num=20]Train Loss: 5987.7421875
+Epoch 0:  52%|█████▏    | 177/341 [06:16<05:48,  0.47it/s, v_num=20]Epoch 0:  52%|█████▏    | 177/341 [06:16<05:48,  0.47it/s, v_num=20]Train Loss: 5986.58935546875
+Epoch 0:  52%|█████▏    | 178/341 [06:18<05:46,  0.47it/s, v_num=20]Epoch 0:  52%|█████▏    | 178/341 [06:18<05:46,  0.47it/s, v_num=20]Train Loss: 5983.83740234375
+Epoch 0:  52%|█████▏    | 179/341 [06:20<05:44,  0.47it/s, v_num=20]Epoch 0:  52%|█████▏    | 179/341 [06:20<05:44,  0.47it/s, v_num=20]Train Loss: 5981.58740234375
+Epoch 0:  53%|█████▎    | 180/341 [06:22<05:41,  0.47it/s, v_num=20]Epoch 0:  53%|█████▎    | 180/341 [06:22<05:41,  0.47it/s, v_num=20]Train Loss: 5980.9287109375
+Epoch 0:  53%|█████▎    | 181/341 [06:24<05:39,  0.47it/s, v_num=20]Epoch 0:  53%|█████▎    | 181/341 [06:24<05:39,  0.47it/s, v_num=20]Train Loss: 5978.25830078125
+Epoch 0:  53%|█████▎    | 182/341 [06:26<05:37,  0.47it/s, v_num=20]Epoch 0:  53%|█████▎    | 182/341 [06:26<05:37,  0.47it/s, v_num=20]Train Loss: 5974.9619140625
+Epoch 0:  54%|█████▎    | 183/341 [06:28<05:35,  0.47it/s, v_num=20]Epoch 0:  54%|█████▎    | 183/341 [06:28<05:35,  0.47it/s, v_num=20]Train Loss: 5974.4287109375
+Epoch 0:  54%|█████▍    | 184/341 [06:30<05:33,  0.47it/s, v_num=20]Epoch 0:  54%|█████▍    | 184/341 [06:30<05:33,  0.47it/s, v_num=20]Train Loss: 5972.01513671875
+Epoch 0:  54%|█████▍    | 185/341 [06:32<05:30,  0.47it/s, v_num=20]Epoch 0:  54%|█████▍    | 185/341 [06:32<05:30,  0.47it/s, v_num=20]Train Loss: 5970.5126953125
+Epoch 0:  55%|█████▍    | 186/341 [06:34<05:28,  0.47it/s, v_num=20]Epoch 0:  55%|█████▍    | 186/341 [06:34<05:28,  0.47it/s, v_num=20]Train Loss: 5967.4892578125
+Epoch 0:  55%|█████▍    | 187/341 [06:36<05:26,  0.47it/s, v_num=20]Epoch 0:  55%|█████▍    | 187/341 [06:36<05:26,  0.47it/s, v_num=20]Train Loss: 5966.9248046875
+Epoch 0:  55%|█████▌    | 188/341 [06:38<05:24,  0.47it/s, v_num=20]Epoch 0:  55%|█████▌    | 188/341 [06:38<05:24,  0.47it/s, v_num=20]Train Loss: 5967.18505859375
+Epoch 0:  55%|█████▌    | 189/341 [06:40<05:22,  0.47it/s, v_num=20]Epoch 0:  55%|█████▌    | 189/341 [06:40<05:22,  0.47it/s, v_num=20]Train Loss: 5963.71826171875
+Epoch 0:  56%|█████▌    | 190/341 [06:42<05:19,  0.47it/s, v_num=20]Epoch 0:  56%|█████▌    | 190/341 [06:42<05:19,  0.47it/s, v_num=20]Train Loss: 5961.31982421875
+Epoch 0:  56%|█████▌    | 191/341 [06:44<05:17,  0.47it/s, v_num=20]Epoch 0:  56%|█████▌    | 191/341 [06:44<05:17,  0.47it/s, v_num=20]Train Loss: 5957.685546875
+Epoch 0:  56%|█████▋    | 192/341 [06:46<05:15,  0.47it/s, v_num=20]Epoch 0:  56%|█████▋    | 192/341 [06:46<05:15,  0.47it/s, v_num=20]Train Loss: 5959.14013671875
+Epoch 0:  57%|█████▋    | 193/341 [06:48<05:13,  0.47it/s, v_num=20]Epoch 0:  57%|█████▋    | 193/341 [06:48<05:13,  0.47it/s, v_num=20]Train Loss: 5958.65234375
+Epoch 0:  57%|█████▋    | 194/341 [06:50<05:11,  0.47it/s, v_num=20]Epoch 0:  57%|█████▋    | 194/341 [06:50<05:11,  0.47it/s, v_num=20]Train Loss: 5952.0673828125
+Epoch 0:  57%|█████▋    | 195/341 [06:52<05:09,  0.47it/s, v_num=20]Epoch 0:  57%|█████▋    | 195/341 [06:52<05:09,  0.47it/s, v_num=20]Train Loss: 5952.6494140625
+Epoch 0:  57%|█████▋    | 196/341 [06:54<05:06,  0.47it/s, v_num=20]Epoch 0:  57%|█████▋    | 196/341 [06:54<05:06,  0.47it/s, v_num=20]Train Loss: 5950.94873046875
+Epoch 0:  58%|█████▊    | 197/341 [06:56<05:04,  0.47it/s, v_num=20]Epoch 0:  58%|█████▊    | 197/341 [06:56<05:04,  0.47it/s, v_num=20]Train Loss: 5949.2333984375
+Epoch 0:  58%|█████▊    | 198/341 [06:58<05:02,  0.47it/s, v_num=20]Epoch 0:  58%|█████▊    | 198/341 [06:58<05:02,  0.47it/s, v_num=20]Train Loss: 5945.634765625
+Epoch 0:  58%|█████▊    | 199/341 [07:00<05:00,  0.47it/s, v_num=20]Epoch 0:  58%|█████▊    | 199/341 [07:00<05:00,  0.47it/s, v_num=20]Train Loss: 5947.47265625
+Epoch 0:  59%|█████▊    | 200/341 [07:03<04:58,  0.47it/s, v_num=20]Epoch 0:  59%|█████▊    | 200/341 [07:03<04:58,  0.47it/s, v_num=20]Train Loss: 5943.0771484375
+Epoch 0:  59%|█████▉    | 201/341 [07:04<04:55,  0.47it/s, v_num=20]Epoch 0:  59%|█████▉    | 201/341 [07:04<04:55,  0.47it/s, v_num=20]Train Loss: 5941.6005859375
+Epoch 0:  59%|█████▉    | 202/341 [07:07<04:54,  0.47it/s, v_num=20]Epoch 0:  59%|█████▉    | 202/341 [07:07<04:54,  0.47it/s, v_num=20]Train Loss: 5937.4853515625
+Epoch 0:  60%|█████▉    | 203/341 [07:09<04:51,  0.47it/s, v_num=20]Epoch 0:  60%|█████▉    | 203/341 [07:09<04:51,  0.47it/s, v_num=20]Train Loss: 5935.54345703125
+Epoch 0:  60%|█████▉    | 204/341 [07:11<04:49,  0.47it/s, v_num=20]Epoch 0:  60%|█████▉    | 204/341 [07:11<04:49,  0.47it/s, v_num=20]Train Loss: 5934.05908203125
+Epoch 0:  60%|██████    | 205/341 [07:13<04:47,  0.47it/s, v_num=20]Epoch 0:  60%|██████    | 205/341 [07:13<04:47,  0.47it/s, v_num=20]Train Loss: 5933.3955078125
+Epoch 0:  60%|██████    | 206/341 [07:15<04:45,  0.47it/s, v_num=20]Epoch 0:  60%|██████    | 206/341 [07:15<04:45,  0.47it/s, v_num=20]Train Loss: 5931.4384765625
+Epoch 0:  61%|██████    | 207/341 [07:17<04:43,  0.47it/s, v_num=20]Epoch 0:  61%|██████    | 207/341 [07:17<04:43,  0.47it/s, v_num=20]Train Loss: 5931.59716796875
+Epoch 0:  61%|██████    | 208/341 [07:19<04:41,  0.47it/s, v_num=20]Epoch 0:  61%|██████    | 208/341 [07:19<04:41,  0.47it/s, v_num=20]Train Loss: 5931.7724609375
+Epoch 0:  61%|██████▏   | 209/341 [07:21<04:38,  0.47it/s, v_num=20]Epoch 0:  61%|██████▏   | 209/341 [07:21<04:38,  0.47it/s, v_num=20]Train Loss: 5927.580078125
+Epoch 0:  62%|██████▏   | 210/341 [07:23<04:36,  0.47it/s, v_num=20]Epoch 0:  62%|██████▏   | 210/341 [07:23<04:36,  0.47it/s, v_num=20]Train Loss: 5925.72900390625
+Epoch 0:  62%|██████▏   | 211/341 [07:25<04:34,  0.47it/s, v_num=20]Epoch 0:  62%|██████▏   | 211/341 [07:25<04:34,  0.47it/s, v_num=20]Train Loss: 5925.2587890625
+Epoch 0:  62%|██████▏   | 212/341 [07:27<04:32,  0.47it/s, v_num=20]Epoch 0:  62%|██████▏   | 212/341 [07:27<04:32,  0.47it/s, v_num=20]Train Loss: 5922.35205078125
+Epoch 0:  62%|██████▏   | 213/341 [07:29<04:30,  0.47it/s, v_num=20]Epoch 0:  62%|██████▏   | 213/341 [07:29<04:30,  0.47it/s, v_num=20]Train Loss: 5921.6220703125
+Epoch 0:  63%|██████▎   | 214/341 [07:31<04:28,  0.47it/s, v_num=20]Epoch 0:  63%|██████▎   | 214/341 [07:31<04:28,  0.47it/s, v_num=20]Train Loss: 5917.65478515625
+Epoch 0:  63%|██████▎   | 215/341 [07:33<04:25,  0.47it/s, v_num=20]Epoch 0:  63%|██████▎   | 215/341 [07:33<04:25,  0.47it/s, v_num=20]Train Loss: 5919.2353515625
+Epoch 0:  63%|██████▎   | 216/341 [07:35<04:23,  0.47it/s, v_num=20]Epoch 0:  63%|██████▎   | 216/341 [07:35<04:23,  0.47it/s, v_num=20]Train Loss: 5918.26611328125
+Epoch 0:  64%|██████▎   | 217/341 [07:37<04:21,  0.47it/s, v_num=20]Epoch 0:  64%|██████▎   | 217/341 [07:37<04:21,  0.47it/s, v_num=20]Train Loss: 5918.24072265625
+Epoch 0:  64%|██████▍   | 218/341 [07:39<04:19,  0.47it/s, v_num=20]Epoch 0:  64%|██████▍   | 218/341 [07:39<04:19,  0.47it/s, v_num=20]Train Loss: 5914.6962890625
+Epoch 0:  64%|██████▍   | 219/341 [07:42<04:17,  0.47it/s, v_num=20]Epoch 0:  64%|██████▍   | 219/341 [07:42<04:17,  0.47it/s, v_num=20]Train Loss: 5912.09521484375
+Epoch 0:  65%|██████▍   | 220/341 [07:43<04:15,  0.47it/s, v_num=20]Epoch 0:  65%|██████▍   | 220/341 [07:43<04:15,  0.47it/s, v_num=20]Train Loss: 5909.62939453125
+Epoch 0:  65%|██████▍   | 221/341 [07:45<04:12,  0.47it/s, v_num=20]Epoch 0:  65%|██████▍   | 221/341 [07:45<04:12,  0.47it/s, v_num=20]Train Loss: 5909.66552734375
+Epoch 0:  65%|██████▌   | 222/341 [07:48<04:10,  0.47it/s, v_num=20]Epoch 0:  65%|██████▌   | 222/341 [07:48<04:10,  0.47it/s, v_num=20]Train Loss: 5907.2158203125
+Epoch 0:  65%|██████▌   | 223/341 [07:49<04:08,  0.47it/s, v_num=20]Epoch 0:  65%|██████▌   | 223/341 [07:49<04:08,  0.47it/s, v_num=20]Train Loss: 5906.20361328125
+Epoch 0:  66%|██████▌   | 224/341 [07:52<04:06,  0.47it/s, v_num=20]Epoch 0:  66%|██████▌   | 224/341 [07:52<04:06,  0.47it/s, v_num=20]Train Loss: 5906.63134765625
+Epoch 0:  66%|██████▌   | 225/341 [07:54<04:04,  0.47it/s, v_num=20]Epoch 0:  66%|██████▌   | 225/341 [07:54<04:04,  0.47it/s, v_num=20]Train Loss: 5906.3642578125
+Epoch 0:  66%|██████▋   | 226/341 [07:56<04:02,  0.47it/s, v_num=20]Epoch 0:  66%|██████▋   | 226/341 [07:56<04:02,  0.47it/s, v_num=20]Train Loss: 5903.41357421875
+Epoch 0:  67%|██████▋   | 227/341 [07:58<04:00,  0.47it/s, v_num=20]Epoch 0:  67%|██████▋   | 227/341 [07:58<04:00,  0.47it/s, v_num=20]Train Loss: 5900.06298828125
+Epoch 0:  67%|██████▋   | 228/341 [08:00<03:57,  0.47it/s, v_num=20]Epoch 0:  67%|██████▋   | 228/341 [08:00<03:57,  0.47it/s, v_num=20]Train Loss: 5898.65185546875
+Epoch 0:  67%|██████▋   | 229/341 [08:02<03:55,  0.47it/s, v_num=20]Epoch 0:  67%|██████▋   | 229/341 [08:02<03:55,  0.47it/s, v_num=20]Train Loss: 5896.91552734375
+Epoch 0:  67%|██████▋   | 230/341 [08:04<03:53,  0.48it/s, v_num=20]Epoch 0:  67%|██████▋   | 230/341 [08:04<03:53,  0.48it/s, v_num=20]Train Loss: 5897.65625
+Epoch 0:  68%|██████▊   | 231/341 [08:06<03:51,  0.47it/s, v_num=20]Epoch 0:  68%|██████▊   | 231/341 [08:06<03:51,  0.47it/s, v_num=20]Train Loss: 5894.7490234375
+Epoch 0:  68%|██████▊   | 232/341 [08:08<03:49,  0.48it/s, v_num=20]Epoch 0:  68%|██████▊   | 232/341 [08:08<03:49,  0.48it/s, v_num=20]Train Loss: 5894.67431640625
+Epoch 0:  68%|██████▊   | 233/341 [08:10<03:47,  0.48it/s, v_num=20]Epoch 0:  68%|██████▊   | 233/341 [08:10<03:47,  0.48it/s, v_num=20]Train Loss: 5893.63037109375
+Epoch 0:  69%|██████▊   | 234/341 [08:12<03:45,  0.48it/s, v_num=20]Epoch 0:  69%|██████▊   | 234/341 [08:12<03:45,  0.48it/s, v_num=20]Train Loss: 5893.29296875
+Epoch 0:  69%|██████▉   | 235/341 [08:14<03:43,  0.48it/s, v_num=20]Epoch 0:  69%|██████▉   | 235/341 [08:14<03:43,  0.48it/s, v_num=20]Train Loss: 5889.16015625
+Epoch 0:  69%|██████▉   | 236/341 [08:16<03:40,  0.48it/s, v_num=20]Epoch 0:  69%|██████▉   | 236/341 [08:16<03:40,  0.48it/s, v_num=20]Train Loss: 5890.23974609375
+Epoch 0:  70%|██████▉   | 237/341 [08:18<03:38,  0.48it/s, v_num=20]Epoch 0:  70%|██████▉   | 237/341 [08:18<03:38,  0.48it/s, v_num=20]Train Loss: 5886.71142578125
+Epoch 0:  70%|██████▉   | 238/341 [08:20<03:36,  0.48it/s, v_num=20]Epoch 0:  70%|██████▉   | 238/341 [08:20<03:36,  0.48it/s, v_num=20]Train Loss: 5887.296875
+Epoch 0:  70%|███████   | 239/341 [08:22<03:34,  0.48it/s, v_num=20]Epoch 0:  70%|███████   | 239/341 [08:22<03:34,  0.48it/s, v_num=20]Train Loss: 5885.748046875
+Epoch 0:  70%|███████   | 240/341 [08:24<03:32,  0.48it/s, v_num=20]Epoch 0:  70%|███████   | 240/341 [08:24<03:32,  0.48it/s, v_num=20]Train Loss: 5883.89013671875
+Epoch 0:  71%|███████   | 241/341 [08:26<03:30,  0.48it/s, v_num=20]Epoch 0:  71%|███████   | 241/341 [08:26<03:30,  0.48it/s, v_num=20]Train Loss: 5883.892578125
+Epoch 0:  71%|███████   | 242/341 [08:28<03:28,  0.48it/s, v_num=20]Epoch 0:  71%|███████   | 242/341 [08:28<03:28,  0.48it/s, v_num=20]Train Loss: 5881.1787109375
+Epoch 0:  71%|███████▏  | 243/341 [08:30<03:25,  0.48it/s, v_num=20]Epoch 0:  71%|███████▏  | 243/341 [08:30<03:25,  0.48it/s, v_num=20]Train Loss: 5878.20068359375
+Epoch 0:  72%|███████▏  | 244/341 [08:32<03:23,  0.48it/s, v_num=20]Epoch 0:  72%|███████▏  | 244/341 [08:32<03:23,  0.48it/s, v_num=20]Train Loss: 5879.17041015625
+Epoch 0:  72%|███████▏  | 245/341 [08:34<03:21,  0.48it/s, v_num=20]Epoch 0:  72%|███████▏  | 245/341 [08:34<03:21,  0.48it/s, v_num=20]Train Loss: 5876.63330078125
+Epoch 0:  72%|███████▏  | 246/341 [08:36<03:19,  0.48it/s, v_num=20]Epoch 0:  72%|███████▏  | 246/341 [08:36<03:19,  0.48it/s, v_num=20]Train Loss: 5873.93896484375
+Epoch 0:  72%|███████▏  | 247/341 [08:38<03:17,  0.48it/s, v_num=20]Epoch 0:  72%|███████▏  | 247/341 [08:38<03:17,  0.48it/s, v_num=20]Train Loss: 5874.99853515625
+Epoch 0:  73%|███████▎  | 248/341 [08:40<03:15,  0.48it/s, v_num=20]Epoch 0:  73%|███████▎  | 248/341 [08:40<03:15,  0.48it/s, v_num=20]Train Loss: 5872.6689453125
+Epoch 0:  73%|███████▎  | 249/341 [08:42<03:13,  0.48it/s, v_num=20]Epoch 0:  73%|███████▎  | 249/341 [08:42<03:13,  0.48it/s, v_num=20]Train Loss: 5872.05859375
+Epoch 0:  73%|███████▎  | 250/341 [08:44<03:11,  0.48it/s, v_num=20]Epoch 0:  73%|███████▎  | 250/341 [08:44<03:11,  0.48it/s, v_num=20]Train Loss: 5874.23193359375
+Epoch 0:  74%|███████▎  | 251/341 [08:46<03:08,  0.48it/s, v_num=20]Epoch 0:  74%|███████▎  | 251/341 [08:46<03:08,  0.48it/s, v_num=20]Train Loss: 5868.09765625
+Epoch 0:  74%|███████▍  | 252/341 [08:48<03:06,  0.48it/s, v_num=20]Epoch 0:  74%|███████▍  | 252/341 [08:48<03:06,  0.48it/s, v_num=20]Train Loss: 5868.9140625
+Epoch 0:  74%|███████▍  | 253/341 [08:50<03:04,  0.48it/s, v_num=20]Epoch 0:  74%|███████▍  | 253/341 [08:50<03:04,  0.48it/s, v_num=20]Train Loss: 5864.67578125
+Epoch 0:  74%|███████▍  | 254/341 [08:53<03:02,  0.48it/s, v_num=20]Epoch 0:  74%|███████▍  | 254/341 [08:53<03:02,  0.48it/s, v_num=20]Train Loss: 5864.5947265625
+Epoch 0:  75%|███████▍  | 255/341 [08:54<03:00,  0.48it/s, v_num=20]Epoch 0:  75%|███████▍  | 255/341 [08:54<03:00,  0.48it/s, v_num=20]Train Loss: 5862.80615234375
+Epoch 0:  75%|███████▌  | 256/341 [08:56<02:58,  0.48it/s, v_num=20]Epoch 0:  75%|███████▌  | 256/341 [08:56<02:58,  0.48it/s, v_num=20]Train Loss: 5861.69091796875
+Epoch 0:  75%|███████▌  | 257/341 [08:58<02:56,  0.48it/s, v_num=20]Epoch 0:  75%|███████▌  | 257/341 [08:58<02:56,  0.48it/s, v_num=20]Train Loss: 5860.33251953125
+Epoch 0:  76%|███████▌  | 258/341 [09:01<02:54,  0.48it/s, v_num=20]Epoch 0:  76%|███████▌  | 258/341 [09:01<02:54,  0.48it/s, v_num=20]Train Loss: 5860.58837890625
+Epoch 0:  76%|███████▌  | 259/341 [09:03<02:51,  0.48it/s, v_num=20]Epoch 0:  76%|███████▌  | 259/341 [09:03<02:51,  0.48it/s, v_num=20]Train Loss: 5858.02880859375
+Epoch 0:  76%|███████▌  | 260/341 [09:04<02:49,  0.48it/s, v_num=20]Epoch 0:  76%|███████▌  | 260/341 [09:04<02:49,  0.48it/s, v_num=20]Train Loss: 5856.92626953125
+Epoch 0:  77%|███████▋  | 261/341 [09:07<02:47,  0.48it/s, v_num=20]Epoch 0:  77%|███████▋  | 261/341 [09:07<02:47,  0.48it/s, v_num=20]Train Loss: 5852.38330078125
+Epoch 0:  77%|███████▋  | 262/341 [09:09<02:45,  0.48it/s, v_num=20]Epoch 0:  77%|███████▋  | 262/341 [09:09<02:45,  0.48it/s, v_num=20]Train Loss: 5854.07373046875
+Epoch 0:  77%|███████▋  | 263/341 [09:11<02:43,  0.48it/s, v_num=20]Epoch 0:  77%|███████▋  | 263/341 [09:11<02:43,  0.48it/s, v_num=20]Train Loss: 5853.37548828125
+Epoch 0:  77%|███████▋  | 264/341 [09:13<02:41,  0.48it/s, v_num=20]Epoch 0:  77%|███████▋  | 264/341 [09:13<02:41,  0.48it/s, v_num=20]Train Loss: 5851.10205078125
+Epoch 0:  78%|███████▊  | 265/341 [09:15<02:39,  0.48it/s, v_num=20]Epoch 0:  78%|███████▊  | 265/341 [09:15<02:39,  0.48it/s, v_num=20]Train Loss: 5850.52734375
+Epoch 0:  78%|███████▊  | 266/341 [09:17<02:37,  0.48it/s, v_num=20]Epoch 0:  78%|███████▊  | 266/341 [09:17<02:37,  0.48it/s, v_num=20]Train Loss: 5848.78564453125
+Epoch 0:  78%|███████▊  | 267/341 [09:19<02:34,  0.48it/s, v_num=20]Epoch 0:  78%|███████▊  | 267/341 [09:19<02:34,  0.48it/s, v_num=20]Train Loss: 5847.89794921875
+Epoch 0:  79%|███████▊  | 268/341 [09:21<02:32,  0.48it/s, v_num=20]Epoch 0:  79%|███████▊  | 268/341 [09:21<02:32,  0.48it/s, v_num=20]Train Loss: 5846.57373046875
+Epoch 0:  79%|███████▉  | 269/341 [09:23<02:30,  0.48it/s, v_num=20]Epoch 0:  79%|███████▉  | 269/341 [09:23<02:30,  0.48it/s, v_num=20]Train Loss: 5846.4443359375
+Epoch 0:  79%|███████▉  | 270/341 [09:25<02:28,  0.48it/s, v_num=20]Epoch 0:  79%|███████▉  | 270/341 [09:25<02:28,  0.48it/s, v_num=20]Train Loss: 5846.404296875
+Epoch 0:  79%|███████▉  | 271/341 [09:27<02:26,  0.48it/s, v_num=20]Epoch 0:  79%|███████▉  | 271/341 [09:27<02:26,  0.48it/s, v_num=20]Train Loss: 5843.4599609375
+Epoch 0:  80%|███████▉  | 272/341 [09:29<02:24,  0.48it/s, v_num=20]Epoch 0:  80%|███████▉  | 272/341 [09:29<02:24,  0.48it/s, v_num=20]Train Loss: 5841.10986328125
+Epoch 0:  80%|████████  | 273/341 [09:31<02:22,  0.48it/s, v_num=20]Epoch 0:  80%|████████  | 273/341 [09:31<02:22,  0.48it/s, v_num=20]Train Loss: 5837.8740234375
+Epoch 0:  80%|████████  | 274/341 [09:33<02:20,  0.48it/s, v_num=20]Epoch 0:  80%|████████  | 274/341 [09:33<02:20,  0.48it/s, v_num=20]Train Loss: 5840.69189453125
+Epoch 0:  81%|████████  | 275/341 [09:35<02:18,  0.48it/s, v_num=20]Epoch 0:  81%|████████  | 275/341 [09:35<02:18,  0.48it/s, v_num=20]Train Loss: 5837.45068359375
+Epoch 0:  81%|████████  | 276/341 [09:37<02:15,  0.48it/s, v_num=20]Epoch 0:  81%|████████  | 276/341 [09:37<02:15,  0.48it/s, v_num=20]Train Loss: 5838.234375
+Epoch 0:  81%|████████  | 277/341 [09:39<02:13,  0.48it/s, v_num=20]Epoch 0:  81%|████████  | 277/341 [09:39<02:13,  0.48it/s, v_num=20]Train Loss: 5832.681640625
+Epoch 0:  82%|████████▏ | 278/341 [09:41<02:11,  0.48it/s, v_num=20]Epoch 0:  82%|████████▏ | 278/341 [09:41<02:11,  0.48it/s, v_num=20]Train Loss: 5833.97998046875
+Epoch 0:  82%|████████▏ | 279/341 [09:43<02:09,  0.48it/s, v_num=20]Epoch 0:  82%|████████▏ | 279/341 [09:43<02:09,  0.48it/s, v_num=20]Train Loss: 5833.22705078125
+Epoch 0:  82%|████████▏ | 280/341 [09:45<02:07,  0.48it/s, v_num=20]Epoch 0:  82%|████████▏ | 280/341 [09:45<02:07,  0.48it/s, v_num=20]Train Loss: 5831.705078125
+Epoch 0:  82%|████████▏ | 281/341 [09:47<02:05,  0.48it/s, v_num=20]Epoch 0:  82%|████████▏ | 281/341 [09:47<02:05,  0.48it/s, v_num=20]Train Loss: 5829.916015625
+Epoch 0:  83%|████████▎ | 282/341 [09:49<02:03,  0.48it/s, v_num=20]Epoch 0:  83%|████████▎ | 282/341 [09:49<02:03,  0.48it/s, v_num=20]Train Loss: 5829.6279296875
+Epoch 0:  83%|████████▎ | 283/341 [09:51<02:01,  0.48it/s, v_num=20]Epoch 0:  83%|████████▎ | 283/341 [09:51<02:01,  0.48it/s, v_num=20]Train Loss: 5829.27294921875
+Epoch 0:  83%|████████▎ | 284/341 [09:54<01:59,  0.48it/s, v_num=20]Epoch 0:  83%|████████▎ | 284/341 [09:54<01:59,  0.48it/s, v_num=20]Train Loss: 5825.865234375
+Epoch 0:  84%|████████▎ | 285/341 [09:55<01:57,  0.48it/s, v_num=20]Epoch 0:  84%|████████▎ | 285/341 [09:55<01:57,  0.48it/s, v_num=20]Train Loss: 5825.7431640625
+Epoch 0:  84%|████████▍ | 286/341 [09:58<01:55,  0.48it/s, v_num=20]Epoch 0:  84%|████████▍ | 286/341 [09:58<01:55,  0.48it/s, v_num=20]Train Loss: 5824.93603515625
+Epoch 0:  84%|████████▍ | 287/341 [10:00<01:52,  0.48it/s, v_num=20]Epoch 0:  84%|████████▍ | 287/341 [10:00<01:52,  0.48it/s, v_num=20]Train Loss: 5824.41552734375
+Epoch 0:  84%|████████▍ | 288/341 [10:02<01:50,  0.48it/s, v_num=20]Epoch 0:  84%|████████▍ | 288/341 [10:02<01:50,  0.48it/s, v_num=20]Train Loss: 5821.92578125
+Epoch 0:  85%|████████▍ | 289/341 [10:04<01:48,  0.48it/s, v_num=20]Epoch 0:  85%|████████▍ | 289/341 [10:04<01:48,  0.48it/s, v_num=20]Train Loss: 5819.58642578125
+Epoch 0:  85%|████████▌ | 290/341 [10:06<01:46,  0.48it/s, v_num=20]Epoch 0:  85%|████████▌ | 290/341 [10:06<01:46,  0.48it/s, v_num=20]Train Loss: 5820.44482421875
+Epoch 0:  85%|████████▌ | 291/341 [10:08<01:44,  0.48it/s, v_num=20]Epoch 0:  85%|████████▌ | 291/341 [10:08<01:44,  0.48it/s, v_num=20]Train Loss: 5821.228515625
+Epoch 0:  86%|████████▌ | 292/341 [10:10<01:42,  0.48it/s, v_num=20]Epoch 0:  86%|████████▌ | 292/341 [10:10<01:42,  0.48it/s, v_num=20]Train Loss: 5818.125
+Epoch 0:  86%|████████▌ | 293/341 [10:12<01:40,  0.48it/s, v_num=20]Epoch 0:  86%|████████▌ | 293/341 [10:12<01:40,  0.48it/s, v_num=20]Train Loss: 5816.3671875
+Epoch 0:  86%|████████▌ | 294/341 [10:14<01:38,  0.48it/s, v_num=20]Epoch 0:  86%|████████▌ | 294/341 [10:14<01:38,  0.48it/s, v_num=20]Train Loss: 5815.31201171875
+Epoch 0:  87%|████████▋ | 295/341 [10:16<01:36,  0.48it/s, v_num=20]Epoch 0:  87%|████████▋ | 295/341 [10:16<01:36,  0.48it/s, v_num=20]Train Loss: 5813.3388671875
+Epoch 0:  87%|████████▋ | 296/341 [10:18<01:34,  0.48it/s, v_num=20]Epoch 0:  87%|████████▋ | 296/341 [10:18<01:34,  0.48it/s, v_num=20]Train Loss: 5811.9853515625
+Epoch 0:  87%|████████▋ | 297/341 [10:20<01:31,  0.48it/s, v_num=20]Epoch 0:  87%|████████▋ | 297/341 [10:20<01:31,  0.48it/s, v_num=20]Train Loss: 5812.498046875
+Epoch 0:  87%|████████▋ | 298/341 [10:22<01:29,  0.48it/s, v_num=20]Epoch 0:  87%|████████▋ | 298/341 [10:22<01:29,  0.48it/s, v_num=20]Train Loss: 5809.81396484375
+Epoch 0:  88%|████████▊ | 299/341 [10:24<01:27,  0.48it/s, v_num=20]Epoch 0:  88%|████████▊ | 299/341 [10:24<01:27,  0.48it/s, v_num=20]Train Loss: 5809.1318359375
+Epoch 0:  88%|████████▊ | 300/341 [10:27<01:25,  0.48it/s, v_num=20]Epoch 0:  88%|████████▊ | 300/341 [10:27<01:25,  0.48it/s, v_num=20]Train Loss: 5808.3935546875
+Epoch 0:  88%|████████▊ | 301/341 [10:28<01:23,  0.48it/s, v_num=20]Epoch 0:  88%|████████▊ | 301/341 [10:28<01:23,  0.48it/s, v_num=20]Train Loss: 5807.447265625
+Epoch 0:  89%|████████▊ | 302/341 [10:31<01:21,  0.48it/s, v_num=20]Epoch 0:  89%|████████▊ | 302/341 [10:31<01:21,  0.48it/s, v_num=20]Train Loss: 5804.01123046875
+Epoch 0:  89%|████████▉ | 303/341 [10:33<01:19,  0.48it/s, v_num=20]Epoch 0:  89%|████████▉ | 303/341 [10:33<01:19,  0.48it/s, v_num=20]Train Loss: 5804.80126953125
+Epoch 0:  89%|████████▉ | 304/341 [10:34<01:17,  0.48it/s, v_num=20]Epoch 0:  89%|████████▉ | 304/341 [10:34<01:17,  0.48it/s, v_num=20]Train Loss: 5805.38330078125
+Epoch 0:  89%|████████▉ | 305/341 [10:37<01:15,  0.48it/s, v_num=20]Epoch 0:  89%|████████▉ | 305/341 [10:37<01:15,  0.48it/s, v_num=20]Train Loss: 5802.75634765625
+Epoch 0:  90%|████████▉ | 306/341 [10:39<01:13,  0.48it/s, v_num=20]Epoch 0:  90%|████████▉ | 306/341 [10:39<01:13,  0.48it/s, v_num=20]Train Loss: 5803.94384765625
+Epoch 0:  90%|█████████ | 307/341 [10:41<01:11,  0.48it/s, v_num=20]Epoch 0:  90%|█████████ | 307/341 [10:41<01:11,  0.48it/s, v_num=20]Train Loss: 5802.77880859375
+Epoch 0:  90%|█████████ | 308/341 [10:43<01:08,  0.48it/s, v_num=20]Epoch 0:  90%|█████████ | 308/341 [10:43<01:08,  0.48it/s, v_num=20]Train Loss: 5799.54296875
+Epoch 0:  91%|█████████ | 309/341 [10:45<01:06,  0.48it/s, v_num=20]Epoch 0:  91%|█████████ | 309/341 [10:45<01:06,  0.48it/s, v_num=20]Train Loss: 5799.154296875
+Epoch 0:  91%|█████████ | 310/341 [10:47<01:04,  0.48it/s, v_num=20]Epoch 0:  91%|█████████ | 310/341 [10:47<01:04,  0.48it/s, v_num=20]Train Loss: 5798.5751953125
+Epoch 0:  91%|█████████ | 311/341 [10:49<01:02,  0.48it/s, v_num=20]Epoch 0:  91%|█████████ | 311/341 [10:49<01:02,  0.48it/s, v_num=20]Train Loss: 5799.15673828125
+Epoch 0:  91%|█████████▏| 312/341 [10:51<01:00,  0.48it/s, v_num=20]Epoch 0:  91%|█████████▏| 312/341 [10:51<01:00,  0.48it/s, v_num=20]Train Loss: 5797.1298828125
+Epoch 0:  92%|█████████▏| 313/341 [10:53<00:58,  0.48it/s, v_num=20]Epoch 0:  92%|█████████▏| 313/341 [10:53<00:58,  0.48it/s, v_num=20]Train Loss: 5794.1220703125
+Epoch 0:  92%|█████████▏| 314/341 [10:55<00:56,  0.48it/s, v_num=20]Epoch 0:  92%|█████████▏| 314/341 [10:55<00:56,  0.48it/s, v_num=20]Train Loss: 5793.1123046875
+Epoch 0:  92%|█████████▏| 315/341 [10:57<00:54,  0.48it/s, v_num=20]Epoch 0:  92%|█████████▏| 315/341 [10:57<00:54,  0.48it/s, v_num=20]Train Loss: 5791.9326171875
+Epoch 0:  93%|█████████▎| 316/341 [10:59<00:52,  0.48it/s, v_num=20]Epoch 0:  93%|█████████▎| 316/341 [10:59<00:52,  0.48it/s, v_num=20]Train Loss: 5790.9775390625
+Epoch 0:  93%|█████████▎| 317/341 [11:01<00:50,  0.48it/s, v_num=20]Epoch 0:  93%|█████████▎| 317/341 [11:01<00:50,  0.48it/s, v_num=20]Train Loss: 5790.63671875
+Epoch 0:  93%|█████████▎| 318/341 [11:03<00:48,  0.48it/s, v_num=20]Epoch 0:  93%|█████████▎| 318/341 [11:03<00:48,  0.48it/s, v_num=20]Train Loss: 5790.220703125
+Epoch 0:  94%|█████████▎| 319/341 [11:05<00:45,  0.48it/s, v_num=20]Epoch 0:  94%|█████████▎| 319/341 [11:05<00:45,  0.48it/s, v_num=20]Train Loss: 5788.6669921875
+Epoch 0:  94%|█████████▍| 320/341 [11:08<00:43,  0.48it/s, v_num=20]Epoch 0:  94%|█████████▍| 320/341 [11:08<00:43,  0.48it/s, v_num=20]Train Loss: 5787.31591796875
+Epoch 0:  94%|█████████▍| 321/341 [11:09<00:41,  0.48it/s, v_num=20]Epoch 0:  94%|█████████▍| 321/341 [11:09<00:41,  0.48it/s, v_num=20]Train Loss: 5787.23779296875
+Epoch 0:  94%|█████████▍| 322/341 [11:11<00:39,  0.48it/s, v_num=20]Epoch 0:  94%|█████████▍| 322/341 [11:11<00:39,  0.48it/s, v_num=20]Train Loss: 5786.10205078125
+Epoch 0:  95%|█████████▍| 323/341 [11:14<00:37,  0.48it/s, v_num=20]Epoch 0:  95%|█████████▍| 323/341 [11:14<00:37,  0.48it/s, v_num=20]Train Loss: 5785.30908203125
+Epoch 0:  95%|█████████▌| 324/341 [11:15<00:35,  0.48it/s, v_num=20]Epoch 0:  95%|█████████▌| 324/341 [11:15<00:35,  0.48it/s, v_num=20]Train Loss: 5782.86669921875
+Epoch 0:  95%|█████████▌| 325/341 [11:18<00:33,  0.48it/s, v_num=20]Epoch 0:  95%|█████████▌| 325/341 [11:18<00:33,  0.48it/s, v_num=20]Train Loss: 5781.68701171875
+Epoch 0:  96%|█████████▌| 326/341 [11:20<00:31,  0.48it/s, v_num=20]Epoch 0:  96%|█████████▌| 326/341 [11:20<00:31,  0.48it/s, v_num=20]Train Loss: 5779.91552734375
+Epoch 0:  96%|█████████▌| 327/341 [11:22<00:29,  0.48it/s, v_num=20]Epoch 0:  96%|█████████▌| 327/341 [11:22<00:29,  0.48it/s, v_num=20]Train Loss: 5780.83154296875
+Epoch 0:  96%|█████████▌| 328/341 [11:24<00:27,  0.48it/s, v_num=20]Epoch 0:  96%|█████████▌| 328/341 [11:24<00:27,  0.48it/s, v_num=20]Train Loss: 5778.56298828125
+Epoch 0:  96%|█████████▋| 329/341 [11:26<00:25,  0.48it/s, v_num=20]Epoch 0:  96%|█████████▋| 329/341 [11:26<00:25,  0.48it/s, v_num=20]Train Loss: 5778.9365234375
+Epoch 0:  97%|█████████▋| 330/341 [11:28<00:22,  0.48it/s, v_num=20]Epoch 0:  97%|█████████▋| 330/341 [11:28<00:22,  0.48it/s, v_num=20]Train Loss: 5776.24755859375
+Epoch 0:  97%|█████████▋| 331/341 [11:30<00:20,  0.48it/s, v_num=20]Epoch 0:  97%|█████████▋| 331/341 [11:30<00:20,  0.48it/s, v_num=20]Train Loss: 5776.87744140625
+Epoch 0:  97%|█████████▋| 332/341 [11:32<00:18,  0.48it/s, v_num=20]Epoch 0:  97%|█████████▋| 332/341 [11:32<00:18,  0.48it/s, v_num=20]Train Loss: 5775.51708984375
+Epoch 0:  98%|█████████▊| 333/341 [11:34<00:16,  0.48it/s, v_num=20]Epoch 0:  98%|█████████▊| 333/341 [11:34<00:16,  0.48it/s, v_num=20]Train Loss: 5773.5634765625
+Epoch 0:  98%|█████████▊| 334/341 [11:36<00:14,  0.48it/s, v_num=20]Epoch 0:  98%|█████████▊| 334/341 [11:36<00:14,  0.48it/s, v_num=20]Train Loss: 5773.6962890625
+Epoch 0:  98%|█████████▊| 335/341 [11:38<00:12,  0.48it/s, v_num=20]Epoch 0:  98%|█████████▊| 335/341 [11:38<00:12,  0.48it/s, v_num=20]Train Loss: 5773.537109375
+Epoch 0:  99%|█████████▊| 336/341 [11:40<00:10,  0.48it/s, v_num=20]Epoch 0:  99%|█████████▊| 336/341 [11:40<00:10,  0.48it/s, v_num=20]Train Loss: 5772.18212890625
+Epoch 0:  99%|█████████▉| 337/341 [11:42<00:08,  0.48it/s, v_num=20]Epoch 0:  99%|█████████▉| 337/341 [11:42<00:08,  0.48it/s, v_num=20]Train Loss: 5771.1640625
+Epoch 0:  99%|█████████▉| 338/341 [11:44<00:06,  0.48it/s, v_num=20]Epoch 0:  99%|█████████▉| 338/341 [11:44<00:06,  0.48it/s, v_num=20]Train Loss: 5770.07861328125
+Epoch 0:  99%|█████████▉| 339/341 [11:46<00:04,  0.48it/s, v_num=20]Epoch 0:  99%|█████████▉| 339/341 [11:46<00:04,  0.48it/s, v_num=20]Train Loss: 5769.48974609375
+Epoch 0: 100%|█████████▉| 340/341 [11:48<00:02,  0.48it/s, v_num=20]Epoch 0: 100%|█████████▉| 340/341 [11:48<00:02,  0.48it/s, v_num=20]Train Loss: 5769.69287109375
+Epoch 0: 100%|██████████| 341/341 [11:50<00:00,  0.48it/s, v_num=20]Epoch 0: 100%|██████████| 341/341 [11:50<00:00,  0.48it/s, v_num=20]
+Validation: |          | 0/? [00:00<?, ?it/s][A
+Validation:   0%|          | 0/1 [00:00<?, ?it/s][A
+Validation DataLoader 0:   0%|          | 0/1 [00:00<?, ?it/s][A
+Validation DataLoader 0: 100%|██████████| 1/1 [00:00<00:00,  1.87it/s][AValidation Loss:6498.87353515625
+
+                                                                      [AEpoch 0: 100%|██████████| 341/341 [11:52<00:00,  0.48it/s, v_num=20]Epoch 0: 100%|██████████| 341/341 [11:52<00:00,  0.48it/s, v_num=20]Epoch 0:   0%|          | 0/341 [00:00<?, ?it/s, v_num=20]          Epoch 1:   0%|          | 0/341 [00:00<?, ?it/s, v_num=20]Train Loss: 5766.5009765625
+Epoch 1:   0%|          | 1/341 [00:02<15:18,  0.37it/s, v_num=20]Epoch 1:   0%|          | 1/341 [00:02<15:18,  0.37it/s, v_num=20]Train Loss: 5766.35595703125
+Epoch 1:   1%|          | 2/341 [00:04<14:02,  0.40it/s, v_num=20]Epoch 1:   1%|          | 2/341 [00:04<14:02,  0.40it/s, v_num=20]Train Loss: 5764.54833984375
+Epoch 1:   1%|          | 3/341 [00:06<12:56,  0.44it/s, v_num=20]Epoch 1:   1%|          | 3/341 [00:06<12:56,  0.44it/s, v_num=20]Train Loss: 5764.6962890625
+Epoch 1:   1%|          | 4/341 [00:09<12:52,  0.44it/s, v_num=20]Epoch 1:   1%|          | 4/341 [00:09<12:52,  0.44it/s, v_num=20]Train Loss: 5763.1591796875
+Epoch 1:   1%|▏         | 5/341 [00:11<12:22,  0.45it/s, v_num=20]Epoch 1:   1%|▏         | 5/341 [00:11<12:22,  0.45it/s, v_num=20]Train Loss: 5762.23193359375
+Epoch 1:   2%|▏         | 6/341 [00:12<12:02,  0.46it/s, v_num=20]Epoch 1:   2%|▏         | 6/341 [00:12<12:02,  0.46it/s, v_num=20]Train Loss: 5761.3203125
+Epoch 1:   2%|▏         | 7/341 [00:15<12:05,  0.46it/s, v_num=20]Epoch 1:   2%|▏         | 7/341 [00:15<12:05,  0.46it/s, v_num=20]Train Loss: 5760.36669921875
+Epoch 1:   2%|▏         | 8/341 [00:17<11:52,  0.47it/s, v_num=20]Epoch 1:   2%|▏         | 8/341 [00:17<11:52,  0.47it/s, v_num=20]Train Loss: 5760.484375
+Epoch 1:   3%|▎         | 9/341 [00:19<11:55,  0.46it/s, v_num=20]Epoch 1:   3%|▎         | 9/341 [00:19<11:55,  0.46it/s, v_num=20]Train Loss: 5758.267578125
+Epoch 1:   3%|▎         | 10/341 [00:21<11:44,  0.47it/s, v_num=20]Epoch 1:   3%|▎         | 10/341 [00:21<11:44,  0.47it/s, v_num=20]Train Loss: 5757.13623046875
+Epoch 1:   3%|▎         | 11/341 [00:23<11:47,  0.47it/s, v_num=20]Epoch 1:   3%|▎         | 11/341 [00:23<11:47,  0.47it/s, v_num=20]Train Loss: 5756.87841796875
+Epoch 1:   4%|▎         | 12/341 [00:25<11:37,  0.47it/s, v_num=20]Epoch 1:   4%|▎         | 12/341 [00:25<11:37,  0.47it/s, v_num=20]Train Loss: 5755.57373046875
+Epoch 1:   4%|▍         | 13/341 [00:27<11:41,  0.47it/s, v_num=20]Epoch 1:   4%|▍         | 13/341 [00:27<11:41,  0.47it/s, v_num=20]Train Loss: 5754.15771484375
+Epoch 1:   4%|▍         | 14/341 [00:29<11:33,  0.47it/s, v_num=20]Epoch 1:   4%|▍         | 14/341 [00:29<11:33,  0.47it/s, v_num=20]Train Loss: 5754.3935546875
+Epoch 1:   4%|▍         | 15/341 [00:31<11:25,  0.48it/s, v_num=20]Epoch 1:   4%|▍         | 15/341 [00:31<11:25,  0.48it/s, v_num=20]Train Loss: 5753.474609375
+Epoch 1:   5%|▍         | 16/341 [00:33<11:27,  0.47it/s, v_num=20]Epoch 1:   5%|▍         | 16/341 [00:33<11:27,  0.47it/s, v_num=20]Train Loss: 5752.21240234375
+Epoch 1:   5%|▍         | 17/341 [00:35<11:21,  0.48it/s, v_num=20]Epoch 1:   5%|▍         | 17/341 [00:35<11:21,  0.48it/s, v_num=20]Train Loss: 5752.84423828125
+Epoch 1:   5%|▌         | 18/341 [00:37<11:21,  0.47it/s, v_num=20]Epoch 1:   5%|▌         | 18/341 [00:37<11:21,  0.47it/s, v_num=20]Train Loss: 5749.96923828125
+Epoch 1:   6%|▌         | 19/341 [00:39<11:15,  0.48it/s, v_num=20]Epoch 1:   6%|▌         | 19/341 [00:39<11:15,  0.48it/s, v_num=20]Train Loss: 5750.58837890625
+Epoch 1:   6%|▌         | 20/341 [00:42<11:15,  0.48it/s, v_num=20]Epoch 1:   6%|▌         | 20/341 [00:42<11:15,  0.48it/s, v_num=20]Train Loss: 5748.07666015625
+Epoch 1:   6%|▌         | 21/341 [00:43<11:09,  0.48it/s, v_num=20]Epoch 1:   6%|▌         | 21/341 [00:43<11:09,  0.48it/s, v_num=20]Train Loss: 5747.3330078125
+Epoch 1:   6%|▋         | 22/341 [00:45<11:05,  0.48it/s, v_num=20]Epoch 1:   6%|▋         | 22/341 [00:45<11:05,  0.48it/s, v_num=20]Train Loss: 5746.14892578125
+Epoch 1:   7%|▋         | 23/341 [00:48<11:05,  0.48it/s, v_num=20]Epoch 1:   7%|▋         | 23/341 [00:48<11:05,  0.48it/s, v_num=20]Train Loss: 5745.69287109375
+Epoch 1:   7%|▋         | 24/341 [00:50<11:00,  0.48it/s, v_num=20]Epoch 1:   7%|▋         | 24/341 [00:50<11:00,  0.48it/s, v_num=20]Train Loss: 5744.0771484375
+Epoch 1:   7%|▋         | 25/341 [00:52<11:00,  0.48it/s, v_num=20]Epoch 1:   7%|▋         | 25/341 [00:52<11:00,  0.48it/s, v_num=20]Train Loss: 5742.10205078125
+Epoch 1:   8%|▊         | 26/341 [00:54<10:56,  0.48it/s, v_num=20]Epoch 1:   8%|▊         | 26/341 [00:54<10:56,  0.48it/s, v_num=20]Train Loss: 5741.14111328125
+Epoch 1:   8%|▊         | 27/341 [00:56<10:56,  0.48it/s, v_num=20]Epoch 1:   8%|▊         | 27/341 [00:56<10:56,  0.48it/s, v_num=20]Train Loss: 5740.63720703125
+Epoch 1:   8%|▊         | 28/341 [00:58<10:51,  0.48it/s, v_num=20]Epoch 1:   8%|▊         | 28/341 [00:58<10:51,  0.48it/s, v_num=20]Train Loss: 5738.7568359375
+Epoch 1:   9%|▊         | 29/341 [01:00<10:51,  0.48it/s, v_num=20]Epoch 1:   9%|▊         | 29/341 [01:00<10:51,  0.48it/s, v_num=20]Train Loss: 5738.2294921875
+Epoch 1:   9%|▉         | 30/341 [01:02<10:46,  0.48it/s, v_num=20]Epoch 1:   9%|▉         | 30/341 [01:02<10:46,  0.48it/s, v_num=20]Train Loss: 5736.69677734375
+Epoch 1:   9%|▉         | 31/341 [01:04<10:42,  0.48it/s, v_num=20]Epoch 1:   9%|▉         | 31/341 [01:04<10:42,  0.48it/s, v_num=20]Train Loss: 5737.63671875
+Epoch 1:   9%|▉         | 32/341 [01:06<10:42,  0.48it/s, v_num=20]Epoch 1:   9%|▉         | 32/341 [01:06<10:42,  0.48it/s, v_num=20]Train Loss: 5734.7265625
+Epoch 1:  10%|▉         | 33/341 [01:08<10:38,  0.48it/s, v_num=20]Epoch 1:  10%|▉         | 33/341 [01:08<10:38,  0.48it/s, v_num=20]Train Loss: 5733.716796875
+Epoch 1:  10%|▉         | 34/341 [01:10<10:38,  0.48it/s, v_num=20]Epoch 1:  10%|▉         | 34/341 [01:10<10:38,  0.48it/s, v_num=20]Train Loss: 5731.3369140625
+Epoch 1:  10%|█         | 35/341 [01:12<10:34,  0.48it/s, v_num=20]Epoch 1:  10%|█         | 35/341 [01:12<10:34,  0.48it/s, v_num=20]Train Loss: 5731.55419921875
+Epoch 1:  11%|█         | 36/341 [01:14<10:33,  0.48it/s, v_num=20]Epoch 1:  11%|█         | 36/341 [01:14<10:33,  0.48it/s, v_num=20]Train Loss: 5730.2724609375
+Epoch 1:  11%|█         | 37/341 [01:16<10:29,  0.48it/s, v_num=20]Epoch 1:  11%|█         | 37/341 [01:16<10:29,  0.48it/s, v_num=20]Train Loss: 5728.9560546875
+Epoch 1:  11%|█         | 38/341 [01:18<10:26,  0.48it/s, v_num=20]Epoch 1:  11%|█         | 38/341 [01:18<10:26,  0.48it/s, v_num=20]Train Loss: 5727.74609375
+Epoch 1:  11%|█▏        | 39/341 [01:20<10:25,  0.48it/s, v_num=20]Epoch 1:  11%|█▏        | 39/341 [01:20<10:25,  0.48it/s, v_num=20]Train Loss: 5728.05029296875
+Epoch 1:  12%|█▏        | 40/341 [01:22<10:21,  0.48it/s, v_num=20]Epoch 1:  12%|█▏        | 40/341 [01:22<10:21,  0.48it/s, v_num=20]Train Loss: 5725.75
+Epoch 1:  12%|█▏        | 41/341 [01:24<10:20,  0.48it/s, v_num=20]Epoch 1:  12%|█▏        | 41/341 [01:24<10:20,  0.48it/s, v_num=20]Train Loss: 5724.56787109375
+Epoch 1:  12%|█▏        | 42/341 [01:26<10:17,  0.48it/s, v_num=20]Epoch 1:  12%|█▏        | 42/341 [01:26<10:17,  0.48it/s, v_num=20]Train Loss: 5723.85400390625
+Epoch 1:  13%|█▎        | 43/341 [01:28<10:16,  0.48it/s, v_num=20]Epoch 1:  13%|█▎        | 43/341 [01:28<10:16,  0.48it/s, v_num=20]Train Loss: 5723.75048828125
+Epoch 1:  13%|█▎        | 44/341 [01:30<10:13,  0.48it/s, v_num=20]Epoch 1:  13%|█▎        | 44/341 [01:30<10:13,  0.48it/s, v_num=20]Train Loss: 5721.67041015625
+Epoch 1:  13%|█▎        | 45/341 [01:32<10:10,  0.49it/s, v_num=20]Epoch 1:  13%|█▎        | 45/341 [01:32<10:10,  0.49it/s, v_num=20]Train Loss: 5720.76123046875
+Epoch 1:  13%|█▎        | 46/341 [01:34<10:09,  0.48it/s, v_num=20]Epoch 1:  13%|█▎        | 46/341 [01:34<10:09,  0.48it/s, v_num=20]Train Loss: 5720.8916015625
+Epoch 1:  14%|█▍        | 47/341 [01:36<10:05,  0.49it/s, v_num=20]Epoch 1:  14%|█▍        | 47/341 [01:36<10:05,  0.49it/s, v_num=20]Train Loss: 5721.02880859375
+Epoch 1:  14%|█▍        | 48/341 [01:39<10:04,  0.48it/s, v_num=20]Epoch 1:  14%|█▍        | 48/341 [01:39<10:04,  0.48it/s, v_num=20]Train Loss: 5719.41357421875
+Epoch 1:  14%|█▍        | 49/341 [01:40<10:01,  0.49it/s, v_num=20]Epoch 1:  14%|█▍        | 49/341 [01:40<10:01,  0.49it/s, v_num=20]Train Loss: 5717.47216796875
+Epoch 1:  15%|█▍        | 50/341 [01:43<10:00,  0.48it/s, v_num=20]Epoch 1:  15%|█▍        | 50/341 [01:43<10:00,  0.48it/s, v_num=20]Train Loss: 5717.3935546875
+Epoch 1:  15%|█▍        | 51/341 [01:45<09:57,  0.49it/s, v_num=20]Epoch 1:  15%|█▍        | 51/341 [01:45<09:57,  0.49it/s, v_num=20]Train Loss: 5717.2392578125
+Epoch 1:  15%|█▌        | 52/341 [01:47<09:56,  0.48it/s, v_num=20]Epoch 1:  15%|█▌        | 52/341 [01:47<09:56,  0.48it/s, v_num=20]Train Loss: 5715.3447265625
+Epoch 1:  16%|█▌        | 53/341 [01:49<09:53,  0.49it/s, v_num=20]Epoch 1:  16%|█▌        | 53/341 [01:49<09:53,  0.49it/s, v_num=20]Train Loss: 5714.06005859375
+Epoch 1:  16%|█▌        | 54/341 [01:51<09:50,  0.49it/s, v_num=20]Epoch 1:  16%|█▌        | 54/341 [01:51<09:50,  0.49it/s, v_num=20]Train Loss: 5713.62939453125
+Epoch 1:  16%|█▌        | 55/341 [01:53<09:49,  0.49it/s, v_num=20]Epoch 1:  16%|█▌        | 55/341 [01:53<09:49,  0.49it/s, v_num=20]Train Loss: 5712.19287109375
+Epoch 1:  16%|█▋        | 56/341 [01:55<09:46,  0.49it/s, v_num=20]Epoch 1:  16%|█▋        | 56/341 [01:55<09:46,  0.49it/s, v_num=20]Train Loss: 5713.84033203125
+Epoch 1:  17%|█▋        | 57/341 [01:57<09:45,  0.49it/s, v_num=20]Epoch 1:  17%|█▋        | 57/341 [01:57<09:45,  0.49it/s, v_num=20]Train Loss: 5710.5830078125
+Epoch 1:  17%|█▋        | 58/341 [01:59<09:42,  0.49it/s, v_num=20]Epoch 1:  17%|█▋        | 58/341 [01:59<09:42,  0.49it/s, v_num=20]Train Loss: 5711.3642578125
+Epoch 1:  17%|█▋        | 59/341 [02:01<09:40,  0.49it/s, v_num=20]Epoch 1:  17%|█▋        | 59/341 [02:01<09:40,  0.49it/s, v_num=20]Train Loss: 5710.4345703125
+Epoch 1:  18%|█▊        | 60/341 [02:03<09:38,  0.49it/s, v_num=20]Epoch 1:  18%|█▊        | 60/341 [02:03<09:38,  0.49it/s, v_num=20]Train Loss: 5708.98193359375
+Epoch 1:  18%|█▊        | 61/341 [02:05<09:36,  0.49it/s, v_num=20]Epoch 1:  18%|█▊        | 61/341 [02:05<09:36,  0.49it/s, v_num=20]Train Loss: 5708.14013671875
+Epoch 1:  18%|█▊        | 62/341 [02:07<09:34,  0.49it/s, v_num=20]Epoch 1:  18%|█▊        | 62/341 [02:07<09:34,  0.49it/s, v_num=20]Train Loss: 5706.81298828125
+Epoch 1:  18%|█▊        | 63/341 [02:09<09:31,  0.49it/s, v_num=20]Epoch 1:  18%|█▊        | 63/341 [02:09<09:31,  0.49it/s, v_num=20]Train Loss: 5706.36767578125
+Epoch 1:  19%|█▉        | 64/341 [02:11<09:29,  0.49it/s, v_num=20]Epoch 1:  19%|█▉        | 64/341 [02:11<09:29,  0.49it/s, v_num=20]Train Loss: 5705.81005859375
+Epoch 1:  19%|█▉        | 65/341 [02:13<09:27,  0.49it/s, v_num=20]Epoch 1:  19%|█▉        | 65/341 [02:13<09:27,  0.49it/s, v_num=20]Train Loss: 5704.48779296875
+Epoch 1:  19%|█▉        | 66/341 [02:15<09:25,  0.49it/s, v_num=20]Epoch 1:  19%|█▉        | 66/341 [02:15<09:25,  0.49it/s, v_num=20]Train Loss: 5703.5166015625
+Epoch 1:  20%|█▉        | 67/341 [02:17<09:23,  0.49it/s, v_num=20]Epoch 1:  20%|█▉        | 67/341 [02:17<09:23,  0.49it/s, v_num=20]Train Loss: 5703.6494140625
+Epoch 1:  20%|█▉        | 68/341 [02:19<09:21,  0.49it/s, v_num=20]Epoch 1:  20%|█▉        | 68/341 [02:19<09:21,  0.49it/s, v_num=20]Train Loss: 5702.85546875
+Epoch 1:  20%|██        | 69/341 [02:21<09:18,  0.49it/s, v_num=20]Epoch 1:  20%|██        | 69/341 [02:21<09:18,  0.49it/s, v_num=20]Train Loss: 5702.34619140625
+Epoch 1:  21%|██        | 70/341 [02:24<09:17,  0.49it/s, v_num=20]Epoch 1:  21%|██        | 70/341 [02:24<09:17,  0.49it/s, v_num=20]Train Loss: 5700.93359375
+Epoch 1:  21%|██        | 71/341 [02:25<09:14,  0.49it/s, v_num=20]Epoch 1:  21%|██        | 71/341 [02:25<09:14,  0.49it/s, v_num=20]Train Loss: 5700.162109375
+Epoch 1:  21%|██        | 72/341 [02:27<09:12,  0.49it/s, v_num=20]Epoch 1:  21%|██        | 72/341 [02:27<09:12,  0.49it/s, v_num=20]Train Loss: 5699.31005859375
+Epoch 1:  21%|██▏       | 73/341 [02:29<09:10,  0.49it/s, v_num=20]Epoch 1:  21%|██▏       | 73/341 [02:29<09:10,  0.49it/s, v_num=20]Train Loss: 5699.31005859375
+Epoch 1:  22%|██▏       | 74/341 [02:31<09:07,  0.49it/s, v_num=20]Epoch 1:  22%|██▏       | 74/341 [02:31<09:07,  0.49it/s, v_num=20]Train Loss: 5698.35498046875
+Epoch 1:  22%|██▏       | 75/341 [02:34<09:06,  0.49it/s, v_num=20]Epoch 1:  22%|██▏       | 75/341 [02:34<09:06,  0.49it/s, v_num=20]Train Loss: 5697.39453125
+Epoch 1:  22%|██▏       | 76/341 [02:35<09:03,  0.49it/s, v_num=20]Epoch 1:  22%|██▏       | 76/341 [02:35<09:03,  0.49it/s, v_num=20]Train Loss: 5697.66015625
+Epoch 1:  23%|██▎       | 77/341 [02:38<09:02,  0.49it/s, v_num=20]Epoch 1:  23%|██▎       | 77/341 [02:38<09:02,  0.49it/s, v_num=20]Train Loss: 5696.42578125
+Epoch 1:  23%|██▎       | 78/341 [02:40<08:59,  0.49it/s, v_num=20]Epoch 1:  23%|██▎       | 78/341 [02:40<08:59,  0.49it/s, v_num=20]Train Loss: 5694.50830078125
+Epoch 1:  23%|██▎       | 79/341 [02:41<08:56,  0.49it/s, v_num=20]Epoch 1:  23%|██▎       | 79/341 [02:41<08:56,  0.49it/s, v_num=20]Train Loss: 5695.14208984375
+Epoch 1:  23%|██▎       | 80/341 [02:44<08:55,  0.49it/s, v_num=20]Epoch 1:  23%|██▎       | 80/341 [02:44<08:55,  0.49it/s, v_num=20]Train Loss: 5692.96533203125
+Epoch 1:  24%|██▍       | 81/341 [02:46<08:52,  0.49it/s, v_num=20]Epoch 1:  24%|██▍       | 81/341 [02:46<08:52,  0.49it/s, v_num=20]Train Loss: 5692.32080078125
+Epoch 1:  24%|██▍       | 82/341 [02:48<08:51,  0.49it/s, v_num=20]Epoch 1:  24%|██▍       | 82/341 [02:48<08:51,  0.49it/s, v_num=20]Train Loss: 5691.7763671875
+Epoch 1:  24%|██▍       | 83/341 [02:50<08:48,  0.49it/s, v_num=20]Epoch 1:  24%|██▍       | 83/341 [02:50<08:48,  0.49it/s, v_num=20]Train Loss: 5691.72802734375
+Epoch 1:  25%|██▍       | 84/341 [02:52<08:47,  0.49it/s, v_num=20]Epoch 1:  25%|██▍       | 84/341 [02:52<08:47,  0.49it/s, v_num=20]Train Loss: 5693.1513671875
+Epoch 1:  25%|██▍       | 85/341 [02:54<08:44,  0.49it/s, v_num=20]Epoch 1:  25%|██▍       | 85/341 [02:54<08:44,  0.49it/s, v_num=20]Train Loss: 5691.16748046875
+Epoch 1:  25%|██▌       | 86/341 [02:56<08:43,  0.49it/s, v_num=20]Epoch 1:  25%|██▌       | 86/341 [02:56<08:43,  0.49it/s, v_num=20]Train Loss: 5690.3740234375
+Epoch 1:  26%|██▌       | 87/341 [02:58<08:40,  0.49it/s, v_num=20]Epoch 1:  26%|██▌       | 87/341 [02:58<08:40,  0.49it/s, v_num=20]Train Loss: 5688.51904296875
+Epoch 1:  26%|██▌       | 88/341 [03:00<08:37,  0.49it/s, v_num=20]Epoch 1:  26%|██▌       | 88/341 [03:00<08:37,  0.49it/s, v_num=20]Train Loss: 5689.20703125
+Epoch 1:  26%|██▌       | 89/341 [03:02<08:36,  0.49it/s, v_num=20]Epoch 1:  26%|██▌       | 89/341 [03:02<08:36,  0.49it/s, v_num=20]Train Loss: 5688.54296875
+Epoch 1:  26%|██▋       | 90/341 [03:04<08:33,  0.49it/s, v_num=20]Epoch 1:  26%|██▋       | 90/341 [03:04<08:33,  0.49it/s, v_num=20]Train Loss: 5687.1796875
+Epoch 1:  27%|██▋       | 91/341 [03:06<08:32,  0.49it/s, v_num=20]Epoch 1:  27%|██▋       | 91/341 [03:06<08:32,  0.49it/s, v_num=20]Train Loss: 5687.10205078125
+Epoch 1:  27%|██▋       | 92/341 [03:08<08:30,  0.49it/s, v_num=20]Epoch 1:  27%|██▋       | 92/341 [03:08<08:30,  0.49it/s, v_num=20]Train Loss: 5685.86865234375
+Epoch 1:  27%|██▋       | 93/341 [03:11<08:29,  0.49it/s, v_num=20]Epoch 1:  27%|██▋       | 93/341 [03:11<08:29,  0.49it/s, v_num=20]Train Loss: 5686.87646484375
+Epoch 1:  28%|██▊       | 94/341 [03:12<08:26,  0.49it/s, v_num=20]Epoch 1:  28%|██▊       | 94/341 [03:12<08:26,  0.49it/s, v_num=20]Train Loss: 5685.677734375
+Epoch 1:  28%|██▊       | 95/341 [03:14<08:24,  0.49it/s, v_num=20]Epoch 1:  28%|██▊       | 95/341 [03:14<08:24,  0.49it/s, v_num=20]Train Loss: 5684.30419921875
+Epoch 1:  28%|██▊       | 96/341 [03:16<08:22,  0.49it/s, v_num=20]Epoch 1:  28%|██▊       | 96/341 [03:16<08:22,  0.49it/s, v_num=20]Train Loss: 5683.232421875
+Epoch 1:  28%|██▊       | 97/341 [03:18<08:20,  0.49it/s, v_num=20]Epoch 1:  28%|██▊       | 97/341 [03:18<08:20,  0.49it/s, v_num=20]Train Loss: 5683.4091796875
+Epoch 1:  29%|██▊       | 98/341 [03:21<08:18,  0.49it/s, v_num=20]Epoch 1:  29%|██▊       | 98/341 [03:21<08:18,  0.49it/s, v_num=20]Train Loss: 5682.92919921875
+Epoch 1:  29%|██▉       | 99/341 [03:22<08:16,  0.49it/s, v_num=20]Epoch 1:  29%|██▉       | 99/341 [03:22<08:16,  0.49it/s, v_num=20]Train Loss: 5681.9091796875
+Epoch 1:  29%|██▉       | 100/341 [03:25<08:14,  0.49it/s, v_num=20]Epoch 1:  29%|██▉       | 100/341 [03:25<08:14,  0.49it/s, v_num=20]Train Loss: 5681.95166015625
+Epoch 1:  30%|██▉       | 101/341 [03:27<08:12,  0.49it/s, v_num=20]Epoch 1:  30%|██▉       | 101/341 [03:27<08:12,  0.49it/s, v_num=20]Train Loss: 5680.12744140625
+Epoch 1:  30%|██▉       | 102/341 [03:28<08:09,  0.49it/s, v_num=20]Epoch 1:  30%|██▉       | 102/341 [03:28<08:09,  0.49it/s, v_num=20]Train Loss: 5678.34765625
+Epoch 1:  30%|███       | 103/341 [03:31<08:07,  0.49it/s, v_num=20]Epoch 1:  30%|███       | 103/341 [03:31<08:07,  0.49it/s, v_num=20]Train Loss: 5680.7490234375
+Epoch 1:  30%|███       | 104/341 [03:33<08:05,  0.49it/s, v_num=20]Epoch 1:  30%|███       | 104/341 [03:33<08:05,  0.49it/s, v_num=20]Train Loss: 5678.84912109375
+Epoch 1:  31%|███       | 105/341 [03:35<08:03,  0.49it/s, v_num=20]Epoch 1:  31%|███       | 105/341 [03:35<08:03,  0.49it/s, v_num=20]Train Loss: 5678.33203125
+Epoch 1:  31%|███       | 106/341 [03:37<08:01,  0.49it/s, v_num=20]Epoch 1:  31%|███       | 106/341 [03:37<08:01,  0.49it/s, v_num=20]Train Loss: 5677.13330078125
+Epoch 1:  31%|███▏      | 107/341 [03:39<07:59,  0.49it/s, v_num=20]Epoch 1:  31%|███▏      | 107/341 [03:39<07:59,  0.49it/s, v_num=20]Train Loss: 5678.419921875
+Epoch 1:  32%|███▏      | 108/341 [03:41<07:57,  0.49it/s, v_num=20]Epoch 1:  32%|███▏      | 108/341 [03:41<07:57,  0.49it/s, v_num=20]Train Loss: 5674.63818359375
+Epoch 1:  32%|███▏      | 109/341 [03:43<07:54,  0.49it/s, v_num=20]Epoch 1:  32%|███▏      | 109/341 [03:43<07:54,  0.49it/s, v_num=20]Train Loss: 5676.23291015625
+Epoch 1:  32%|███▏      | 110/341 [03:45<07:53,  0.49it/s, v_num=20]Epoch 1:  32%|███▏      | 110/341 [03:45<07:53,  0.49it/s, v_num=20]Train Loss: 5674.654296875
+Epoch 1:  33%|███▎      | 111/341 [03:47<07:50,  0.49it/s, v_num=20]Epoch 1:  33%|███▎      | 111/341 [03:47<07:50,  0.49it/s, v_num=20]Train Loss: 5674.06591796875
+Epoch 1:  33%|███▎      | 112/341 [03:49<07:49,  0.49it/s, v_num=20]Epoch 1:  33%|███▎      | 112/341 [03:49<07:49,  0.49it/s, v_num=20]Train Loss: 5674.27685546875
+Epoch 1:  33%|███▎      | 113/341 [03:51<07:46,  0.49it/s, v_num=20]Epoch 1:  33%|███▎      | 113/341 [03:51<07:46,  0.49it/s, v_num=20]Train Loss: 5673.93408203125
+Epoch 1:  33%|███▎      | 114/341 [03:53<07:44,  0.49it/s, v_num=20]Epoch 1:  33%|███▎      | 114/341 [03:53<07:44,  0.49it/s, v_num=20]Train Loss: 5672.37353515625
+Epoch 1:  34%|███▎      | 115/341 [03:55<07:42,  0.49it/s, v_num=20]Epoch 1:  34%|███▎      | 115/341 [03:55<07:42,  0.49it/s, v_num=20]Train Loss: 5671.1396484375
+Epoch 1:  34%|███▍      | 116/341 [03:57<07:40,  0.49it/s, v_num=20]Epoch 1:  34%|███▍      | 116/341 [03:57<07:40,  0.49it/s, v_num=20]Train Loss: 5672.6728515625
+Epoch 1:  34%|███▍      | 117/341 [03:59<07:38,  0.49it/s, v_num=20]Epoch 1:  34%|███▍      | 117/341 [03:59<07:38,  0.49it/s, v_num=20]Train Loss: 5673.1083984375
+Epoch 1:  35%|███▍      | 118/341 [04:01<07:36,  0.49it/s, v_num=20]Epoch 1:  35%|███▍      | 118/341 [04:01<07:36,  0.49it/s, v_num=20]Train Loss: 5671.34375
+Epoch 1:  35%|███▍      | 119/341 [04:03<07:34,  0.49it/s, v_num=20]Epoch 1:  35%|███▍      | 119/341 [04:03<07:34,  0.49it/s, v_num=20]Train Loss: 5670.353515625
+Epoch 1:  35%|███▌      | 120/341 [04:05<07:32,  0.49it/s, v_num=20]Epoch 1:  35%|███▌      | 120/341 [04:05<07:32,  0.49it/s, v_num=20]Train Loss: 5669.6943359375
+Epoch 1:  35%|███▌      | 121/341 [04:07<07:29,  0.49it/s, v_num=20]Epoch 1:  35%|███▌      | 121/341 [04:07<07:29,  0.49it/s, v_num=20]Train Loss: 5669.31201171875
+Epoch 1:  36%|███▌      | 122/341 [04:09<07:28,  0.49it/s, v_num=20]Epoch 1:  36%|███▌      | 122/341 [04:09<07:28,  0.49it/s, v_num=20]Train Loss: 5669.49365234375
+Epoch 1:  36%|███▌      | 123/341 [04:11<07:25,  0.49it/s, v_num=20]Epoch 1:  36%|███▌      | 123/341 [04:11<07:25,  0.49it/s, v_num=20]Train Loss: 5668.13037109375
+Epoch 1:  36%|███▋      | 124/341 [04:13<07:24,  0.49it/s, v_num=20]Epoch 1:  36%|███▋      | 124/341 [04:13<07:24,  0.49it/s, v_num=20]Train Loss: 5668.4892578125
+Epoch 1:  37%|███▋      | 125/341 [04:15<07:21,  0.49it/s, v_num=20]Epoch 1:  37%|███▋      | 125/341 [04:15<07:21,  0.49it/s, v_num=20]Train Loss: 5667.048828125
+Epoch 1:  37%|███▋      | 126/341 [04:17<07:19,  0.49it/s, v_num=20]Epoch 1:  37%|███▋      | 126/341 [04:17<07:19,  0.49it/s, v_num=20]Train Loss: 5668.4765625
+Epoch 1:  37%|███▋      | 127/341 [04:19<07:17,  0.49it/s, v_num=20]Epoch 1:  37%|███▋      | 127/341 [04:19<07:17,  0.49it/s, v_num=20]Train Loss: 5665.36083984375
+Epoch 1:  38%|███▊      | 128/341 [04:21<07:15,  0.49it/s, v_num=20]Epoch 1:  38%|███▊      | 128/341 [04:21<07:15,  0.49it/s, v_num=20]Train Loss: 5666.10400390625
+Epoch 1:  38%|███▊      | 129/341 [04:23<07:13,  0.49it/s, v_num=20]Epoch 1:  38%|███▊      | 129/341 [04:23<07:13,  0.49it/s, v_num=20]Train Loss: 5666.11865234375
+Epoch 1:  38%|███▊      | 130/341 [04:25<07:11,  0.49it/s, v_num=20]Epoch 1:  38%|███▊      | 130/341 [04:25<07:11,  0.49it/s, v_num=20]Train Loss: 5666.294921875
+Epoch 1:  38%|███▊      | 131/341 [04:27<07:09,  0.49it/s, v_num=20]Epoch 1:  38%|███▊      | 131/341 [04:27<07:09,  0.49it/s, v_num=20]Train Loss: 5665.08154296875
+Epoch 1:  39%|███▊      | 132/341 [04:29<07:07,  0.49it/s, v_num=20]Epoch 1:  39%|███▊      | 132/341 [04:29<07:07,  0.49it/s, v_num=20]Train Loss: 5663.87109375
+Epoch 1:  39%|███▉      | 133/341 [04:32<07:05,  0.49it/s, v_num=20]Epoch 1:  39%|███▉      | 133/341 [04:32<07:05,  0.49it/s, v_num=20]Train Loss: 5664.5595703125
+Epoch 1:  39%|███▉      | 134/341 [04:33<07:03,  0.49it/s, v_num=20]Epoch 1:  39%|███▉      | 134/341 [04:33<07:03,  0.49it/s, v_num=20]Train Loss: 5663.66455078125
+Epoch 1:  40%|███▉      | 135/341 [04:36<07:01,  0.49it/s, v_num=20]Epoch 1:  40%|███▉      | 135/341 [04:36<07:01,  0.49it/s, v_num=20]Train Loss: 5663.51904296875
+Epoch 1:  40%|███▉      | 136/341 [04:37<06:59,  0.49it/s, v_num=20]Epoch 1:  40%|███▉      | 136/341 [04:38<06:59,  0.49it/s, v_num=20]Train Loss: 5663.65576171875
+Epoch 1:  40%|████      | 137/341 [04:39<06:56,  0.49it/s, v_num=20]Epoch 1:  40%|████      | 137/341 [04:39<06:56,  0.49it/s, v_num=20]Train Loss: 5662.720703125
+Epoch 1:  40%|████      | 138/341 [04:42<06:55,  0.49it/s, v_num=20]Epoch 1:  40%|████      | 138/341 [04:42<06:55,  0.49it/s, v_num=20]Train Loss: 5661.46044921875
+Epoch 1:  41%|████      | 139/341 [04:44<06:52,  0.49it/s, v_num=20]Epoch 1:  41%|████      | 139/341 [04:44<06:52,  0.49it/s, v_num=20]Train Loss: 5660.51318359375
+Epoch 1:  41%|████      | 140/341 [04:46<06:51,  0.49it/s, v_num=20]Epoch 1:  41%|████      | 140/341 [04:46<06:51,  0.49it/s, v_num=20]Train Loss: 5661.8779296875
+Epoch 1:  41%|████▏     | 141/341 [04:48<06:48,  0.49it/s, v_num=20]Epoch 1:  41%|████▏     | 141/341 [04:48<06:48,  0.49it/s, v_num=20]Train Loss: 5661.89794921875
+Epoch 1:  42%|████▏     | 142/341 [04:50<06:47,  0.49it/s, v_num=20]Epoch 1:  42%|████▏     | 142/341 [04:50<06:47,  0.49it/s, v_num=20]Train Loss: 5660.56884765625
+Epoch 1:  42%|████▏     | 143/341 [04:52<06:44,  0.49it/s, v_num=20]Epoch 1:  42%|████▏     | 143/341 [04:52<06:44,  0.49it/s, v_num=20]Train Loss: 5659.3671875
+Epoch 1:  42%|████▏     | 144/341 [04:54<06:42,  0.49it/s, v_num=20]Epoch 1:  42%|████▏     | 144/341 [04:54<06:42,  0.49it/s, v_num=20]Train Loss: 5659.59033203125
+Epoch 1:  43%|████▎     | 145/341 [04:56<06:40,  0.49it/s, v_num=20]Epoch 1:  43%|████▎     | 145/341 [04:56<06:40,  0.49it/s, v_num=20]Train Loss: 5658.263671875
+Epoch 1:  43%|████▎     | 146/341 [04:58<06:38,  0.49it/s, v_num=20]Epoch 1:  43%|████▎     | 146/341 [04:58<06:38,  0.49it/s, v_num=20]Train Loss: 5657.55908203125
+Epoch 1:  43%|████▎     | 147/341 [05:00<06:36,  0.49it/s, v_num=20]Epoch 1:  43%|████▎     | 147/341 [05:00<06:36,  0.49it/s, v_num=20]Train Loss: 5658.63037109375
+Epoch 1:  43%|████▎     | 148/341 [05:02<06:34,  0.49it/s, v_num=20]Epoch 1:  43%|████▎     | 148/341 [05:02<06:34,  0.49it/s, v_num=20]Train Loss: 5656.90869140625
+Epoch 1:  44%|████▎     | 149/341 [05:04<06:32,  0.49it/s, v_num=20]Epoch 1:  44%|████▎     | 149/341 [05:04<06:32,  0.49it/s, v_num=20]Train Loss: 5656.88232421875
+Epoch 1:  44%|████▍     | 150/341 [05:06<06:30,  0.49it/s, v_num=20]Epoch 1:  44%|████▍     | 150/341 [05:06<06:30,  0.49it/s, v_num=20]Train Loss: 5657.16650390625
+Epoch 1:  44%|████▍     | 151/341 [05:08<06:28,  0.49it/s, v_num=20]Epoch 1:  44%|████▍     | 151/341 [05:08<06:28,  0.49it/s, v_num=20]Train Loss: 5655.6904296875
+Epoch 1:  45%|████▍     | 152/341 [05:10<06:26,  0.49it/s, v_num=20]Epoch 1:  45%|████▍     | 152/341 [05:10<06:26,  0.49it/s, v_num=20]Train Loss: 5656.44970703125
+Epoch 1:  45%|████▍     | 153/341 [05:12<06:24,  0.49it/s, v_num=20]Epoch 1:  45%|████▍     | 153/341 [05:12<06:24,  0.49it/s, v_num=20]Train Loss: 5654.6708984375
+Epoch 1:  45%|████▌     | 154/341 [05:14<06:22,  0.49it/s, v_num=20]Epoch 1:  45%|████▌     | 154/341 [05:14<06:22,  0.49it/s, v_num=20]Train Loss: 5654.6083984375
+Epoch 1:  45%|████▌     | 155/341 [05:16<06:20,  0.49it/s, v_num=20]Epoch 1:  45%|████▌     | 155/341 [05:16<06:20,  0.49it/s, v_num=20]Train Loss: 5655.134765625
+Epoch 1:  46%|████▌     | 156/341 [05:19<06:18,  0.49it/s, v_num=20]Epoch 1:  46%|████▌     | 156/341 [05:19<06:18,  0.49it/s, v_num=20]Train Loss: 5655.5791015625
+Epoch 1:  46%|████▌     | 157/341 [05:20<06:16,  0.49it/s, v_num=20]Epoch 1:  46%|████▌     | 157/341 [05:20<06:16,  0.49it/s, v_num=20]Train Loss: 5653.75439453125
+Epoch 1:  46%|████▋     | 158/341 [05:23<06:14,  0.49it/s, v_num=20]Epoch 1:  46%|████▋     | 158/341 [05:23<06:14,  0.49it/s, v_num=20]Train Loss: 5652.7958984375
+Epoch 1:  47%|████▋     | 159/341 [05:24<06:12,  0.49it/s, v_num=20]Epoch 1:  47%|████▋     | 159/341 [05:24<06:12,  0.49it/s, v_num=20]Train Loss: 5652.3984375
+Epoch 1:  47%|████▋     | 160/341 [05:26<06:09,  0.49it/s, v_num=20]Epoch 1:  47%|████▋     | 160/341 [05:26<06:09,  0.49it/s, v_num=20]Train Loss: 5653.4169921875
+Epoch 1:  47%|████▋     | 161/341 [05:29<06:07,  0.49it/s, v_num=20]Epoch 1:  47%|████▋     | 161/341 [05:29<06:07,  0.49it/s, v_num=20]Train Loss: 5652.68505859375
+Epoch 1:  48%|████▊     | 162/341 [05:30<06:05,  0.49it/s, v_num=20]Epoch 1:  48%|████▊     | 162/341 [05:30<06:05,  0.49it/s, v_num=20]Train Loss: 5651.43505859375
+Epoch 1:  48%|████▊     | 163/341 [05:33<06:03,  0.49it/s, v_num=20]Epoch 1:  48%|████▊     | 163/341 [05:33<06:03,  0.49it/s, v_num=20]Train Loss: 5651.62451171875
+Epoch 1:  48%|████▊     | 164/341 [05:35<06:01,  0.49it/s, v_num=20]Epoch 1:  48%|████▊     | 164/341 [05:35<06:01,  0.49it/s, v_num=20]Train Loss: 5650.56689453125
+Epoch 1:  48%|████▊     | 165/341 [05:37<05:59,  0.49it/s, v_num=20]Epoch 1:  48%|████▊     | 165/341 [05:37<05:59,  0.49it/s, v_num=20]Train Loss: 5650.234375
+Epoch 1:  49%|████▊     | 166/341 [05:39<05:57,  0.49it/s, v_num=20]Epoch 1:  49%|████▊     | 166/341 [05:39<05:57,  0.49it/s, v_num=20]Train Loss: 5649.44775390625
+Epoch 1:  49%|████▉     | 167/341 [05:41<05:55,  0.49it/s, v_num=20]Epoch 1:  49%|████▉     | 167/341 [05:41<05:55,  0.49it/s, v_num=20]Train Loss: 5648.99609375
+Epoch 1:  49%|████▉     | 168/341 [05:43<05:53,  0.49it/s, v_num=20]Epoch 1:  49%|████▉     | 168/341 [05:43<05:53,  0.49it/s, v_num=20]Train Loss: 5650.00537109375
+Epoch 1:  50%|████▉     | 169/341 [05:45<05:51,  0.49it/s, v_num=20]Epoch 1:  50%|████▉     | 169/341 [05:45<05:51,  0.49it/s, v_num=20]Train Loss: 5649.68603515625
+Epoch 1:  50%|████▉     | 170/341 [05:47<05:49,  0.49it/s, v_num=20]Epoch 1:  50%|████▉     | 170/341 [05:47<05:49,  0.49it/s, v_num=20]Train Loss: 5649.236328125
+Epoch 1:  50%|█████     | 171/341 [05:49<05:47,  0.49it/s, v_num=20]Epoch 1:  50%|█████     | 171/341 [05:49<05:47,  0.49it/s, v_num=20]Train Loss: 5647.82373046875
+Epoch 1:  50%|█████     | 172/341 [05:51<05:45,  0.49it/s, v_num=20]Epoch 1:  50%|█████     | 172/341 [05:51<05:45,  0.49it/s, v_num=20]Train Loss: 5648.29248046875
+Epoch 1:  51%|█████     | 173/341 [05:53<05:43,  0.49it/s, v_num=20]Epoch 1:  51%|█████     | 173/341 [05:53<05:43,  0.49it/s, v_num=20]Train Loss: 5647.77490234375
+Epoch 1:  51%|█████     | 174/341 [05:55<05:41,  0.49it/s, v_num=20]Epoch 1:  51%|█████     | 174/341 [05:55<05:41,  0.49it/s, v_num=20]Train Loss: 5645.7998046875
+Epoch 1:  51%|█████▏    | 175/341 [05:57<05:39,  0.49it/s, v_num=20]Epoch 1:  51%|█████▏    | 175/341 [05:57<05:39,  0.49it/s, v_num=20]Train Loss: 5647.3759765625
+Epoch 1:  52%|█████▏    | 176/341 [05:59<05:37,  0.49it/s, v_num=20]Epoch 1:  52%|█████▏    | 176/341 [05:59<05:37,  0.49it/s, v_num=20]Train Loss: 5646.27978515625
+Epoch 1:  52%|█████▏    | 177/341 [06:01<05:35,  0.49it/s, v_num=20]Epoch 1:  52%|█████▏    | 177/341 [06:01<05:35,  0.49it/s, v_num=20]Train Loss: 5645.916015625
+Epoch 1:  52%|█████▏    | 178/341 [06:03<05:32,  0.49it/s, v_num=20]Epoch 1:  52%|█████▏    | 178/341 [06:03<05:32,  0.49it/s, v_num=20]Train Loss: 5644.1865234375
+Epoch 1:  52%|█████▏    | 179/341 [06:05<05:30,  0.49it/s, v_num=20]Epoch 1:  52%|█████▏    | 179/341 [06:05<05:30,  0.49it/s, v_num=20]Train Loss: 5645.68798828125
+Epoch 1:  53%|█████▎    | 180/341 [06:07<05:28,  0.49it/s, v_num=20]Epoch 1:  53%|█████▎    | 180/341 [06:07<05:28,  0.49it/s, v_num=20]Train Loss: 5645.53466796875
+Epoch 1:  53%|█████▎    | 181/341 [06:09<05:26,  0.49it/s, v_num=20]Epoch 1:  53%|█████▎    | 181/341 [06:09<05:26,  0.49it/s, v_num=20]Train Loss: 5644.3134765625
+Epoch 1:  53%|█████▎    | 182/341 [06:11<05:24,  0.49it/s, v_num=20]Epoch 1:  53%|█████▎    | 182/341 [06:11<05:24,  0.49it/s, v_num=20]Train Loss: 5644.1328125
+Epoch 1:  54%|█████▎    | 183/341 [06:13<05:22,  0.49it/s, v_num=20]Epoch 1:  54%|█████▎    | 183/341 [06:13<05:22,  0.49it/s, v_num=20]Train Loss: 5644.6064453125
+Epoch 1:  54%|█████▍    | 184/341 [06:15<05:20,  0.49it/s, v_num=20]Epoch 1:  54%|█████▍    | 184/341 [06:15<05:20,  0.49it/s, v_num=20]Train Loss: 5643.32666015625
+Epoch 1:  54%|█████▍    | 185/341 [06:17<05:18,  0.49it/s, v_num=20]Epoch 1:  54%|█████▍    | 185/341 [06:17<05:18,  0.49it/s, v_num=20]Train Loss: 5644.69384765625
+Epoch 1:  55%|█████▍    | 186/341 [06:19<05:16,  0.49it/s, v_num=20]Epoch 1:  55%|█████▍    | 186/341 [06:19<05:16,  0.49it/s, v_num=20]Train Loss: 5644.25537109375
+Epoch 1:  55%|█████▍    | 187/341 [06:21<05:14,  0.49it/s, v_num=20]Epoch 1:  55%|█████▍    | 187/341 [06:21<05:14,  0.49it/s, v_num=20]Train Loss: 5641.61572265625
+Epoch 1:  55%|█████▌    | 188/341 [06:24<05:12,  0.49it/s, v_num=20]Epoch 1:  55%|█████▌    | 188/341 [06:24<05:12,  0.49it/s, v_num=20]Train Loss: 5642.31005859375
+Epoch 1:  55%|█████▌    | 189/341 [06:26<05:10,  0.49it/s, v_num=20]Epoch 1:  55%|█████▌    | 189/341 [06:26<05:10,  0.49it/s, v_num=20]Train Loss: 5642.3271484375
+Epoch 1:  56%|█████▌    | 190/341 [06:28<05:08,  0.49it/s, v_num=20]Epoch 1:  56%|█████▌    | 190/341 [06:28<05:08,  0.49it/s, v_num=20]Train Loss: 5642.78369140625
+Epoch 1:  56%|█████▌    | 191/341 [06:30<05:06,  0.49it/s, v_num=20]Epoch 1:  56%|█████▌    | 191/341 [06:30<05:06,  0.49it/s, v_num=20]Train Loss: 5641.37548828125
+Epoch 1:  56%|█████▋    | 192/341 [06:32<05:04,  0.49it/s, v_num=20]Epoch 1:  56%|█████▋    | 192/341 [06:32<05:04,  0.49it/s, v_num=20]Train Loss: 5641.7177734375
+Epoch 1:  57%|█████▋    | 193/341 [06:34<05:02,  0.49it/s, v_num=20]Epoch 1:  57%|█████▋    | 193/341 [06:34<05:02,  0.49it/s, v_num=20]Train Loss: 5641.6142578125
+Epoch 1:  57%|█████▋    | 194/341 [06:36<05:00,  0.49it/s, v_num=20]Epoch 1:  57%|█████▋    | 194/341 [06:36<05:00,  0.49it/s, v_num=20]Train Loss: 5641.26025390625
+Epoch 1:  57%|█████▋    | 195/341 [06:38<04:58,  0.49it/s, v_num=20]Epoch 1:  57%|█████▋    | 195/341 [06:38<04:58,  0.49it/s, v_num=20]Train Loss: 5640.96240234375
+Epoch 1:  57%|█████▋    | 196/341 [06:40<04:56,  0.49it/s, v_num=20]Epoch 1:  57%|█████▋    | 196/341 [06:40<04:56,  0.49it/s, v_num=20]Train Loss: 5641.02587890625
+Epoch 1:  58%|█████▊    | 197/341 [06:42<04:54,  0.49it/s, v_num=20]Epoch 1:  58%|█████▊    | 197/341 [06:42<04:54,  0.49it/s, v_num=20]Train Loss: 5641.08349609375
+Epoch 1:  58%|█████▊    | 198/341 [06:44<04:52,  0.49it/s, v_num=20]Epoch 1:  58%|█████▊    | 198/341 [06:44<04:52,  0.49it/s, v_num=20]Train Loss: 5639.51171875
+Epoch 1:  58%|█████▊    | 199/341 [06:46<04:50,  0.49it/s, v_num=20]Epoch 1:  58%|█████▊    | 199/341 [06:46<04:50,  0.49it/s, v_num=20]Train Loss: 5639.32763671875
+Epoch 1:  59%|█████▊    | 200/341 [06:48<04:48,  0.49it/s, v_num=20]Epoch 1:  59%|█████▊    | 200/341 [06:48<04:48,  0.49it/s, v_num=20]Train Loss: 5638.27099609375
+Epoch 1:  59%|█████▉    | 201/341 [06:51<04:46,  0.49it/s, v_num=20]Epoch 1:  59%|█████▉    | 201/341 [06:51<04:46,  0.49it/s, v_num=20]Train Loss: 5639.658203125
+Epoch 1:  59%|█████▉    | 202/341 [06:52<04:44,  0.49it/s, v_num=20]Epoch 1:  59%|█████▉    | 202/341 [06:52<04:44,  0.49it/s, v_num=20]Train Loss: 5638.91162109375
+Epoch 1:  60%|█████▉    | 203/341 [06:54<04:41,  0.49it/s, v_num=20]Epoch 1:  60%|█████▉    | 203/341 [06:54<04:41,  0.49it/s, v_num=20]Train Loss: 5638.61181640625
+Epoch 1:  60%|█████▉    | 204/341 [06:56<04:40,  0.49it/s, v_num=20]Epoch 1:  60%|█████▉    | 204/341 [06:56<04:40,  0.49it/s, v_num=20]Train Loss: 5636.96728515625
+Epoch 1:  60%|██████    | 205/341 [06:58<04:37,  0.49it/s, v_num=20]Epoch 1:  60%|██████    | 205/341 [06:58<04:37,  0.49it/s, v_num=20]Train Loss: 5638.3359375
+Epoch 1:  60%|██████    | 206/341 [07:01<04:35,  0.49it/s, v_num=20]Epoch 1:  60%|██████    | 206/341 [07:01<04:35,  0.49it/s, v_num=20]Train Loss: 5637.67578125
+Epoch 1:  61%|██████    | 207/341 [07:03<04:33,  0.49it/s, v_num=20]Epoch 1:  61%|██████    | 207/341 [07:03<04:33,  0.49it/s, v_num=20]Train Loss: 5637.84033203125
+Epoch 1:  61%|██████    | 208/341 [07:05<04:31,  0.49it/s, v_num=20]Epoch 1:  61%|██████    | 208/341 [07:05<04:31,  0.49it/s, v_num=20]Train Loss: 5637.49853515625
+Epoch 1:  61%|██████▏   | 209/341 [07:07<04:29,  0.49it/s, v_num=20]Epoch 1:  61%|██████▏   | 209/341 [07:07<04:29,  0.49it/s, v_num=20]Train Loss: 5637.24658203125
+Epoch 1:  62%|██████▏   | 210/341 [07:09<04:27,  0.49it/s, v_num=20]Epoch 1:  62%|██████▏   | 210/341 [07:09<04:27,  0.49it/s, v_num=20]Train Loss: 5636.2275390625
+Epoch 1:  62%|██████▏   | 211/341 [07:11<04:25,  0.49it/s, v_num=20]Epoch 1:  62%|██████▏   | 211/341 [07:11<04:25,  0.49it/s, v_num=20]Train Loss: 5635.02490234375
+Epoch 1:  62%|██████▏   | 212/341 [07:13<04:23,  0.49it/s, v_num=20]Epoch 1:  62%|██████▏   | 212/341 [07:13<04:23,  0.49it/s, v_num=20]Train Loss: 5636.0791015625
+Epoch 1:  62%|██████▏   | 213/341 [07:15<04:21,  0.49it/s, v_num=20]Epoch 1:  62%|██████▏   | 213/341 [07:15<04:21,  0.49it/s, v_num=20]Train Loss: 5635.80126953125
+Epoch 1:  63%|██████▎   | 214/341 [07:17<04:19,  0.49it/s, v_num=20]Epoch 1:  63%|██████▎   | 214/341 [07:17<04:19,  0.49it/s, v_num=20]Train Loss: 5635.27001953125
+Epoch 1:  63%|██████▎   | 215/341 [07:19<04:17,  0.49it/s, v_num=20]Epoch 1:  63%|██████▎   | 215/341 [07:19<04:17,  0.49it/s, v_num=20]Train Loss: 5635.23583984375
+Epoch 1:  63%|██████▎   | 216/341 [07:21<04:15,  0.49it/s, v_num=20]Epoch 1:  63%|██████▎   | 216/341 [07:21<04:15,  0.49it/s, v_num=20]Train Loss: 5635.40625
+Epoch 1:  64%|██████▎   | 217/341 [07:23<04:13,  0.49it/s, v_num=20]Epoch 1:  64%|██████▎   | 217/341 [07:23<04:13,  0.49it/s, v_num=20]Train Loss: 5634.5908203125
+Epoch 1:  64%|██████▍   | 218/341 [07:25<04:11,  0.49it/s, v_num=20]Epoch 1:  64%|██████▍   | 218/341 [07:25<04:11,  0.49it/s, v_num=20]Train Loss: 5635.3193359375
+Epoch 1:  64%|██████▍   | 219/341 [07:27<04:09,  0.49it/s, v_num=20]Epoch 1:  64%|██████▍   | 219/341 [07:27<04:09,  0.49it/s, v_num=20]Train Loss: 5633.6328125
+Epoch 1:  65%|██████▍   | 220/341 [07:29<04:07,  0.49it/s, v_num=20]Epoch 1:  65%|██████▍   | 220/341 [07:29<04:07,  0.49it/s, v_num=20]Train Loss: 5634.58544921875
+Epoch 1:  65%|██████▍   | 221/341 [07:31<04:05,  0.49it/s, v_num=20]Epoch 1:  65%|██████▍   | 221/341 [07:31<04:05,  0.49it/s, v_num=20]Train Loss: 5634.5107421875
+Epoch 1:  65%|██████▌   | 222/341 [07:33<04:03,  0.49it/s, v_num=20]Epoch 1:  65%|██████▌   | 222/341 [07:33<04:03,  0.49it/s, v_num=20]Train Loss: 5632.40576171875
+Epoch 1:  65%|██████▌   | 223/341 [07:35<04:01,  0.49it/s, v_num=20]Epoch 1:  65%|██████▌   | 223/341 [07:35<04:01,  0.49it/s, v_num=20]Train Loss: 5633.49462890625
+Epoch 1:  66%|██████▌   | 224/341 [07:37<03:59,  0.49it/s, v_num=20]Epoch 1:  66%|██████▌   | 224/341 [07:37<03:59,  0.49it/s, v_num=20]Train Loss: 5631.81005859375
+Epoch 1:  66%|██████▌   | 225/341 [07:40<03:57,  0.49it/s, v_num=20]Epoch 1:  66%|██████▌   | 225/341 [07:40<03:57,  0.49it/s, v_num=20]Train Loss: 5632.26318359375
+Epoch 1:  66%|██████▋   | 226/341 [07:41<03:55,  0.49it/s, v_num=20]Epoch 1:  66%|██████▋   | 226/341 [07:41<03:55,  0.49it/s, v_num=20]Train Loss: 5632.1279296875
+Epoch 1:  67%|██████▋   | 227/341 [07:44<03:53,  0.49it/s, v_num=20]Epoch 1:  67%|██████▋   | 227/341 [07:44<03:53,  0.49it/s, v_num=20]Train Loss: 5632.33984375
+Epoch 1:  67%|██████▋   | 228/341 [07:46<03:50,  0.49it/s, v_num=20]Epoch 1:  67%|██████▋   | 228/341 [07:46<03:50,  0.49it/s, v_num=20]Train Loss: 5631.5166015625
+Epoch 1:  67%|██████▋   | 229/341 [07:48<03:49,  0.49it/s, v_num=20]Epoch 1:  67%|██████▋   | 229/341 [07:48<03:49,  0.49it/s, v_num=20]Train Loss: 5631.826171875
+Epoch 1:  67%|██████▋   | 230/341 [07:50<03:46,  0.49it/s, v_num=20]Epoch 1:  67%|██████▋   | 230/341 [07:50<03:46,  0.49it/s, v_num=20]Train Loss: 5631.0595703125
+Epoch 1:  68%|██████▊   | 231/341 [07:52<03:44,  0.49it/s, v_num=20]Epoch 1:  68%|██████▊   | 231/341 [07:52<03:44,  0.49it/s, v_num=20]Train Loss: 5630.41357421875
+Epoch 1:  68%|██████▊   | 232/341 [07:54<03:42,  0.49it/s, v_num=20]Epoch 1:  68%|██████▊   | 232/341 [07:54<03:42,  0.49it/s, v_num=20]Train Loss: 5630.36083984375
+Epoch 1:  68%|██████▊   | 233/341 [07:56<03:40,  0.49it/s, v_num=20]Epoch 1:  68%|██████▊   | 233/341 [07:56<03:40,  0.49it/s, v_num=20]Train Loss: 5630.54150390625
+Epoch 1:  69%|██████▊   | 234/341 [07:58<03:38,  0.49it/s, v_num=20]Epoch 1:  69%|██████▊   | 234/341 [07:58<03:38,  0.49it/s, v_num=20]Train Loss: 5630.38232421875
+Epoch 1:  69%|██████▉   | 235/341 [08:00<03:36,  0.49it/s, v_num=20]Epoch 1:  69%|██████▉   | 235/341 [08:00<03:36,  0.49it/s, v_num=20]Train Loss: 5630.77880859375
+Epoch 1:  69%|██████▉   | 236/341 [08:02<03:34,  0.49it/s, v_num=20]Epoch 1:  69%|██████▉   | 236/341 [08:02<03:34,  0.49it/s, v_num=20]Train Loss: 5629.31591796875
+Epoch 1:  70%|██████▉   | 237/341 [08:04<03:32,  0.49it/s, v_num=20]Epoch 1:  70%|██████▉   | 237/341 [08:04<03:32,  0.49it/s, v_num=20]Train Loss: 5629.08837890625
+Epoch 1:  70%|██████▉   | 238/341 [08:06<03:30,  0.49it/s, v_num=20]Epoch 1:  70%|██████▉   | 238/341 [08:06<03:30,  0.49it/s, v_num=20]Train Loss: 5629.25830078125
+Epoch 1:  70%|███████   | 239/341 [08:08<03:28,  0.49it/s, v_num=20]Epoch 1:  70%|███████   | 239/341 [08:08<03:28,  0.49it/s, v_num=20]Train Loss: 5628.4306640625
+Epoch 1:  70%|███████   | 240/341 [08:10<03:26,  0.49it/s, v_num=20]Epoch 1:  70%|███████   | 240/341 [08:10<03:26,  0.49it/s, v_num=20]Train Loss: 5628.416015625
+Epoch 1:  71%|███████   | 241/341 [08:13<03:24,  0.49it/s, v_num=20]Epoch 1:  71%|███████   | 241/341 [08:13<03:24,  0.49it/s, v_num=20]Train Loss: 5628.998046875
+Epoch 1:  71%|███████   | 242/341 [08:15<03:22,  0.49it/s, v_num=20]Epoch 1:  71%|███████   | 242/341 [08:15<03:22,  0.49it/s, v_num=20]Train Loss: 5627.84765625
+Epoch 1:  71%|███████▏  | 243/341 [08:17<03:20,  0.49it/s, v_num=20]Epoch 1:  71%|███████▏  | 243/341 [08:17<03:20,  0.49it/s, v_num=20]Train Loss: 5627.552734375
+Epoch 1:  72%|███████▏  | 244/341 [08:19<03:18,  0.49it/s, v_num=20]Epoch 1:  72%|███████▏  | 244/341 [08:19<03:18,  0.49it/s, v_num=20]Train Loss: 5627.75439453125
+Epoch 1:  72%|███████▏  | 245/341 [08:21<03:16,  0.49it/s, v_num=20]Epoch 1:  72%|███████▏  | 245/341 [08:21<03:16,  0.49it/s, v_num=20]Train Loss: 5626.412109375
+Epoch 1:  72%|███████▏  | 246/341 [08:23<03:14,  0.49it/s, v_num=20]Epoch 1:  72%|███████▏  | 246/341 [08:23<03:14,  0.49it/s, v_num=20]Train Loss: 5627.61328125
+Epoch 1:  72%|███████▏  | 247/341 [08:25<03:12,  0.49it/s, v_num=20]Epoch 1:  72%|███████▏  | 247/341 [08:25<03:12,  0.49it/s, v_num=20]Train Loss: 5627.0224609375
+Epoch 1:  73%|███████▎  | 248/341 [08:27<03:10,  0.49it/s, v_num=20]Epoch 1:  73%|███████▎  | 248/341 [08:27<03:10,  0.49it/s, v_num=20]Train Loss: 5625.98974609375
+Epoch 1:  73%|███████▎  | 249/341 [08:29<03:08,  0.49it/s, v_num=20]Epoch 1:  73%|███████▎  | 249/341 [08:29<03:08,  0.49it/s, v_num=20]Train Loss: 5626.6796875
+Epoch 1:  73%|███████▎  | 250/341 [08:31<03:06,  0.49it/s, v_num=20]Epoch 1:  73%|███████▎  | 250/341 [08:31<03:06,  0.49it/s, v_num=20]Train Loss: 5625.7216796875
+Epoch 1:  74%|███████▎  | 251/341 [08:33<03:04,  0.49it/s, v_num=20]Epoch 1:  74%|███████▎  | 251/341 [08:33<03:04,  0.49it/s, v_num=20]Train Loss: 5624.54296875
+Epoch 1:  74%|███████▍  | 252/341 [08:35<03:02,  0.49it/s, v_num=20]Epoch 1:  74%|███████▍  | 252/341 [08:35<03:02,  0.49it/s, v_num=20]Train Loss: 5626.0390625
+Epoch 1:  74%|███████▍  | 253/341 [08:37<03:00,  0.49it/s, v_num=20]Epoch 1:  74%|███████▍  | 253/341 [08:37<03:00,  0.49it/s, v_num=20]Train Loss: 5626.63720703125
+Epoch 1:  74%|███████▍  | 254/341 [08:39<02:57,  0.49it/s, v_num=20]Epoch 1:  74%|███████▍  | 254/341 [08:39<02:57,  0.49it/s, v_num=20]Train Loss: 5624.1357421875
+Epoch 1:  75%|███████▍  | 255/341 [08:41<02:55,  0.49it/s, v_num=20]Epoch 1:  75%|███████▍  | 255/341 [08:41<02:55,  0.49it/s, v_num=20]Train Loss: 5625.09716796875
+Epoch 1:  75%|███████▌  | 256/341 [08:43<02:53,  0.49it/s, v_num=20]Epoch 1:  75%|███████▌  | 256/341 [08:43<02:53,  0.49it/s, v_num=20]Train Loss: 5624.8642578125
+Epoch 1:  75%|███████▌  | 257/341 [08:45<02:51,  0.49it/s, v_num=20]Epoch 1:  75%|███████▌  | 257/341 [08:45<02:51,  0.49it/s, v_num=20]Train Loss: 5624.1826171875
+Epoch 1:  76%|███████▌  | 258/341 [08:47<02:49,  0.49it/s, v_num=20]Epoch 1:  76%|███████▌  | 258/341 [08:47<02:49,  0.49it/s, v_num=20]Train Loss: 5624.83251953125
+Epoch 1:  76%|███████▌  | 259/341 [08:49<02:47,  0.49it/s, v_num=20]Epoch 1:  76%|███████▌  | 259/341 [08:49<02:47,  0.49it/s, v_num=20]Train Loss: 5623.17919921875
+Epoch 1:  76%|███████▌  | 260/341 [08:52<02:45,  0.49it/s, v_num=20]Epoch 1:  76%|███████▌  | 260/341 [08:52<02:45,  0.49it/s, v_num=20]Train Loss: 5624.06591796875
+Epoch 1:  77%|███████▋  | 261/341 [08:53<02:43,  0.49it/s, v_num=20]Epoch 1:  77%|███████▋  | 261/341 [08:53<02:43,  0.49it/s, v_num=20]Train Loss: 5623.99755859375
+Epoch 1:  77%|███████▋  | 262/341 [08:56<02:41,  0.49it/s, v_num=20]Epoch 1:  77%|███████▋  | 262/341 [08:56<02:41,  0.49it/s, v_num=20]Train Loss: 5623.525390625
+Epoch 1:  77%|███████▋  | 263/341 [08:58<02:39,  0.49it/s, v_num=20]Epoch 1:  77%|███████▋  | 263/341 [08:58<02:39,  0.49it/s, v_num=20]Train Loss: 5622.8583984375
+Epoch 1:  77%|███████▋  | 264/341 [09:00<02:37,  0.49it/s, v_num=20]Epoch 1:  77%|███████▋  | 264/341 [09:00<02:37,  0.49it/s, v_num=20]Train Loss: 5621.4755859375
+Epoch 1:  78%|███████▊  | 265/341 [09:02<02:35,  0.49it/s, v_num=20]Epoch 1:  78%|███████▊  | 265/341 [09:02<02:35,  0.49it/s, v_num=20]Train Loss: 5622.64306640625
+Epoch 1:  78%|███████▊  | 266/341 [09:04<02:33,  0.49it/s, v_num=20]Epoch 1:  78%|███████▊  | 266/341 [09:04<02:33,  0.49it/s, v_num=20]Train Loss: 5622.86474609375
+Epoch 1:  78%|███████▊  | 267/341 [09:06<02:31,  0.49it/s, v_num=20]Epoch 1:  78%|███████▊  | 267/341 [09:06<02:31,  0.49it/s, v_num=20]Train Loss: 5621.6044921875
+Epoch 1:  79%|███████▊  | 268/341 [09:08<02:29,  0.49it/s, v_num=20]Epoch 1:  79%|███████▊  | 268/341 [09:08<02:29,  0.49it/s, v_num=20]Train Loss: 5621.40283203125
+Epoch 1:  79%|███████▉  | 269/341 [09:10<02:27,  0.49it/s, v_num=20]Epoch 1:  79%|███████▉  | 269/341 [09:10<02:27,  0.49it/s, v_num=20]Train Loss: 5621.2060546875
+Epoch 1:  79%|███████▉  | 270/341 [09:12<02:25,  0.49it/s, v_num=20]Epoch 1:  79%|███████▉  | 270/341 [09:12<02:25,  0.49it/s, v_num=20]Train Loss: 5621.38671875
+Epoch 1:  79%|███████▉  | 271/341 [09:14<02:23,  0.49it/s, v_num=20]Epoch 1:  79%|███████▉  | 271/341 [09:14<02:23,  0.49it/s, v_num=20]Train Loss: 5621.93798828125
+Epoch 1:  80%|███████▉  | 272/341 [09:16<02:21,  0.49it/s, v_num=20]Epoch 1:  80%|███████▉  | 272/341 [09:16<02:21,  0.49it/s, v_num=20]Train Loss: 5620.97802734375
+Epoch 1:  80%|████████  | 273/341 [09:19<02:19,  0.49it/s, v_num=20]Epoch 1:  80%|████████  | 273/341 [09:19<02:19,  0.49it/s, v_num=20]Train Loss: 5621.64892578125
+Epoch 1:  80%|████████  | 274/341 [09:21<02:17,  0.49it/s, v_num=20]Epoch 1:  80%|████████  | 274/341 [09:21<02:17,  0.49it/s, v_num=20]Train Loss: 5621.03466796875
+Epoch 1:  81%|████████  | 275/341 [09:23<02:15,  0.49it/s, v_num=20]Epoch 1:  81%|████████  | 275/341 [09:23<02:15,  0.49it/s, v_num=20]Train Loss: 5620.9130859375
+Epoch 1:  81%|████████  | 276/341 [09:25<02:13,  0.49it/s, v_num=20]Epoch 1:  81%|████████  | 276/341 [09:25<02:13,  0.49it/s, v_num=20]Train Loss: 5621.3759765625
+Epoch 1:  81%|████████  | 277/341 [09:27<02:11,  0.49it/s, v_num=20]Epoch 1:  81%|████████  | 277/341 [09:27<02:11,  0.49it/s, v_num=20]Train Loss: 5621.654296875
+Epoch 1:  82%|████████▏ | 278/341 [09:29<02:09,  0.49it/s, v_num=20]Epoch 1:  82%|████████▏ | 278/341 [09:29<02:09,  0.49it/s, v_num=20]Train Loss: 5621.00537109375
+Epoch 1:  82%|████████▏ | 279/341 [09:31<02:06,  0.49it/s, v_num=20]Epoch 1:  82%|████████▏ | 279/341 [09:31<02:06,  0.49it/s, v_num=20]Train Loss: 5619.048828125
+Epoch 1:  82%|████████▏ | 280/341 [09:33<02:04,  0.49it/s, v_num=20]Epoch 1:  82%|████████▏ | 280/341 [09:33<02:04,  0.49it/s, v_num=20]Train Loss: 5618.95654296875
+Epoch 1:  82%|████████▏ | 281/341 [09:35<02:02,  0.49it/s, v_num=20]Epoch 1:  82%|████████▏ | 281/341 [09:35<02:02,  0.49it/s, v_num=20]Train Loss: 5619.72021484375
+Epoch 1:  83%|████████▎ | 282/341 [09:37<02:00,  0.49it/s, v_num=20]Epoch 1:  83%|████████▎ | 282/341 [09:37<02:00,  0.49it/s, v_num=20]Train Loss: 5618.79296875
+Epoch 1:  83%|████████▎ | 283/341 [09:39<01:58,  0.49it/s, v_num=20]Epoch 1:  83%|████████▎ | 283/341 [09:39<01:58,  0.49it/s, v_num=20]Train Loss: 5619.23828125
+Epoch 1:  83%|████████▎ | 284/341 [09:41<01:56,  0.49it/s, v_num=20]Epoch 1:  83%|████████▎ | 284/341 [09:41<01:56,  0.49it/s, v_num=20]Train Loss: 5618.68798828125
+Epoch 1:  84%|████████▎ | 285/341 [09:43<01:54,  0.49it/s, v_num=20]Epoch 1:  84%|████████▎ | 285/341 [09:43<01:54,  0.49it/s, v_num=20]Train Loss: 5618.84765625
+Epoch 1:  84%|████████▍ | 286/341 [09:46<01:52,  0.49it/s, v_num=20]Epoch 1:  84%|████████▍ | 286/341 [09:46<01:52,  0.49it/s, v_num=20]Train Loss: 5618.5478515625
+Epoch 1:  84%|████████▍ | 287/341 [09:48<01:50,  0.49it/s, v_num=20]Epoch 1:  84%|████████▍ | 287/341 [09:48<01:50,  0.49it/s, v_num=20]Train Loss: 5618.44970703125
+Epoch 1:  84%|████████▍ | 288/341 [09:50<01:48,  0.49it/s, v_num=20]Epoch 1:  84%|████████▍ | 288/341 [09:50<01:48,  0.49it/s, v_num=20]Train Loss: 5618.35693359375
+Epoch 1:  85%|████████▍ | 289/341 [09:52<01:46,  0.49it/s, v_num=20]Epoch 1:  85%|████████▍ | 289/341 [09:52<01:46,  0.49it/s, v_num=20]Train Loss: 5617.56201171875
+Epoch 1:  85%|████████▌ | 290/341 [09:54<01:44,  0.49it/s, v_num=20]Epoch 1:  85%|████████▌ | 290/341 [09:54<01:44,  0.49it/s, v_num=20]Train Loss: 5617.6044921875
+Epoch 1:  85%|████████▌ | 291/341 [09:56<01:42,  0.49it/s, v_num=20]Epoch 1:  85%|████████▌ | 291/341 [09:56<01:42,  0.49it/s, v_num=20]Train Loss: 5618.0361328125
+Epoch 1:  86%|████████▌ | 292/341 [09:58<01:40,  0.49it/s, v_num=20]Epoch 1:  86%|████████▌ | 292/341 [09:58<01:40,  0.49it/s, v_num=20]Train Loss: 5617.7490234375
+Epoch 1:  86%|████████▌ | 293/341 [10:00<01:38,  0.49it/s, v_num=20]Epoch 1:  86%|████████▌ | 293/341 [10:00<01:38,  0.49it/s, v_num=20]Train Loss: 5616.4853515625
+Epoch 1:  86%|████████▌ | 294/341 [10:02<01:36,  0.49it/s, v_num=20]Epoch 1:  86%|████████▌ | 294/341 [10:02<01:36,  0.49it/s, v_num=20]Train Loss: 5617.28076171875
+Epoch 1:  87%|████████▋ | 295/341 [10:04<01:34,  0.49it/s, v_num=20]Epoch 1:  87%|████████▋ | 295/341 [10:04<01:34,  0.49it/s, v_num=20]Train Loss: 5618.26318359375
+Epoch 1:  87%|████████▋ | 296/341 [10:06<01:32,  0.49it/s, v_num=20]Epoch 1:  87%|████████▋ | 296/341 [10:06<01:32,  0.49it/s, v_num=20]Train Loss: 5617.0009765625
+Epoch 1:  87%|████████▋ | 297/341 [10:09<01:30,  0.49it/s, v_num=20]Epoch 1:  87%|████████▋ | 297/341 [10:09<01:30,  0.49it/s, v_num=20]Train Loss: 5616.900390625
+Epoch 1:  87%|████████▋ | 298/341 [10:11<01:28,  0.49it/s, v_num=20]Epoch 1:  87%|████████▋ | 298/341 [10:11<01:28,  0.49it/s, v_num=20]Train Loss: 5617.578125
+Epoch 1:  88%|████████▊ | 299/341 [10:13<01:26,  0.49it/s, v_num=20]Epoch 1:  88%|████████▊ | 299/341 [10:13<01:26,  0.49it/s, v_num=20]Train Loss: 5616.87353515625
+Epoch 1:  88%|████████▊ | 300/341 [10:15<01:24,  0.49it/s, v_num=20]Epoch 1:  88%|████████▊ | 300/341 [10:15<01:24,  0.49it/s, v_num=20]Train Loss: 5616.3857421875
+Epoch 1:  88%|████████▊ | 301/341 [10:17<01:22,  0.49it/s, v_num=20]Epoch 1:  88%|████████▊ | 301/341 [10:17<01:22,  0.49it/s, v_num=20]Train Loss: 5615.70947265625
+Epoch 1:  89%|████████▊ | 302/341 [10:19<01:20,  0.49it/s, v_num=20]Epoch 1:  89%|████████▊ | 302/341 [10:19<01:20,  0.49it/s, v_num=20]Train Loss: 5616.22509765625
+Epoch 1:  89%|████████▉ | 303/341 [10:21<01:17,  0.49it/s, v_num=20]Epoch 1:  89%|████████▉ | 303/341 [10:21<01:17,  0.49it/s, v_num=20]Train Loss: 5615.43017578125
+Epoch 1:  89%|████████▉ | 304/341 [10:24<01:15,  0.49it/s, v_num=20]Epoch 1:  89%|████████▉ | 304/341 [10:24<01:15,  0.49it/s, v_num=20]Train Loss: 5615.88525390625
+Epoch 1:  89%|████████▉ | 305/341 [10:25<01:13,  0.49it/s, v_num=20]Epoch 1:  89%|████████▉ | 305/341 [10:25<01:13,  0.49it/s, v_num=20]Train Loss: 5615.7919921875
+Epoch 1:  90%|████████▉ | 306/341 [10:28<01:11,  0.49it/s, v_num=20]Epoch 1:  90%|████████▉ | 306/341 [10:28<01:11,  0.49it/s, v_num=20]Train Loss: 5615.5390625
+Epoch 1:  90%|█████████ | 307/341 [10:30<01:09,  0.49it/s, v_num=20]Epoch 1:  90%|█████████ | 307/341 [10:30<01:09,  0.49it/s, v_num=20]Train Loss: 5614.72216796875
+Epoch 1:  90%|█████████ | 308/341 [10:32<01:07,  0.49it/s, v_num=20]Epoch 1:  90%|█████████ | 308/341 [10:32<01:07,  0.49it/s, v_num=20]Train Loss: 5615.0693359375
+Epoch 1:  91%|█████████ | 309/341 [10:34<01:05,  0.49it/s, v_num=20]Epoch 1:  91%|█████████ | 309/341 [10:34<01:05,  0.49it/s, v_num=20]Train Loss: 5615.42041015625
+Epoch 1:  91%|█████████ | 310/341 [10:36<01:03,  0.49it/s, v_num=20]Epoch 1:  91%|█████████ | 310/341 [10:36<01:03,  0.49it/s, v_num=20]Train Loss: 5615.29736328125
+Epoch 1:  91%|█████████ | 311/341 [10:38<01:01,  0.49it/s, v_num=20]Epoch 1:  91%|█████████ | 311/341 [10:38<01:01,  0.49it/s, v_num=20]Train Loss: 5614.66015625
+Epoch 1:  91%|█████████▏| 312/341 [10:40<00:59,  0.49it/s, v_num=20]Epoch 1:  91%|█████████▏| 312/341 [10:40<00:59,  0.49it/s, v_num=20]Train Loss: 5614.98876953125
+Epoch 1:  92%|█████████▏| 313/341 [10:42<00:57,  0.49it/s, v_num=20]Epoch 1:  92%|█████████▏| 313/341 [10:42<00:57,  0.49it/s, v_num=20]Train Loss: 5616.0458984375
+Epoch 1:  92%|█████████▏| 314/341 [10:44<00:55,  0.49it/s, v_num=20]Epoch 1:  92%|█████████▏| 314/341 [10:44<00:55,  0.49it/s, v_num=20]Train Loss: 5616.00439453125
+Epoch 1:  92%|█████████▏| 315/341 [10:47<00:53,  0.49it/s, v_num=20]Epoch 1:  92%|█████████▏| 315/341 [10:47<00:53,  0.49it/s, v_num=20]Train Loss: 5614.9375
+Epoch 1:  93%|█████████▎| 316/341 [10:48<00:51,  0.49it/s, v_num=20]Epoch 1:  93%|█████████▎| 316/341 [10:48<00:51,  0.49it/s, v_num=20]Train Loss: 5615.60986328125
+Epoch 1:  93%|█████████▎| 317/341 [10:51<00:49,  0.49it/s, v_num=20]Epoch 1:  93%|█████████▎| 317/341 [10:51<00:49,  0.49it/s, v_num=20]

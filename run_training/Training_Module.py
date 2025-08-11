@@ -1,6 +1,6 @@
 from pytorch_lightning import LightningModule
 from pytorch_lightning.utilities.types import STEP_OUTPUT, OptimizerLRScheduler
-from model.PandemicDeepCompartmentModel import pandemic_early_warning_model_with_DELPHI
+from model.PandemicDeepCompartmentModel import pandemic_early_warning_model
 from utils.loss_fn import MAPE, Combined_Loss
 from utils.schedulers import Scheduler
 import torch
@@ -47,6 +47,7 @@ class TrainingModule(LightningModule):
                  use_scheduler:bool = False,
                  loss_mape_weight:float = 100,
                  loss_mae_weight:float = 0.5,
+                 compartmental_model:str='delphi',
                  ):
         
         super().__init__()
@@ -67,12 +68,14 @@ class TrainingModule(LightningModule):
 
         self.batch_size = batch_size
 
-        self.model = pandemic_early_warning_model_with_DELPHI(pred_len=pred_len,
-                                                              dropout = dropout,
-                                                              include_death=include_death)
+        self.model = pandemic_early_warning_model(pred_len=pred_len,
+                                                  dropout = dropout,
+                                                  include_death=include_death,
+                                                  compartmental_model=compartmental_model)
         
         self.population_weighting = population_weighting
         self.use_scheduler = use_scheduler
+        self.compartmental_model = compartmental_model
 
         if loss == 'MAPE':
             self.loss_fn = MAPE(reduction='none')
@@ -158,8 +161,9 @@ class TrainingModule(LightningModule):
             true_case = [item[:self.pred_len].cpu() for item in batch['cumulative_case_number']]
         else:
             true_case = [item[:self.pred_len] for item in batch['cumulative_case_number']]
-        true_case = torch.tensor(np.array(true_case)).to(predicted_case)
-
+        # true_case = torch.tensor(np.array(true_case)).to(predicted_case)
+        true_case = torch.tensor(np.stack(true_case)).to(predicted_case)
+        
         # Calculate constant for balance death/case
         weighted_case = torch.mean(true_case[:,:self.train_len] * batch['time_dependent_weight'][:,:self.train_len],
                                    dim=1)
@@ -229,6 +233,10 @@ class TrainingModule(LightningModule):
                  batch_size = self.batch_size)
         
         print(f"Train Loss: {loss}")
+
+        ## Log Predicted Parameters
+        if self.compartmental_model == 'delphi':
+            self.log_predicted_params(predicted_params)
 
         if self.use_scheduler:
             sch = self.lr_schedulers()
@@ -457,3 +465,15 @@ class TrainingModule(LightningModule):
         mape = torch.mean(mape, dim = 1)
 
         return mape
+    
+    def log_predicted_params(self,predicted_params):
+        param_names = ["alpha", "days", "r_s", "r_dth", "p_dth", "r_dthdecay", "k1", "k2", "jump", "t_jump","std_normal","k3"]
+        for i in range(len(param_names)):
+            self.log(f'predicted_param_{param_names[i]}_mean', 
+                     predicted_params[:,i].mean(), 
+                     on_epoch=True, 
+                     batch_size=self.batch_size)
+            self.log(f'predicted_param_{param_names[i]}_std', 
+                     predicted_params[:,i].std(), 
+                     on_epoch=True, 
+                     batch_size=self.batch_size)

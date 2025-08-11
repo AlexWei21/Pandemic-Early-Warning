@@ -199,14 +199,14 @@ class ResNet(nn.Module):
         x = self.avgpool(x)
         x = x.reshape(x.shape[0], -1)
 
-        meta_data = self.meta_data_layer1(meta_data)
-        meta_data = self.meta_data_layer2(meta_data)
+        meta_data = self.relu(self.meta_data_layer1(meta_data))
+        meta_data = self.relu(self.meta_data_layer2(meta_data))
 
         x = torch.cat([x,meta_data], dim = 1)
 
-        x = self.fc1(x)
-        x = self.fc2(x)
-        x = self.fc3(x)
+        x = self.relu(self.fc1(x))
+        x = self.relu(self.fc2(x))
+        x = self.relu(self.fc3(x))
         x = self.fc4(x)
         
         return x

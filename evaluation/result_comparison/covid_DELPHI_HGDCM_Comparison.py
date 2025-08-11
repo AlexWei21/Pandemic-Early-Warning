@@ -10,8 +10,8 @@ def scientific_format(x, _):
 
 ## 56 Days - 84 Days
 # DELPHI Performance
-delphi_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_56_84_case_only_performance.csv')
-hgdcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/09-12-0900_56-84/validation_location_loss.csv')
+delphi_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/delphi/covid_56_84_case_only_performance.csv')
+hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/08-08-1000_56-84/validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain'], right_on=['country','domain'], how = 'inner')
@@ -47,7 +47,7 @@ plt.xlabel("Out-sample MAPE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/mape_distribution_plots/56_84.png")
+plt.savefig("/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/mape_distribution_plots/56_84.png")
 
 plt.figure(figsize=(6.4,3.2))
 ax = plt.subplot(111)
@@ -65,13 +65,13 @@ plt.xlabel("Out-sample MAE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/mae_distribution_plots/56_84.png")
+plt.savefig("/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/mae_distribution_plots/56_84.png")
 
 ## 42 Days - 84 Days
 
 # DELPHI Performance
-delphi_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_42_84_case_only_performance.csv')
-hgdcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/09-12-0900_42-84/validation_location_loss.csv')
+delphi_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/delphi/covid_42_84_case_only_performance.csv')
+hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/08-09-1900_42-84/validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain'], right_on=['country','domain'], how = 'inner')
@@ -110,7 +110,7 @@ plt.xlabel("Out-sample MAPE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/mape_distribution_plots/42_84.png")
+plt.savefig("/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/mape_distribution_plots/42_84.png")
 
 plt.figure(figsize=(6.4,3.2))
 ax = plt.subplot(111)
@@ -128,13 +128,15 @@ plt.xlabel("Out-sample MAE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/mae_distribution_plots/42_84.png")
+plt.savefig("/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/mae_distribution_plots/42_84.png")
+
+exit()
 
 ## 28 Days - 84 Days
 
 # DELPHI Performance
-delphi_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_28_84_case_only_performance.csv')
-hgdcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/09-12-0900_28-84/validation_location_loss.csv')
+delphi_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/delphi/covid_28_84_case_only_performance.csv')
+hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/09-12-0900_28-84/validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain'], right_on=['country','domain'], how = 'inner')
