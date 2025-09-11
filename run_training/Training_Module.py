@@ -1,6 +1,6 @@
 from pytorch_lightning import LightningModule
 from pytorch_lightning.utilities.types import STEP_OUTPUT, OptimizerLRScheduler
-from model.PandemicDeepCompartmentModel import pandemic_early_warning_model_with_DELPHI
+from model.PandemicDeepCompartmentModel import pandemic_early_warning_model
 from utils.loss_fn import MAPE, Combined_Loss
 from utils.schedulers import Scheduler
 import torch
@@ -47,6 +47,7 @@ class TrainingModule(LightningModule):
                  use_scheduler:bool = False,
                  loss_mape_weight:float = 100,
                  loss_mae_weight:float = 0.5,
+                 compartmental_model:str='delphi',
                  ):
         
         super().__init__()
@@ -67,12 +68,14 @@ class TrainingModule(LightningModule):
 
         self.batch_size = batch_size
 
-        self.model = pandemic_early_warning_model_with_DELPHI(pred_len=pred_len,
-                                                              dropout = dropout,
-                                                              include_death=include_death)
+        self.model = pandemic_early_warning_model(pred_len=pred_len,
+                                                  dropout = dropout,
+                                                  include_death=include_death,
+                                                  compartmental_model=compartmental_model)
         
         self.population_weighting = population_weighting
         self.use_scheduler = use_scheduler
+        self.compartmental_model = compartmental_model
 
         if loss == 'MAPE':
             self.loss_fn = MAPE(reduction='none')
@@ -106,6 +109,7 @@ class TrainingModule(LightningModule):
         self.train_death_pred = []
 
         self.best_validation_insample_mape = 9999
+        self.best_validation_insample_mae = np.inf
 
     def forward(self, batch):
 
@@ -158,8 +162,9 @@ class TrainingModule(LightningModule):
             true_case = [item[:self.pred_len].cpu() for item in batch['cumulative_case_number']]
         else:
             true_case = [item[:self.pred_len] for item in batch['cumulative_case_number']]
-        true_case = torch.tensor(np.array(true_case)).to(predicted_case)
-
+        # true_case = torch.tensor(np.array(true_case)).to(predicted_case)
+        true_case = torch.tensor(np.stack(true_case)).to(predicted_case)
+        
         # Calculate constant for balance death/case
         weighted_case = torch.mean(true_case[:,:self.train_len] * batch['time_dependent_weight'][:,:self.train_len],
                                    dim=1)
@@ -230,6 +235,10 @@ class TrainingModule(LightningModule):
         
         print(f"Train Loss: {loss}")
 
+        ## Log Predicted Parameters
+        if self.compartmental_model == 'delphi':
+            self.log_predicted_params(predicted_params)
+
         if self.use_scheduler:
             sch = self.lr_schedulers()
             sch.step()
@@ -276,15 +285,42 @@ class TrainingModule(LightningModule):
         validation_outsample_mape = self.calculate_mape(outsample_pred, outsample_true)
         
         # if torch.mean(validation_train_mape).item() < self.best_validation_insample_mape: 
-        if self.epoch_id % 100 == 0:
-            validation_loss_df = pd.DataFrame()
-            validation_loss_df['Country'] = self.validation_country
-            validation_loss_df['Domain'] = self.validation_domain
-            validation_loss_df['InSample_MAE'] = validation_train_mae.tolist()
-            validation_loss_df['OutSample_MAE'] = validation_outsample_mae.tolist()
-            validation_loss_df['InSample_MAPE'] = validation_train_mape.tolist()
-            validation_loss_df['OutSample_MAPE'] = validation_outsample_mape.tolist()
+        
+        validation_loss_df = pd.DataFrame()
+        validation_loss_df['Country'] = self.validation_country
+        validation_loss_df['Domain'] = self.validation_domain
+        validation_loss_df['InSample_MAE'] = validation_train_mae.tolist()
+        validation_loss_df['OutSample_MAE'] = validation_outsample_mae.tolist()
+        validation_loss_df['InSample_MAPE'] = validation_train_mape.tolist()
+        validation_loss_df['OutSample_MAPE'] = validation_outsample_mape.tolist()
 
+        if np.mean(validation_loss_df['InSample_MAE']) < self.best_validation_insample_mae:
+            self.best_validation_insample_mae = np.mean(validation_loss_df['InSample_MAE'])
+            validation_loss_df.to_csv(self.output_dir + 'best_epoch_validation_location_loss.csv',
+                                    index = False)
+            
+            ## Save Predicted Case
+            predicted_case_df = pd.DataFrame(self.validation_preds[:,:,15].tolist())
+            predicted_case_df.insert(0,'Country',self.validation_country)
+            predicted_case_df.insert(1,'Domain',self.validation_domain)
+            predicted_case_df.to_csv(self.output_dir + 'best_epoch_case_prediction.csv',
+                                    index = False)
+            ## Save Predicted Death
+            predicted_death_df = pd.DataFrame(self.validation_preds[:,:,14].tolist())
+            predicted_death_df.insert(0,'Country',self.validation_country)
+            predicted_death_df.insert(1,'Domain',self.validation_domain)
+            predicted_death_df.to_csv(self.output_dir + 'best_epoch_death_prediction.csv',
+                                    index = False)
+
+            ## Save Parameters
+            param_df = pd.DataFrame(self.validation_predicted_params.tolist())
+            param_df.insert(0,'Country',self.validation_country)
+            param_df.insert(1,'Domain',self.validation_domain)
+            param_df.to_csv(self.output_dir + 'best_epoch_predicted_params.csv',
+                            index = False)
+
+        if self.epoch_id % 10 == 0:
+            
             validation_loss_df.to_csv(self.output_dir + 'validation_location_loss.csv',
                                     index = False)
             ## Save Predicted Case
@@ -341,8 +377,8 @@ class TrainingModule(LightningModule):
                  on_epoch=True,
                  batch_size = self.batch_size)
         
-        self.log('best_validation_insample_mape',
-                 self.best_validation_insample_mape,
+        self.log('best_validation_insample_mae',
+                 self.best_validation_insample_mae,
                  on_epoch=True,
                  batch_size = self.batch_size)
 
@@ -457,3 +493,15 @@ class TrainingModule(LightningModule):
         mape = torch.mean(mape, dim = 1)
 
         return mape
+    
+    def log_predicted_params(self,predicted_params):
+        param_names = ["alpha", "days", "r_s", "r_dth", "p_dth", "r_dthdecay", "k1", "k2", "jump", "t_jump","std_normal","k3"]
+        for i in range(len(param_names)):
+            self.log(f'predicted_param_{param_names[i]}_mean', 
+                     predicted_params[:,i].mean(), 
+                     on_epoch=True, 
+                     batch_size=self.batch_size)
+            self.log(f'predicted_param_{param_names[i]}_std', 
+                     predicted_params[:,i].std(), 
+                     on_epoch=True, 
+                     batch_size=self.batch_size)

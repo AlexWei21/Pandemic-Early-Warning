@@ -16,3 +16,5 @@ logs/
 plots/
 /__pycache__
 final/
+slurm-*.out
+run_logs/

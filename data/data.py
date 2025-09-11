@@ -5,24 +5,28 @@ from pytorch_lightning.utilities.types import EVAL_DATALOADERS, TRAIN_DATALOADER
 import torch
 from torch.utils.data import DataLoader
 from utils.data_utils import pandemic_meta_data_imputation
-from utils.data_augmentation import data_augmentation
+from utils.data_augmentation import data_augmentation, find_last_augmentation_date
 from matplotlib import pyplot as plt
+import pickle
 
-class Pandemic_Data():
-    def __init__(self, look_back_len, pred_len, meta_data_len):
+# class Pandemic_Data():
+#     def __init__(self, look_back_len, pred_len, meta_data_len):
 
-        super.__init__
+#         super.__init__
 
-        self.pandemic_name = None
-        self.country_name = None
-        self.domain_name = None
-        self.subdomain_name = None
-        self.x = np.empty((0,look_back_len), float)
-        self.y = np.empty((0,pred_len), float)
-        self.time_stamp_x = np.empty((0,look_back_len), pd.Timestamp)
-        self.time_stamp_y = np.empty((0,pred_len), pd.Timestamp)
-        self.meta_data = np.empty((0,meta_data_len), float)
-        self.decoder_input = np.empty((0,pred_len), float)
+#         self.pandemic_name = None
+#         self.country_name = None
+#         self.domain_name = None
+#         self.subdomain_name = None
+#         self.x = np.empty((0,look_back_len), float)
+#         self.y = np.empty((0,pred_len), float)
+#         self.time_stamp_x = np.empty((0,look_back_len), pd.Timestamp)
+#         self.time_stamp_y = np.empty((0,pred_len), pd.Timestamp)
+#         self.meta_data = np.empty((0,meta_data_len), float)
+#         self.decoder_input = np.empty((0,pred_len), float)
+
+def parse_population(pop):
+    return float(str(pop).replace(',', ''))
 
 class Compartment_Model_Pandemic_Data():
     def __init__(self, pandemic_name:str = None, country_name:str = None, domain_name:str = None, 
@@ -30,7 +34,7 @@ class Compartment_Model_Pandemic_Data():
                  update_frequency:str = None, population:int = None, pandemic_meta_data:dict = None,
                  case_number:list = None, cumulative_case_number:list = None, death_number:list = None, 
                  cumulative_death_number:list = None, first_day_above_hundred:pd.Timestamp = None,
-                 timestamps:list = None):
+                 timestamps:list = None, series_id:str=None):
 
         ## Pandemic Information
         self.pandemic_name = pandemic_name
@@ -39,6 +43,7 @@ class Compartment_Model_Pandemic_Data():
         self.country_name = country_name
         self.domain_name = domain_name
         self.subdomain_name = subdomain_name
+        self.series_id = series_id
 
         ## Time Information
         self.start_date = start_date
@@ -75,7 +80,7 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
                  normalize_by_population = False,
                  input_log_transform = False,
                  augmentation = False,
-                 augmentation_method = 'shifting',
+                 augmentation_method = None,
                  max_shifting_len = 10,
                  loss_weight:int = 1,
                  ):
@@ -86,14 +91,14 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
 
         pandemic_data = [item for item in pandemic_data if item.pandemic_meta_data is not None]
         pandemic_data = [item for item in pandemic_data if len(item.cumulative_case_number) >= (target_training_len + pred_len)]
-        pandemic_data = [item for item in pandemic_data if (item.cumulative_case_number[target_training_len-1] - item.cumulative_case_number[0]) >= 100]
+        # pandemic_data = [item for item in pandemic_data if (item.cumulative_case_number[target_training_len-1] - item.cumulative_case_number[0]) >= 100]
 
         for item in pandemic_data:
             if normalize_by_population:
                 # item.model_input = list(item.cumulative_case_number[:target_training_len] / float(item.population.replace(',',''))) + list(item.pandemic_meta_data.values())
-                item.ts_case_input_full = list(item.cumulative_case_number / float(item.population.replace(',','')))
+                item.ts_case_input_full = list(item.cumulative_case_number / parse_population(item.population))
                 if item.cumulative_death_number is not None:
-                    item.ts_death_input_full = list(item.cumulative_death_number / float(item.population.replace(',','')) * 100)
+                    item.ts_death_input_full = list((item.cumulative_death_number / parse_population(item.population)) * 100)
                 else:
                     item.ts_death_input_full = None
             else:
@@ -110,13 +115,14 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
                 item.daily_case_list.append(item.ts_case_input_full[n] - item.ts_case_input_full[n-1])
 
             # Transform Input Data
-            item.ts_case_input = item.daily_case_list[:target_training_len]
             if input_log_transform:
-                item.ts_case_input = [x+1 for x in item.ts_case_input]
-                if not all(x>0 for x in item.ts_case_input):
+                item.daily_case_list = [x+1 for x in item.daily_case_list]
+                if not all(x>0 for x in item.daily_case_list):
                     print(f"{item.country_name} {item.pandemic_name} data has negative daily cases, please check. Here negative daily cases are set to 0")
-                    item.ts_case_input = [x if x >= 1 else 1 for x in item.ts_case_input]
-                item.ts_case_input = np.log(item.ts_case_input)
+                    item.daily_case_list = [x if x >= 1 else 1 for x in item.daily_case_list]
+                item.daily_case_list = np.log(item.daily_case_list)
+
+            item.ts_case_input = item.daily_case_list[:target_training_len]
 
             if item.ts_death_input_full is not None:
                 item.ts_death_input = item.ts_death_input_full[:target_training_len]
@@ -126,7 +132,8 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
             item.meta_input = pandemic_meta_data_imputation(list(item.pandemic_meta_data.values()),
                                                             impute_value=meta_data_impute_value,)
 
-            item.augmentation_length = min(len(item.cumulative_case_number) - target_training_len - pred_len, max_shifting_len)
+            if augmentation_method == 'shifting':
+                item.last_augmentation_idx = max(find_last_augmentation_date(item),pred_len)
 
             item.time_dependent_weight = list(range(1, pred_len + 1))
 
@@ -134,11 +141,20 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
 
         if augmentation:
             pandemic_data = data_augmentation(pandemic_data,
-                                            method = augmentation_method,
-                                            ts_len=target_training_len,)            
+                                              method = augmentation_method,
+                                              ts_len=target_training_len,
+                                              pred_len=pred_len)            
+
+        # Z-Score normalization of all ts_case_input
+        # ts_case_input = [item.ts_case_input for item in pandemic_data]
+        # ts_case_input = np.array(ts_case_input)
+        # ts_case_input_mean = np.mean(ts_case_input, axis=0)
+        # ts_case_input_std = np.std(ts_case_input, axis=0)
+        # for item in pandemic_data:
+        #     item.ts_case_input = (item.ts_case_input - ts_case_input_mean) / ts_case_input_std
 
         print(f"Raw Data Num: {len(self.pandemic_data)}")
-        print(f"Data Num after Window SHifting: {len(pandemic_data)}")
+        print(f"Data Num after {augmentation_method}: {len(pandemic_data)}")
 
         self.pandemic_data = pandemic_data
 
@@ -151,7 +167,7 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
     def collate_fn(self, batch):
 
         pandemic_name = [item.pandemic_name for item in batch]
-        population = [float(item.population.replace(',','')) for item in batch]
+        population = [float(str(item.population).replace(',', '')) for item in batch]
         cumulative_case_number = [item.cumulative_case_number for item in batch]
         cumulative_death_number = [item.cumulative_death_number for item in batch]
         # model_input = [item.model_input for item in batch]
@@ -159,6 +175,7 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
         country_name = [item.country_name for item in batch]
         domain_name = [item.domain_name for item in batch]
         subdomain_name = [item.subdomain_name for item in batch]
+        series_id = [item.series_id for item in batch]
 
         start_date = [item.start_date for item in batch]
         first_day_above_hundred = [item.first_day_above_hundred for item in batch]
@@ -197,6 +214,7 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
                     country_name = country_name,
                     domain_name = domain_name,
                     subdomain_name = subdomain_name,
+                    series_id = series_id,
                     start_date = start_date,
                     first_day_above_hundred = first_day_above_hundred,
                     end_date = end_date,
@@ -210,3 +228,24 @@ class Compartment_Model_Pandemic_Dataset(LightningDataModule):
                     # true_delphi_params = torch.tensor(true_delphi_params),
                     )
     
+    
+if __name__ == '__main__':
+
+    # with open('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/data_files/processed_data/train/compartment_model_dengue_data_objects.pickle','rb') as file:
+    #     data_list = pickle.load(file)
+    with open('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/data_files/processed_data/train/toy.pickle','rb') as file:
+        data_list = pickle.load(file)
+
+    past_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=data_list,
+                                                               target_training_len=56,
+                                                               pred_len = 84,
+                                                               batch_size=1024,
+                                                               meta_data_impute_value=0,
+                                                               normalize_by_population=False,
+                                                               input_log_transform=True,
+                                                               augmentation=True,
+                                                               augmentation_method='shifting',
+                                                               max_shifting_len=10)
+    
+    # for item in past_pandemic_dataset.pandemic_data:
+    #     print(item.ts_case_input)

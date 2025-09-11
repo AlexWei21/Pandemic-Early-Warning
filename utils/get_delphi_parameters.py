@@ -108,7 +108,11 @@ def get_perfect_parameters(data_object,
     
     validcases = validcases[:train_length]
 
-    PopulationT = int(float(data_object.population.replace(',','')))
+    try:
+        float(data_object.population)
+        PopulationT = data_object.population
+    except:
+        PopulationT = int(float(data_object.population.replace(',','')))
 
     OPTIMIZER = "annealing"
 

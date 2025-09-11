@@ -17,33 +17,28 @@ class Location_Fixed_Batch_Sampler(Sampler):
         self.dataset = {}
 
         for item in dataset:
-            if pd.isna(item.domain_name):
-                location = (item.pandemic_name, item.country_name, 'NA')
+            item.series_id = item.pandemic_name + '_' + item.series_id
+            if item.series_id in self.dataset:
+                self.dataset[item.series_id].append(item.idx)
             else:
-                location = (item.pandemic_name, item.country_name, item.domain_name)
-
-            if location in self.dataset:
-                self.dataset[location].append(item.idx)
-            else:
-                self.dataset[location] = [item.idx]
+                self.dataset[item.series_id] = [item.idx]
 
         sample_num = []
         for location, index_list in self.dataset.items():
-            print(location, index_list)
             sample_num.append(len(index_list))
 
         self.min_length = min(sample_num)
         self.max_length = max(sample_num)
 
+        print(f"The smallest set has {self.min_length} curves")
+        print(f"The largest set has {self.max_length} curves")
+
         if self.batch_size < len(self.dataset):
             raise Exception(f"Please set batch size = number of (pandemic, locations) pairs, which here is {len(self.dataset)}")
-
-        print(f"The smallest set has {self.min_length} curves")
-
     
     def __iter__(self):
         batch = []
-        for i in range(self.min_length):
+        for i in range(self.max_length):
             for location, index_list in self.dataset.items():
 
                 batch.append(sample(index_list,1)[0])
@@ -53,5 +48,5 @@ class Location_Fixed_Batch_Sampler(Sampler):
                     batch = []
     
     def __len__(self):
-        return self.min_length
+        return self.max_length
 

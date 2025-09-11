@@ -4,7 +4,7 @@ import math
 
 parameter_max = [1.0, 2.0, 1.0, 1.0, 0.32, 4.5, 0.2, 454.0, 8.22, 209.0, 2.0, 1.0]
 
-def process_daily_data(data, smoothing, look_back, pred_len, avg_len):
+def process_daily_data(data, smoothing, look_back, pred_len, avg_len=7):
     
     if not smoothing:
         look_back_data, pred_data, look_back_timestamp, pred_data_timestamp = data_padding(data,
