@@ -8,7 +8,7 @@ dt=$(date +%m-%d-%H%M)
 #SBATCH -o run_logs/hostname_${dt}_%j.out
 #SBATCH -e run_logs/hostname_${dt}_%j.err
 
-train_len=14
+train_len=28
 
 # Determine batch_size based on train_len
 if [ "$train_len" -eq 56 ]; then
