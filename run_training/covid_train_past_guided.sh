@@ -39,7 +39,7 @@ python -m run_training.train_past_guided \
         --target_self_tuning True \
         --include_death False \
         --population_weighting False \
-        --selftune_weight 0.5 0.5 \
+        --selftune_weight 0.3 0.7 \
         --use_lr_scheduler False \
         --loss_mae_weight 1 \
         --loss_mape_weight 20 \
