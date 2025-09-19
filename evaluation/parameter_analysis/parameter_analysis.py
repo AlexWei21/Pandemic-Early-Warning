@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 
 ### Analyze Parameter Distribution
 ## Parameter Dir
-delphi_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/'
+delphi_dir = '/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/delphi/'
 delphi_parameter_dir = delphi_dir + 'covid_28_84_case_only_parameters.csv'
 # selftune_parameter_dir = selftune_model_dir + 'predicted_params.csv'
 
-past_pandemic_guided_model_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/'
-guided_parameter_dir = past_pandemic_guided_model_dir + '09-12-0900_28-84/' + 'predicted_params.csv'
+past_pandemic_guided_model_dir = '/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/'
+guided_parameter_dir = past_pandemic_guided_model_dir + 'covid_09-17-1000_28-84/' + 'predicted_params.csv'
 
 delphi_parameter_df = pd.read_csv(delphi_parameter_dir)
 # selftune_parameter_df = pd.read_csv(selftune_parameter_dir)
@@ -46,7 +46,7 @@ for param, ax in zip(params,axs.ravel()):
     # print(f"{param} mean: DELPHI = {delphi_mean}, Selftune = {selftune_mean}, Guided = {guided_mean}")
     print(f"##### {param}##### ")
     ax.boxplot([delphi_parameter_df[param], guided_parameter_df[param]],
-                tick_labels = ['DELPHI', 'HG-DCM'])
+                labels = ['DELPHI', 'HG-DCM'])
     ax.set_ylabel(param)
     ax.set_ylim(top = max(delphi_parameter_df[param]) * 1.5)
     ax.spines[['right', 'top']].set_visible(False)
@@ -61,4 +61,5 @@ for param, ax in zip(params,axs.ravel()):
     #     y_max = max(max(delphi_parameter_df[param]), max(guided_parameter_df[param]))  # Max y-value
     #     add_significance_annotation(ax, 1, 2, y_max * 1.3, res.pvalue)
 
-plt.savefig('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/parameter_analysis/parameter_analysis_28-84.png')
+plt.savefig('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/parameter_analysis/parameter_analysis_28-84.png')
+plt.savefig('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/parameter_analysis/parameter_analysis_28-84.pdf')

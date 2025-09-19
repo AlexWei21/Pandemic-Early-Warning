@@ -10,8 +10,8 @@ def scientific_format(x, _):
 
 ## 56 Days - 84 Days
 # DELPHI Performance
-dcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/10-01-15_56-84/validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/09-12-0900_56-84/validation_location_loss.csv')
+dcm_perf_df = pd.read_csv('output/self_tune/covid_09-18-0900_56-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_56-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(dcm_perf_df,
@@ -49,7 +49,7 @@ plt.xlabel("Out-sample MAPE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/ablation/mape_distribution_plots/56_84.png")
+plt.savefig("evaluation/ablation/mape_distribution_plots/56_84.png")
 
 plt.figure(figsize=(6.4,3.2))
 ax = plt.subplot(111)
@@ -67,13 +67,12 @@ plt.xlabel("Out-sample MAE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/ablation/mae_distribution_plots/56_84.png")
-
+plt.savefig("evaluation/ablation/mae_distribution_plots/56_84.png")
 
 ## 42 Days - 84 Days
 # DELPHI Performance
-dcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/10-01-1600_42-84/validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/09-12-0900_42-84/validation_location_loss.csv')
+dcm_perf_df = pd.read_csv('output/self_tune/covid_09-18-0900_42-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_42-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(dcm_perf_df,
@@ -111,7 +110,7 @@ plt.xlabel("Out-sample MAPE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/ablation/mape_distribution_plots/42_84.png")
+plt.savefig("evaluation/ablation/mape_distribution_plots/42_84.png")
 
 plt.figure(figsize=(6.4,3.2))
 ax = plt.subplot(111)
@@ -129,13 +128,13 @@ plt.xlabel("Out-sample MAE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/ablation/mae_distribution_plots/42_84.png")
+plt.savefig("evaluation/ablation/mae_distribution_plots/42_84.png")
 
 ## 28 Days - 84 Days
 
 # DELPHI Performance
-dcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/10-01-1900_28-84/validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/09-12-0900_28-84/validation_location_loss.csv')
+dcm_perf_df = pd.read_csv('output/self_tune/covid_09-18-0900_28-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_28-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(dcm_perf_df,
@@ -173,7 +172,7 @@ plt.xlabel("Out-sample MAPE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/ablation/mape_distribution_plots/28_84.png")
+plt.savefig("evaluation/ablation/mape_distribution_plots/28_84.png")
 
 plt.figure(figsize=(6.4,3.2))
 ax = plt.subplot(111)
@@ -191,13 +190,13 @@ plt.xlabel("Out-sample MAE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/ablation/mae_distribution_plots/28_84.png")
+plt.savefig("evaluation/ablation/mae_distribution_plots/28_84.png")
 
 ## 14 Days - 84 Days
 
 # DELPHI Performance
-dcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/self_tune/10-01-1900_14-84/validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/09-23-1100_14-84/validation_location_loss.csv')
+dcm_perf_df = pd.read_csv('output/self_tune/covid_09-18-1000_14-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_14-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(dcm_perf_df,
@@ -235,7 +234,7 @@ plt.xlabel("Out-sample MAPE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/ablation/mape_distribution_plots/14_84.png")
+plt.savefig("evaluation/ablation/mape_distribution_plots/14_84.png")
 
 plt.figure(figsize=(6.4,3.2))
 ax = plt.subplot(111)
@@ -253,4 +252,4 @@ plt.xlabel("Out-sample MAE")
 plt.ylabel("Density")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/ablation/mae_distribution_plots/14_84.png")
+plt.savefig("evaluation/ablation/mae_distribution_plots/14_84.png")

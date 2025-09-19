@@ -19,6 +19,7 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
 from torch.utils.data import DataLoader
 from evaluation.data_inspection.low_quality_data import covid_low_quality_data
+import argparse
 
 '''
 Pytorch Lightning Module for Training Gated Recurrent Unit (GRU) on COVID-19
@@ -187,7 +188,7 @@ class TrainingModule(LightningModule):
         validation_outsample_mape = self.calculate_mape(outsample_pred, outsample_true)
 
         # if torch.mean(validation_train_mape).item() < self.best_validation_insample_mape: 
-        if self.epoch_id % 100 == 0:
+        if self.epoch_id % 10 == 0:
             validation_loss_df = pd.DataFrame()
             validation_loss_df['Country'] = self.validation_country
             validation_loss_df['Domain'] = self.validation_domain
@@ -360,36 +361,31 @@ def run_training(lr: float = 1e-4,
     Path(output_dir).mkdir(parents=False, exist_ok=True)
 
     ########## Load Past Pandemic Data ##########
-    data_file_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/data_with_country_metadata/'
+    data_file_dir = 'data_files/processed_data/'
     past_pandemic_data = []
 
     for pandemic in past_pandemics:
         if pandemic == 'dengue':
-            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'compartment_model_dengue_data_objects.pickle',
+            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_dengue_data_objects.pickle',
                                                    raw_data=False))
         elif pandemic == 'ebola':
-            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'compartment_model_ebola_data_objects.pickle',
+            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_ebola_data_objects.pickle',
                                                    raw_data=False))
         elif pandemic == 'influenza':
-            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'compartment_model_influenza_data_objects.pickle',
+            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_influenza_data_objects.pickle',
                                                    raw_data=False))
         elif pandemic == 'mpox':
-            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'compartment_model_mpox_data_objects.pickle',
+            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_mpox_data_objects.pickle',
                                                    raw_data=False))
         elif pandemic == 'sars':
-            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'compartment_model_sars_data_objects.pickle',
+            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_sars_data_objects.pickle',
                                                    raw_data=False))
         elif pandemic == 'covid':
-            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'compartment_model_covid_data_objects.pickle',
+            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_covid_data_objects.pickle',
                                                    raw_data=False))
-        elif pandemic == '2010-2017_influenza':
-            for year in [2010,2011,2012,2013,2014,2015,2016,2017]:
-                data = process_data(processed_data_path = data_file_dir+f'compartment_model_{year}_influenza_data_objects.pickle',
-                                    raw_data=False)
-                for item in data:
-                    item.pandemic_name = item.pandemic_name + str(year)
-
-                past_pandemic_data.extend(data)
+        elif pandemic == 'influenza':
+            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_influenza_data_objects.pickle',
+                                                   raw_data=False))
         else:
             print(f"{pandemic} not in the processed data list, please process the data prefore running the model, skipping {[pandemic]}")
 
@@ -405,12 +401,12 @@ def run_training(lr: float = 1e-4,
                                               max_shifting_len=10)
 
     # past_pandemic_dataset.pandemic_data = [item for item in past_pandemic_dataset if sum(item.ts_case_input) != 0]
-    past_pandemic_dataset.pandemic_data = [item for item in past_pandemic_dataset if (item.country_name, item.domain_name) not in covid_low_quality_data]
+    # past_pandemic_dataset.pandemic_data = [item for item in past_pandemic_dataset if (item.country_name, item.domain_name) not in covid_low_quality_data]
 
     print(f"Past Pandemic Training Size:{len(past_pandemic_dataset)}")
 
     ########## Load Target Pandemic Data ##########
-    target_pandemic_data = process_data(processed_data_path=data_file_dir+'compartment_model_covid_data_objects.pickle',
+    target_pandemic_data = process_data(processed_data_path=data_file_dir+'validation/compartment_model_covid_data_objects.pickle',
                                         raw_data=False)
     
     target_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=target_pandemic_data,
@@ -487,24 +483,56 @@ def run_training(lr: float = 1e-4,
     trainer.fit(model,
                 train_data_loader,
                 validation_data_loader)
-    
+
+def str2bool(v):
+    if isinstance(v, bool): return v
+    if v.lower() in ('yes','true','t','1'): return True
+    if v.lower() in ('no','false','f','0'): return False
+    raise argparse.ArgumentTypeError('Boolean value expected.')
+
 if __name__ == '__main__':
 
-    target_training_len = 14
-    pred_len = 84
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--lr', type=float, default=1e-5)
+    parser.add_argument('--batch_size', type=int, default=1247)
+    parser.add_argument('--target_training_len', type=int, default=56)
+    parser.add_argument('--pred_len', type=int, default=84)
+    parser.add_argument('--record_run', type=str2bool, default=False)
+    parser.add_argument('--max_epochs', type=int, default=10000)
+    parser.add_argument('--log_dir', type=str, default='logs/')
+    parser.add_argument('--loss', type=str, default='Combined_Loss')
+    parser.add_argument('--dropout', type=float, default=0.0)
+    parser.add_argument('--past_pandemics', nargs='+', default=['dengue','ebola','sars','influenza'])
+    parser.add_argument('--target_pandemic', type=str, default='covid')
+    parser.add_argument('--target_self_tuning', type=str2bool, default=True)
+    parser.add_argument('--include_death', type=str2bool, default=False)
+    parser.add_argument('--population_weighting', type=str2bool, default=False)
+    parser.add_argument('--selftune_weight', nargs='+', type=float, default=[0.5,0.5])
+    parser.add_argument('--use_lr_scheduler', type=str2bool, default=True)
+    parser.add_argument('--loss_mae_weight', type=float, default=0.5)
+    parser.add_argument('--loss_mape_weight', type=float, default=100)
+    parser.add_argument('--output_dir', type=str, default=None)
+    parser.add_argument('--compartmental_model', type=str, default='delphi')
 
-    run_training(### Training Args
-                lr = 1e-3,
-                batch_size = 1024,
-                target_training_len = target_training_len, # 46
-                pred_len = pred_len, # 71
-                record_run = True,
-                max_epochs = 500,
-                log_dir = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/logs/',
-                ### Model Args
-                loss = 'Combined_Loss',
-                past_pandemics=['dengue','ebola','sars','2010-2017_influenza'],
-                use_lr_scheduler=False,
-                loss_mae_weight = 0.5,
-                loss_mape_weight = 100,
-                output_dir=f"/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/gru/{datetime.today().strftime('%m-%d-%H00')}_{target_training_len}-{pred_len}/",)
+    args = parser.parse_args()
+
+    # If not specified, use the auto-generated output_dir as before
+    output_dir = args.output_dir
+    if output_dir is None:
+        output_dir = f"output/past_guided/{datetime.today().strftime('%m-%d-%H00')}_{args.target_training_len}-{args.pred_len}/"
+
+    run_training(
+        lr = args.lr,
+        batch_size = args.batch_size,
+        target_training_len = args.target_training_len,
+        pred_len = args.pred_len,
+        record_run = args.record_run,
+        max_epochs = args.max_epochs,
+        log_dir = args.log_dir,
+        loss = args.loss,
+        past_pandemics = args.past_pandemics,
+        use_lr_scheduler = args.use_lr_scheduler,
+        loss_mae_weight = args.loss_mae_weight,
+        loss_mape_weight = args.loss_mape_weight,
+        output_dir = output_dir
+    )

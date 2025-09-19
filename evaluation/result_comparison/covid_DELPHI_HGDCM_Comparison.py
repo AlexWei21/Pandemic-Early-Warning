@@ -71,7 +71,7 @@ plt.savefig("/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/mae
 
 # DELPHI Performance
 delphi_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/delphi/covid_42_84_case_only_performance.csv')
-hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_42-84/validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_42-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain'], right_on=['country','domain'], how = 'inner')
