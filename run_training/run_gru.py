@@ -99,7 +99,6 @@ class TrainingModule(LightningModule):
         self.validation_domain = []
         self.validation_preds = []
         self.validation_batch = []
-        self.validation_predicted_params = []
 
         self.train_case_pred = []
         self.train_death_pred = []
@@ -124,6 +123,10 @@ class TrainingModule(LightningModule):
             true_case = [item[:self.pred_len].cpu() for item in batch['cumulative_case_number']]
         else:
             true_case = [item[:self.pred_len] for item in batch['cumulative_case_number']]
+
+        # print(true_case)
+        # print([len(item) for item in true_case])
+
         true_case = torch.tensor(np.array(true_case)).to(predicted_case)
 
         true_case = true_case[:,self.train_len:]
@@ -162,7 +165,6 @@ class TrainingModule(LightningModule):
         self.validation_country = self.validation_country + batch['country_name']
         self.validation_domain = self.validation_domain + batch['domain_name']
         self.validation_preds.append(preds)
-
         if self.validation_batch == []:
             self.validation_batch = batch
         else:
@@ -178,23 +180,32 @@ class TrainingModule(LightningModule):
         
         self.validation_preds = torch.cat(self.validation_preds, dim=0) # [samples,pred_len,compartments]
 
+        ## Logging    
+        loss = self.loss(self.validation_preds,
+                         self.validation_batch)                
+        self.log('validation_loss', 
+                 loss, 
+                 on_epoch=True, 
+                 batch_size = self.batch_size) 
+
         ## Save Readble MAE MAPE Loss
         self.validation_batch['cumulative_case_number'] = torch.tensor(np.array([item[:self.pred_len] for item in self.validation_batch['cumulative_case_number']])).to(self.validation_preds)
 
         outsample_pred = self.validation_preds
         outsample_true = self.validation_batch['cumulative_case_number'][:,self.train_len:self.pred_len]
-        
         validation_outsample_mae = self.calculate_mae(outsample_pred, outsample_true)
         validation_outsample_mape = self.calculate_mape(outsample_pred, outsample_true)
-
+        
         # if torch.mean(validation_train_mape).item() < self.best_validation_insample_mape: 
-        if self.epoch_id % 10 == 0:
-            validation_loss_df = pd.DataFrame()
-            validation_loss_df['Country'] = self.validation_country
-            validation_loss_df['Domain'] = self.validation_domain
-            validation_loss_df['OutSample_MAE'] = validation_outsample_mae.tolist()
-            validation_loss_df['OutSample_MAPE'] = validation_outsample_mape.tolist()
+        
+        validation_loss_df = pd.DataFrame()
+        validation_loss_df['Country'] = self.validation_country
+        validation_loss_df['Domain'] = self.validation_domain
+        validation_loss_df['OutSample_MAE'] = validation_outsample_mae.tolist()
+        validation_loss_df['OutSample_MAPE'] = validation_outsample_mape.tolist()
 
+        if self.epoch_id % 10 == 0:
+            
             validation_loss_df.to_csv(self.output_dir + 'validation_location_loss.csv',
                                     index = False)
             ## Save Predicted Case
@@ -210,15 +221,7 @@ class TrainingModule(LightningModule):
             predicted_death_df.insert(1,'Domain',self.validation_domain)
             predicted_death_df.to_csv(self.output_dir + 'death_prediction.csv',
                                     index = False)
-            
-        ## Logging    
-        loss = self.loss(self.validation_preds,
-                         self.validation_batch)                
-        self.log('validation_loss', 
-                 loss, 
-                 on_epoch=True, 
-                 batch_size = self.batch_size) 
-        
+
         print(f"Validation Loss:{loss}")
         
         self.log('validation_outsample_mae',
@@ -236,79 +239,78 @@ class TrainingModule(LightningModule):
         self.validation_domain = []
         self.validation_preds = []
         self.validation_batch = []
-        self.validation_predicted_params = []
         self.epoch_id += 1
 
     
-    def test_step(self, batch, batch_idx):
+    # def test_step(self, batch, batch_idx):
 
-        for m in self.model.modules():
-            if isinstance(m, nn.BatchNorm1d):
-                m.track_runing_stats=False
+    #     for m in self.model.modules():
+    #         if isinstance(m, nn.BatchNorm1d):
+    #             m.track_runing_stats=False
 
-        print(batch['domain_name'])
+    #     print(batch['domain_name'])
 
-        preds = self.forward(batch)
+    #     preds = self.forward(batch)
 
-        loss, case_loss_df, death_loss_df = self.loss(preds,batch,return_detailed=True)
+    #     loss, case_loss_df, death_loss_df = self.loss(preds,batch,return_detailed=True)
 
-        ## Afterwards Train Loss
-        afterward_train_loss = self.loss(self.train_preds, batch)
-        print(f"Afterwards Train Loss: {afterward_train_loss}")
+    #     ## Afterwards Train Loss
+    #     afterward_train_loss = self.loss(self.train_preds, batch)
+    #     print(f"Afterwards Train Loss: {afterward_train_loss}")
 
-        print(f"Test Loss: {loss}")
-        self.log('test_loss', loss)
+    #     print(f"Test Loss: {loss}")
+    #     self.log('test_loss', loss)
 
-        test_case_prediction = preds[:,:,15]
-        test_death_prediction = preds[:,:,14]
+    #     test_case_prediction = preds[:,:,15]
+    #     test_death_prediction = preds[:,:,14]
 
-        self.train_preds_case = self.train_preds[:,:,15].tolist()
-        self.train_preds_death = self.train_preds[:,:,14].tolist()
+    #     self.train_preds_case = self.train_preds[:,:,15].tolist()
+    #     self.train_preds_death = self.train_preds[:,:,14].tolist()
 
-        self.test_country.append(batch['country_name'])
-        self.test_domain.append(batch['domain_name'])
-        self.test_case_prediction_list = self.test_case_prediction_list + test_case_prediction.tolist()
-        self.test_death_prediction_list = self.test_death_prediction_list + test_death_prediction.tolist()
+    #     self.test_country.append(batch['country_name'])
+    #     self.test_domain.append(batch['domain_name'])
+    #     self.test_case_prediction_list = self.test_case_prediction_list + test_case_prediction.tolist()
+    #     self.test_death_prediction_list = self.test_death_prediction_list + test_death_prediction.tolist()
 
-        self.test_case_true_list = self.test_case_true_list + [item[:self.pred_len] for item in batch['cumulative_case_number']]
-        self.test_death_true_list = self.test_death_true_list + [item[:self.pred_len] for item in batch['cumulative_death_number']]
+    #     self.test_case_true_list = self.test_case_true_list + [item[:self.pred_len] for item in batch['cumulative_case_number']]
+    #     self.test_death_true_list = self.test_death_true_list + [item[:self.pred_len] for item in batch['cumulative_death_number']]
         
-    def on_test_epoch_end(self):
+    # def on_test_epoch_end(self):
 
-        tspan = np.arange(0,len(self.test_case_true_list[0]),1)
+    #     tspan = np.arange(0,len(self.test_case_true_list[0]),1)
 
-        for i in range(len(self.test_country[0])):
+    #     for i in range(len(self.test_country[0])):
 
-            plt.figure()
+    #         plt.figure()
 
-            plt.plot(tspan, 
-                     self.test_case_prediction_list[i],
-                     # self.train_preds_case[i]
-                     )
-            plt.plot(tspan,
-                     self.test_case_true_list[i],
-                     )
+    #         plt.plot(tspan, 
+    #                  self.test_case_prediction_list[i],
+    #                  # self.train_preds_case[i]
+    #                  )
+    #         plt.plot(tspan,
+    #                  self.test_case_true_list[i],
+    #                  )
             
-            plt.legend(['Predicted Case Values', 'True Case Values'])
-            plt.xlabel("days")
-            plt.ylabel("Cumulative Cases")
+    #         plt.legend(['Predicted Case Values', 'True Case Values'])
+    #         plt.xlabel("days")
+    #         plt.ylabel("Cumulative Cases")
 
-            plt.savefig(self.output_dir+'predicted_figures/case/' + self.test_country[0][i] + '_' + self.test_domain[0][i])
+    #         plt.savefig(self.output_dir+'predicted_figures/case/' + self.test_country[0][i] + '_' + self.test_domain[0][i])
 
-            plt.figure()
+    #         plt.figure()
 
-            plt.plot(tspan, 
-                     self.test_death_prediction_list[i],
-                     # self.train_preds_death[i]
-                     )
-            plt.plot(tspan,
-                     self.test_death_true_list[i])
+    #         plt.plot(tspan, 
+    #                  self.test_death_prediction_list[i],
+    #                  # self.train_preds_death[i]
+    #                  )
+    #         plt.plot(tspan,
+    #                  self.test_death_true_list[i])
             
-            plt.legend(['Predicted Death Values', 'True Death Values'])
-            plt.xlabel("days")
-            plt.ylabel("Cumulative Deaths")
+    #         plt.legend(['Predicted Death Values', 'True Death Values'])
+    #         plt.xlabel("days")
+    #         plt.ylabel("Cumulative Deaths")
 
-            plt.savefig(self.output_dir+'predicted_figures/death/' + self.test_country[0][i] + '_' + self.test_domain[0][i])
+    #         plt.savefig(self.output_dir+'predicted_figures/death/' + self.test_country[0][i] + '_' + self.test_domain[0][i])
 
     def configure_optimizers(self):
         
@@ -379,9 +381,6 @@ def run_training(lr: float = 1e-4,
                                                    raw_data=False))
         elif pandemic == 'sars':
             past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_sars_data_objects.pickle',
-                                                   raw_data=False))
-        elif pandemic == 'covid':
-            past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_covid_data_objects.pickle',
                                                    raw_data=False))
         elif pandemic == 'influenza':
             past_pandemic_data.extend(process_data(processed_data_path = data_file_dir+'train/compartment_model_influenza_data_objects.pickle',

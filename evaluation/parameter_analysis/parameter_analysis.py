@@ -26,6 +26,17 @@ guided_parameter_df.columns = ['Country','Domain','alpha','days', 'r_s', 'r_dth'
 
 delphi_parameter_df = delphi_parameter_df[delphi_parameter_df['alpha']!=-999]
 
+## Get Common Countries and Domain Pair
+common_df = delphi_parameter_df.merge(guided_parameter_df,
+                                      on = ['Country','Domain'],
+                                      how = 'inner')
+delphi_parameter_df = delphi_parameter_df.merge(common_df[['Country','Domain']],
+                                                on = ['Country','Domain'],
+                                                how = 'inner')
+guided_parameter_df = guided_parameter_df.merge(common_df[['Country','Domain']],
+                                                on = ['Country','Domain'],
+                                                how = 'inner')
+
 # def add_significance_annotation(ax, x1, x2, y, p_val, text="*"):
 #     ax.plot([x1, x2], [y, y], color='black')  # Draw horizontal line
 #     ax.plot([x1,x1],[y,y-0.2], color='black')
@@ -51,9 +62,9 @@ for param, ax in zip(params,axs.ravel()):
     ax.set_ylim(top = max(delphi_parameter_df[param]) * 1.5)
     ax.spines[['right', 'top']].set_visible(False)
 
-    res = stats.mannwhitneyu(delphi_parameter_df[param],
-                             # selftune_parameter_df[param],
-                             guided_parameter_df[param])
+    res = stats.wilcoxon(delphi_parameter_df[param],
+                         # selftune_parameter_df[param],
+                         guided_parameter_df[param])
     if res.pvalue < 0.05:
         print("*")
 

@@ -7,12 +7,13 @@ from tqdm import tqdm
 from pathlib import Path
 
 ## 56 Days - 84 Days
-Path(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/DELPHI_HGDCM_56_84/').mkdir(parents=False, exist_ok=True)
+Path(f'evaluation/plots/DELPHI_HGDCM_56_84/').mkdir(parents=False, exist_ok=True)
 
-delphi_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_56_84_case_only_pred_case.csv')
-hgdcm_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/final/covid_final_predictions/09-12-0900_56-84/case_prediction.csv')
+delphi_pred_case = pd.read_csv('output/delphi/covid_56_84_case_only_pred_case.csv')
+# hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-17-1000_56-84/case_prediction.csv')
+hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-20-1000_56-84/case_prediction.csv')
 
-target_pandemic_data = process_data(processed_data_path = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/data_with_country_metadata/compartment_model_covid_data_objects.pickle',
+target_pandemic_data = process_data(processed_data_path = 'data_files/processed_data/validation/compartment_model_covid_data_objects.pickle',
                                         raw_data=False)
     
 target_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=target_pandemic_data,
@@ -57,17 +58,15 @@ for index, row in tqdm(hgdcm_pred_case.iterrows(), total=len(hgdcm_pred_case)):
     plt.ylabel("Cumulative Case Number")
     plt.legend()
     plt.tight_layout()
-    plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/DELPHI_HGDCM_56_84/{country}_{domain}.png')
+    plt.savefig(f'evaluation/plots/DELPHI_HGDCM_56_84/{country}_{domain}.png')
     plt.close()
     
 ## 42 Days - 84 Days
-Path(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/DELPHI_HGDCM_42_84/').mkdir(parents=False, exist_ok=True)
+Path(f'evaluation/plots/DELPHI_HGDCM_42_84/').mkdir(parents=False, exist_ok=True)
 
-delphi_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_42_84_case_only_pred_case.csv')
-hgdcm_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/final/covid_final_predictions/09-12-0900_42-84/case_prediction.csv')
-
-target_pandemic_data = process_data(processed_data_path = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/data_with_country_metadata/compartment_model_covid_data_objects.pickle',
-                                        raw_data=False)
+delphi_pred_case = pd.read_csv('output/delphi/covid_42_84_case_only_pred_case.csv')
+# hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-17-1000_42-84/case_prediction.csv')
+hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-20-1000_42-84/case_prediction.csv')
     
 target_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=target_pandemic_data,
                                               target_training_len=42,
@@ -111,17 +110,15 @@ for index, row in tqdm(hgdcm_pred_case.iterrows(), total=len(hgdcm_pred_case)):
     plt.ylabel("Cumulative Case Number")
     plt.legend()
     plt.tight_layout()
-    plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/DELPHI_HGDCM_42_84/{country}_{domain}.png')
+    plt.savefig(f'evaluation/plots/DELPHI_HGDCM_42_84/{country}_{domain}.png')
     plt.close()
 
 ## 28 Days - 84 Days
-Path(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/DELPHI_HGDCM_28_84/').mkdir(parents=False, exist_ok=True)
+Path(f'evaluation/plots/DELPHI_HGDCM_28_84/').mkdir(parents=False, exist_ok=True)
 
-delphi_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_28_84_case_only_pred_case.csv')
-hgdcm_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/final/covid_final_predictions/09-12-0900_28-84/case_prediction.csv')
-
-target_pandemic_data = process_data(processed_data_path = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/data_with_country_metadata/compartment_model_covid_data_objects.pickle',
-                                        raw_data=False)
+delphi_pred_case = pd.read_csv('output/delphi/covid_28_84_case_only_pred_case.csv')
+# hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-17-1000_28-84/case_prediction.csv')
+hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-20-1000_28-84/case_prediction.csv')
     
 target_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=target_pandemic_data,
                                               target_training_len=28,
@@ -165,17 +162,15 @@ for index, row in tqdm(hgdcm_pred_case.iterrows(), total=len(hgdcm_pred_case)):
     plt.ylabel("Cumulative Case Number")
     plt.legend()
     plt.tight_layout()
-    plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/DELPHI_HGDCM_28_84/{country}_{domain}.png')
+    plt.savefig(f'evaluation/plots/DELPHI_HGDCM_28_84/{country}_{domain}.png')
     plt.close()
 
 ## 14 Days - 84 Days
-Path(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/DELPHI_HGDCM_14_84/').mkdir(parents=False, exist_ok=True)
+Path(f'evaluation/plots/DELPHI_HGDCM_14_84/').mkdir(parents=False, exist_ok=True)
 
-delphi_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/delphi/covid_14_84_case_only_pred_case.csv')
-hgdcm_pred_case = pd.read_csv('/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/output/past_guided/09-24-1300_14-84/case_prediction.csv')
-
-target_pandemic_data = process_data(processed_data_path = '/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/data_files/data_with_country_metadata/compartment_model_covid_data_objects.pickle',
-                                        raw_data=False)
+delphi_pred_case = pd.read_csv('output/delphi/covid_14_84_case_only_pred_case.csv')
+# hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-17-1000_14-84/case_prediction.csv')
+hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-20-1000_14-84/case_prediction.csv')
     
 target_pandemic_dataset = Compartment_Model_Pandemic_Dataset(pandemic_data=target_pandemic_data,
                                               target_training_len=14,
@@ -219,5 +214,5 @@ for index, row in tqdm(hgdcm_pred_case.iterrows(), total=len(hgdcm_pred_case)):
     plt.ylabel("Cumulative Case Number")
     plt.legend()
     plt.tight_layout()
-    plt.savefig(f'/export/home/rcsguest/rcs_zwei/Pandemic-Early-Warning/evaluation/plots/DELPHI_HGDCM_14_84/{country}_{domain}.png')
+    plt.savefig(f'evaluation/plots/DELPHI_HGDCM_14_84/{country}_{domain}.png')
     plt.close()

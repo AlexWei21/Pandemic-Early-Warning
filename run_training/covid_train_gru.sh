@@ -8,7 +8,7 @@ dt=$(date +%m-%d-%H%M)
 #SBATCH -o run_logs/hostname_${dt}_%j.out
 #SBATCH -e run_logs/hostname_${dt}_%j.err
 
-train_len=28
+train_len=14
 
 # Determine batch_size based on train_len
 if [ "$train_len" -eq 56 ]; then
@@ -37,4 +37,4 @@ python -m run_training.run_gru \
         --use_lr_scheduler False \
         --loss_mae_weight 1 \
         --loss_mape_weight 20 \
-        --output_dir output/past_guided/covid_$(date +%m-%d-%H00)_$train_len-84/ \
+        --output_dir output/gru/covid_$(date +%m-%d-%H00)_$train_len-84/ \

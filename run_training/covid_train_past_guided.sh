@@ -8,7 +8,7 @@ dt=$(date +%m-%d-%H%M)
 #SBATCH -o run_logs/hostname_${dt}_%j.out
 #SBATCH -e run_logs/hostname_${dt}_%j.err
 
-train_len=14
+train_len=28
 
 # Determine batch_size based on train_len
 if [ "$train_len" -eq 56 ]; then
@@ -25,7 +25,7 @@ else
 fi
 
 python -m run_training.train_past_guided \
-        --lr 1e-5 \
+        --lr 1e-3 \
         --batch_size $batch_size \
         --target_training_len $train_len \
         --pred_len 84 \
@@ -44,4 +44,5 @@ python -m run_training.train_past_guided \
         --loss_mae_weight 1 \
         --loss_mape_weight 20 \
         --output_dir output/past_guided/covid_$(date +%m-%d-%H00)_$train_len-84/ \
-        --compartmental_model delphi
+        --compartmental_model delphi \
+        --nn_model gru 

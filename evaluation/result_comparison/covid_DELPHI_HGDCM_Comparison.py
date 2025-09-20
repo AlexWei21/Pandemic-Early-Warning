@@ -11,7 +11,9 @@ def scientific_format(x, _):
 ## 56 Days - 84 Days
 # DELPHI Performance
 delphi_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/delphi/covid_56_84_case_only_performance.csv')
-hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_56-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_56-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_56-84/best_epoch_validation_location_loss.csv')
+
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain'], right_on=['country','domain'], how = 'inner')
@@ -71,7 +73,8 @@ plt.savefig("/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/mae
 
 # DELPHI Performance
 delphi_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/delphi/covid_42_84_case_only_performance.csv')
-hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_42-84/best_epoch_validation_location_loss.csv')
+#hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_42-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_42-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain'], right_on=['country','domain'], how = 'inner')
@@ -134,7 +137,8 @@ plt.savefig("/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/mae
 
 # DELPHI Performance
 delphi_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/delphi/covid_28_84_case_only_performance.csv')
-hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_28-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_28-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_28-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain'], right_on=['country','domain'], how = 'inner')
@@ -194,7 +198,8 @@ plt.savefig("/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/evaluation/mae
 
 # DELPHI Performance
 delphi_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/delphi/covid_14_84_case_only_performance.csv')
-hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_14-84/best_epoch_validation_location_loss.csv')
+#hgdcm_perf_df = pd.read_csv('/n/data1/hms/dbmi/farhat/alex/Pandemic-Early-Warning/output/past_guided/covid_09-17-1000_14-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_14-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(delphi_perf_df, left_on = ['Country','Domain'], right_on=['country','domain'], how = 'inner')

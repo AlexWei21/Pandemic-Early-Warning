@@ -9,6 +9,7 @@ import random
 import pytorch_lightning as lightning
 
 from model.resnet_1d import ResNet18, ResNet34, ResNet50, ResNet101
+from model.gru import PF_GRU
 
 from utils.delphi_default_parameters import (
     p_v,
@@ -32,11 +33,12 @@ Parameters
 '''
 class pandemic_early_warning_model(nn.Module):
     def __init__(self,
-                 # ts_dim: int = 46,
+                 train_len: None,
                  compartmental_model = 'delphi',
-                 pred_len: int = 71,
+                 pred_len: int = 84,
                  dropout: float = 0.5,
-                 include_death: bool = True,):
+                 include_death: bool = True,
+                 nn_type: str = 'resnet50',):
         
         super().__init__()       
 
@@ -51,9 +53,11 @@ class pandemic_early_warning_model(nn.Module):
             self.output_min = torch.tensor([item[0] for item in default_bounds_params]) # TODO
             self.output_max = torch.tensor([item[1] for item in default_bounds_params]) # TODO
 
-        self.parameter_prediction_layer = parameter_prediction_layer(dropout=dropout,
+        self.parameter_prediction_layer = parameter_prediction_layer(train_len=train_len,
+                                                                     dropout=dropout,
                                                                      include_death = include_death,
-                                                                     output_dim=num_compartmental_params) 
+                                                                     output_dim=num_compartmental_params,
+                                                                     model_type=nn_type,) 
         
         self.output_range = maximum_bounds_params
         # self.output_min = torch.tensor([item[0] for item in default_bounds_params])
@@ -88,7 +92,9 @@ class parameter_prediction_layer(nn.Module):
     def __init__(self,
                  dropout: float = 0.5,
                  include_death: bool = True,
-                 output_dim: int = 12,):
+                 output_dim: int = 12,
+                 model_type: str = 'resnet50',
+                 train_len: int = None,):
         
         super().__init__()
 
@@ -103,10 +109,18 @@ class parameter_prediction_layer(nn.Module):
         #                                channels=channels,
         #                                batch_norm=False,)
 
-        self.encoding_layer = ResNet50(channels=channels,
-                                       output_dim=output_dim,
-                                       batch_norm=False,
-                                       layer_norm=False,)
+        if model_type == 'resnet50':
+            self.encoding_layer = ResNet50(channels=channels,
+                                        output_dim=output_dim,
+                                        batch_norm=False,
+                                        layer_norm=False,)
+            
+        elif model_type == 'gru':
+            self.encoding_layer = PF_GRU(input_size=channels,
+                                         hidden_size=512,
+                                         num_layers=5,
+                                         pred_length=output_dim,
+                                         sequence_length=train_len,)
 
         # self.encoding_layer = ResNet101(channels=channels,
         #                                 output_dim=12,
@@ -264,16 +278,20 @@ def SIRD_model(t, x, args):
     return torch.stack((dSdt, dIdt, dRdt, dDdt), dim=1)
 
 if __name__ == '__main__':
-    model = pandemic_early_warning_model(pred_len=71,
-                                         dropout=0.5,
-                                         compartmental_model='delphi',)
+    model = pandemic_early_warning_model(train_len=56,
+                                         pred_len=84,
+                                         dropout=0.0,
+                                         compartmental_model='delphi',
+                                         nn_type='gru',
+                                         include_death=False
+                                         )
 
     print(model)
 
-    ts_input = torch.randn((2,46))
+    ts_input = torch.randn((2,56,1))
     global_params_fixed = torch.tensor([[7705247, 94.0, 10, 80.0, 16.0, 110.0, 0.2, 0.03, 0.25],
                                         [7029949, 108.0, 10, 0.0, 0.0, 108.0, 0.2, 0.03, 0.25]])
+    meta_input = torch.randn((2,40))
 
-    print(model(ts_input, global_params_fixed).shape)
-    print(model(ts_input, global_params_fixed)[0,:,15])
-    print(model(ts_input, global_params_fixed)[0,:,14])
+    output, params = model(ts_input, global_params_fixed, meta_input)
+    print(output.shape)

@@ -60,6 +60,7 @@ def run_training(lr: float = 1e-3,
                  loss_mape_weight:float = 100,
                  compartmental_model:str='delphi',
                  input_log_transform:bool=True,
+                 nn_model:str='resnet50',
                  ):
 
     Path(output_dir).mkdir(parents=False, exist_ok=True)
@@ -201,7 +202,9 @@ def run_training(lr: float = 1e-3,
                            use_scheduler=use_lr_scheduler,
                            loss_mae_weight=loss_mae_weight,
                            loss_mape_weight=loss_mape_weight,
-                           compartmental_model=compartmental_model)
+                           compartmental_model=compartmental_model,
+                           nn_model=nn_model,
+                           )
     
     print(model)
     
@@ -286,6 +289,7 @@ if __name__ == '__main__':
     parser.add_argument('--loss_mape_weight', type=float, default=100)
     parser.add_argument('--output_dir', type=str, default=None)
     parser.add_argument('--compartmental_model', type=str, default='delphi')
+    parser.add_argument('--nn_model', type=str, default='resnet50')
 
     args = parser.parse_args()
 
@@ -314,5 +318,6 @@ if __name__ == '__main__':
         loss_mae_weight = args.loss_mae_weight,
         loss_mape_weight = args.loss_mape_weight,
         output_dir = output_dir,
-        compartmental_model = args.compartmental_model
+        compartmental_model = args.compartmental_model,
+        nn_model = args.nn_model,
     )

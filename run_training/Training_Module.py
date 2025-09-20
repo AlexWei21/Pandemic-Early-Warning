@@ -48,6 +48,7 @@ class TrainingModule(LightningModule):
                  loss_mape_weight:float = 100,
                  loss_mae_weight:float = 0.5,
                  compartmental_model:str='delphi',
+                 nn_model:str='resnet50',
                  ):
         
         super().__init__()
@@ -68,10 +69,13 @@ class TrainingModule(LightningModule):
 
         self.batch_size = batch_size
 
-        self.model = pandemic_early_warning_model(pred_len=pred_len,
+        self.model = pandemic_early_warning_model(train_len=train_len,
+                                                  pred_len=pred_len,
                                                   dropout = dropout,
                                                   include_death=include_death,
-                                                  compartmental_model=compartmental_model)
+                                                  compartmental_model=compartmental_model,
+                                                  nn_type=nn_model,
+                                                  )
         
         self.population_weighting = population_weighting
         self.use_scheduler = use_scheduler
