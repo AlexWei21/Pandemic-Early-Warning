@@ -12,6 +12,7 @@ Path(f'evaluation/plots/DELPHI_HGDCM_56_84/').mkdir(parents=False, exist_ok=True
 delphi_pred_case = pd.read_csv('output/delphi/covid_56_84_case_only_pred_case.csv')
 # hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-17-1000_56-84/case_prediction.csv')
 hgdcm_pred_case = pd.read_csv('output/past_guided/covid_09-20-1000_56-84/case_prediction.csv')
+gru_pred_case = pd.read_csv('output/gru/covid_09-19-2000_56-84/case_prediction.csv')
 
 target_pandemic_data = process_data(processed_data_path = 'data_files/processed_data/validation/compartment_model_covid_data_objects.pickle',
                                         raw_data=False)
@@ -34,10 +35,12 @@ for index, row in tqdm(hgdcm_pred_case.iterrows(), total=len(hgdcm_pred_case)):
     if pd.isna(domain):
         delphi_case = delphi_pred_case[(delphi_pred_case['country']==country) & (delphi_pred_case['domain'].isna())].values[0][4:]
         hgdcm_case = hgdcm_pred_case[(hgdcm_pred_case['Country']==country) & (hgdcm_pred_case['Domain'].isna())].values[0][2:]
+        gru_case = gru_pred_case[(gru_pred_case['Country']==country) & (gru_pred_case['Domain'].isna())].values[0][2:]
         true_case = [item.cumulative_case_number for item in target_pandemic_data if ((item.country_name == country)&(pd.isna(item.domain_name)))][0][:84]
     else:
         delphi_case = delphi_pred_case[(delphi_pred_case['country']==country) & (delphi_pred_case['domain'] == domain)].values[0][4:]
         hgdcm_case = hgdcm_pred_case[(hgdcm_pred_case['Country']==country) & (hgdcm_pred_case['Domain'] == domain)].values[0][2:]
+        gru_case = gru_pred_case[(gru_pred_case['Country']==country) & (gru_pred_case['Domain'] == domain)].values[0][2:]
         true_case = [item.cumulative_case_number for item in target_pandemic_data if ((item.country_name == country)&(item.domain_name == domain))][0][:84]
         
 
@@ -50,6 +53,9 @@ for index, row in tqdm(hgdcm_pred_case.iterrows(), total=len(hgdcm_pred_case)):
     plt.plot(time_stamp,
              delphi_case,
              label='DELPHI')
+    plt.plot(time_stamp[56:84],
+             gru_case,
+             label='GRU')
     plt.plot(time_stamp,
              hgdcm_case,
              label='History Guided Deep Compartmental Model')
@@ -58,9 +64,11 @@ for index, row in tqdm(hgdcm_pred_case.iterrows(), total=len(hgdcm_pred_case)):
     plt.ylabel("Cumulative Case Number")
     plt.legend()
     plt.tight_layout()
-    plt.savefig(f'evaluation/plots/DELPHI_HGDCM_56_84/{country}_{domain}.png')
+    plt.savefig(f'evaluation/plots/DELPHI_HGDCM_GRU_56_84/{country}_{domain}.png')
     plt.close()
-    
+
+exit()
+
 ## 42 Days - 84 Days
 Path(f'evaluation/plots/DELPHI_HGDCM_42_84/').mkdir(parents=False, exist_ok=True)
 

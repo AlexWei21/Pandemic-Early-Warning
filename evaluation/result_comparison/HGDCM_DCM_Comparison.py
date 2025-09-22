@@ -11,8 +11,8 @@ def scientific_format(x, _):
 ## 56 Days - 84 Days
 # DELPHI Performance
 dcm_perf_df = pd.read_csv('output/self_tune/covid_09-18-0900_56-84/best_epoch_validation_location_loss.csv')
-# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_56-84/best_epoch_validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_56-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_56-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_56-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(dcm_perf_df,
@@ -73,8 +73,8 @@ plt.savefig("evaluation/ablation/mae_distribution_plots/56_84.png")
 ## 42 Days - 84 Days
 # DELPHI Performance
 dcm_perf_df = pd.read_csv('output/self_tune/covid_09-18-0900_42-84/best_epoch_validation_location_loss.csv')
-# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_42-84/best_epoch_validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_42-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_42-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_42-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(dcm_perf_df,
@@ -136,8 +136,8 @@ plt.savefig("evaluation/ablation/mae_distribution_plots/42_84.png")
 
 # DELPHI Performance
 dcm_perf_df = pd.read_csv('output/self_tune/covid_09-18-0900_28-84/best_epoch_validation_location_loss.csv')
-#hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_28-84/best_epoch_validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_28-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_28-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_28-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(dcm_perf_df,
@@ -199,8 +199,8 @@ plt.savefig("evaluation/ablation/mae_distribution_plots/28_84.png")
 
 # DELPHI Performance
 dcm_perf_df = pd.read_csv('output/self_tune/covid_09-18-1000_14-84/best_epoch_validation_location_loss.csv')
-# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_14-84/best_epoch_validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_14-84/best_epoch_validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_14-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_14-84/best_epoch_validation_location_loss.csv')
 
 
 # Valid Comparison Locations

@@ -40,3 +40,4 @@ python -m run_training.train_self-tune \
         --loss_mae_weight 1 \
         --loss_mape_weight 20 \
         --output_dir output/self_tune/covid_$(date +%m-%d-%H00)_$train_len-84/ \
+        --nn_model gru

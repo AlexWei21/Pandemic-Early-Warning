@@ -10,9 +10,10 @@ def scientific_format(x, _):
 
 ## 56 Days - 84 Days
 # DELPHI Performance
-gru_perf_df = pd.read_csv('output/gru/covid_09-19-2000_56-84/validation_location_loss.csv')
-# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_56-84/best_epoch_validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_56-84/best_epoch_validation_location_loss.csv')
+gru_perf_df = pd.read_csv('output/cnn/covid_09-22-0000_56-84/validation_location_loss.csv')
+# gru_perf_df = pd.read_csv('output/gru/covid_09-19-2000_56-84/validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_56-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_56-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(gru_perf_df,
@@ -72,9 +73,10 @@ combined_df['log_OutSample_MAE_x'] = np.log10(combined_df['OutSample_MAE_x'])
 
 ## 42 Days - 84 Days
 # DELPHI Performance
-gru_perf_df = pd.read_csv('output/gru/covid_09-19-2000_42-84/validation_location_loss.csv')
-# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_42-84/best_epoch_validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_42-84/best_epoch_validation_location_loss.csv')
+gru_perf_df = pd.read_csv('output/cnn/covid_09-22-0000_42-84/validation_location_loss.csv')
+# gru_perf_df = pd.read_csv('output/gru/covid_09-19-2000_42-84/validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_42-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_42-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(gru_perf_df,
@@ -135,9 +137,10 @@ combined_df['log_OutSample_MAE_x'] = np.log10(combined_df['OutSample_MAE_x'])
 ## 28 Days - 84 Days
 
 # DELPHI Performance
-gru_perf_df = pd.read_csv('output/gru/covid_09-19-2000_28-84/validation_location_loss.csv')
-# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_28-84/best_epoch_validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_28-84/best_epoch_validation_location_loss.csv')
+gru_perf_df = pd.read_csv('output/cnn/covid_09-22-0000_28-84/validation_location_loss.csv')
+# gru_perf_df = pd.read_csv('output/gru/covid_09-19-2000_28-84/validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_28-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_28-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(gru_perf_df,
@@ -198,9 +201,10 @@ combined_df['log_OutSample_MAE_x'] = np.log10(combined_df['OutSample_MAE_x'])
 ## 14 Days - 84 Days
 
 # DELPHI Performance
-gru_perf_df = pd.read_csv('output/gru/covid_09-19-2000_14-84/validation_location_loss.csv')
-# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_14-84/best_epoch_validation_location_loss.csv')
-hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_14-84/best_epoch_validation_location_loss.csv')
+gru_perf_df = pd.read_csv('output/cnn/covid_09-22-0000_14-84/validation_location_loss.csv')
+# gru_perf_df = pd.read_csv('output/gru/covid_09-19-2000_14-84/validation_location_loss.csv')
+hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-17-1000_14-84/best_epoch_validation_location_loss.csv')
+# hgdcm_perf_df = pd.read_csv('output/past_guided/covid_09-20-1000_14-84/best_epoch_validation_location_loss.csv')
 
 # Valid Comparison Locations
 combined_df = hgdcm_perf_df.merge(gru_perf_df,

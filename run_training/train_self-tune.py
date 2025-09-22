@@ -55,6 +55,7 @@ def run_training(lr: float = 1e-3,
                  use_scheduler:bool=False,
                  loss_mae_weight: float = 0.5,
                  loss_mape_weight: float = 100,
+                 nn_model:str='resnet50',
                  ):
     
     Path(output_dir).mkdir(parents=False, exist_ok=True)
@@ -145,7 +146,8 @@ def run_training(lr: float = 1e-3,
                            use_scheduler=use_scheduler,
                            loss_mae_weight=loss_mae_weight,
                            loss_mape_weight=loss_mape_weight,
-                           compartmental_model='delphi'
+                           compartmental_model='delphi',
+                           nn_model=nn_model,
                            )
     
     print(model)
@@ -225,6 +227,7 @@ if __name__ == '__main__':
     parser.add_argument('--loss_mae_weight', type=float, default=0.5)
     parser.add_argument('--loss_mape_weight', type=float, default=100)
     parser.add_argument('--output_dir', type=str, default=None)
+    parser.add_argument('--nn_model', type=str, default='resnet50')
 
     args = parser.parse_args()
 
@@ -248,5 +251,6 @@ if __name__ == '__main__':
         use_scheduler = args.use_scheduler,
         loss_mae_weight = args.loss_mae_weight,
         loss_mape_weight = args.loss_mape_weight,
-        output_dir = output_dir
+        output_dir = output_dir,
+        nn_model = args.nn_model,
     )
